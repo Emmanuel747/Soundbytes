@@ -6,3 +6,5 @@ class PostManager implements IPostManager {
         throw new Error("Method not implemented.");
     }
 }
+
+export { PostManager };

@@ -17,3 +17,5 @@ class PersonalFeedComposer implements IFeedComposer {
         throw new Error("Method not implemented.");
     }
 }
+
+export { GlobalFeedComposer, PersonalFeedComposer };

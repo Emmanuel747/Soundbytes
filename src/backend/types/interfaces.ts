@@ -21,6 +21,7 @@ interface IUserManager {
     database: IDatabase;
     submitOnValid(user: any): void;
     updateUser(user: any): void;
+    createUser(user: any): void;
 }
 
 interface IValidator {
