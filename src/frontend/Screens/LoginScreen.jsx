@@ -20,18 +20,20 @@ export default function LoginScreen() {
     const [password, setPassword] = useState("Empty_Password_Field");
 
     return (
+        
         <SafeAreaView style={styles.container}>
-            <Text style={styles.textContainer}>Welcome to SoundBytes</Text>
-
-            {/*The LSU Tiger background images on the login page*/}
-            <Image
-                source={{
-                    width: 350,
-                    height: 350,
-                    uri: "https://bossierpress.com/wp-content/uploads/2016/05/lsutigerslogo2.jpg",
-                }}
-            />
-
+            
+           
+            <SafeAreaView style={{
+                
+                width: 350,
+                height: 380,
+                borderColor: '#000000',
+                borderWidth: 2,
+                borderRadius: 9,
+                justifyContent: 'center',
+            }}>
+            
             <View
                 style={{
                     position: "absolute",
@@ -42,6 +44,7 @@ export default function LoginScreen() {
                     justifyContent: "center",
                     alignItems: "center",
                 }}>
+                    <Text style={{fontSize:35, padding: 15,fontWeight:'bold',justifyContent:"center", alignItems:"center",}}>♪ SoundBytes ♪</Text>
                 <TextInput
                     style={{
                         height: 60,
@@ -52,7 +55,7 @@ export default function LoginScreen() {
                         fontSize: 24,
                         color: "red",
                     }}
-                    placeholder='Username'
+                    placeholder='username'
                     onChangeText={(username) => setUsername(username)}
                 />
                 <TextInput
@@ -65,16 +68,21 @@ export default function LoginScreen() {
                         fontSize: 24,
                         color: "red",
                     }}
-                    placeholder='Password'
+                    placeholder='password'
                     onChangeText={(password) => setPassword(password)}
                 />
                 {/*This 'enter' button will take in the inputted username and password and check the database for a profile by calling Validate()*/}
+              
                 <Button
                     onPress={() => Validate(username, password)}
-                    title='Enter'
+                    title='Login'
                 />
+               
             </View>
+           
         </SafeAreaView>
+        </SafeAreaView>
+        
     );
 }
 
@@ -102,12 +110,15 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#61E5F9",
+     /*   backgroundColor: "#61E5F9", */
     },
     textContainer: {
-        fontSize: 24,
+        fontSize: 34,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "blue",
     },
+    button: {
+
+        backgroundColor: 'black',
+      },
 });
