@@ -34,6 +34,16 @@ export default function LoginScreen() {
                 justifyContent: 'center',
             }}>
             
+            
+            {/*The LSU Tiger background images on the login page  
+            <Image
+                source={{
+                    width: 350,
+                    height: 350,
+                    uri: "https://bossierpress.com/wp-content/uploads/2016/05/lsutigerslogo2.jpg",
+                }}
+            /> */}
+            
             <View
                 style={{
                     position: "absolute",
@@ -79,6 +89,7 @@ export default function LoginScreen() {
                 />
                
             </View>
+           
         </SafeAreaView>
         </SafeAreaView>
         
