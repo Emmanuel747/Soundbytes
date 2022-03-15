@@ -1,4 +1,5 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import Post from './components/Post';
 
 import { GlobalFeedComposer, PostManager } from "../../backend";
 
@@ -10,20 +11,18 @@ export default function FeedScreen() {
         // Call feedComposer.composeFeed()
         throw new Error("Method not implemented.");
     };
-
     const commentOnPost = () => {
         // Redirect to Recording page
         throw new Error("Method not implemented.");
     };
-
     const likePost = () => {
         // Call postManager.updatePost
         throw new Error("Method not implemented.");
     };
 
     return (
-        <View>
-            <Text>Feed</Text>
-        </View>
+      <>
+
+      </>
     );
 }

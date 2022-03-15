@@ -31,7 +31,7 @@ export default function Navigator() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName={Screens.Login.name}
+        initialRouteName={Screens.Profile.name}
         screenOptions={({ route }) => ({
           headerTitleAlign: "center",
           tabBarHideOnKeyboard: true,
