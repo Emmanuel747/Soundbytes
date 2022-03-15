@@ -7,7 +7,11 @@ export default function App() {
     return (
         <View style={{ height: "100%" }}>
             <Navigator />
-            <StatusBar />
+            <StatusBar
+              style="light"
+              backgroundColor={"#2e42db"}
+              Animation="slide"
+            />
         </View>
     );
 }
