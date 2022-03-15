@@ -1,5 +1,7 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { FireDB } from "../../backend";
+import Post from './components/Post';
+import ProfileHeader from './components/ProfileHeader'
 
 export default function ProfileScreen() {
     const db = new FireDB();
@@ -13,10 +15,18 @@ export default function ProfileScreen() {
         // Call fireDB.updateUserProfile()
         throw new Error("Method not implemented.");
     };
+    const string = "Testing Proptext";
 
     return (
-        <View>
-            <Text>Profile</Text>
-        </View>
+      <>
+        <ProfileHeader 
+          userName={"@badmamajama420"}
+          statusMsg={'"I make great life decisions"'}
+        />
+        <Post 
+          msgContent={string}
+          
+        />
+      </>
     );
 }
