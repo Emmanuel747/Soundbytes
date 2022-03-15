@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { FireDB } from "../../backend";
-import Post from './components/Post';
-import ProfileHeader from './components/ProfileHeader'
+import Post from "../components/Post";
+import ProfileHeader from "../components/ProfileHeader";
 
 export default function ProfileScreen() {
     const db = new FireDB();
@@ -18,15 +18,12 @@ export default function ProfileScreen() {
     const string = "Testing Proptext";
 
     return (
-      <>
-        <ProfileHeader 
-          userName={"@badmamajama420"}
-          statusMsg={'"I make great life decisions"'}
-        />
-        <Post 
-          msgContent={string}
-          
-        />
-      </>
+        <>
+            <ProfileHeader
+                userName={"@badmamajama420"}
+                statusMsg={'"I make great life decisions"'}
+            />
+            <Post msgContent={string} />
+        </>
     );
 }
