@@ -49,7 +49,7 @@ export default function LoginScreen() {
               borderWidth: 3,
               padding: 10,
               fontSize: 24,
-              color: "red",
+              color: "black",
             }}
             placeholder='username'
             onChangeText={(username) => setUsername(username)}
@@ -62,8 +62,10 @@ export default function LoginScreen() {
               borderWidth: 3,
               padding: 10,
               fontSize: 24,
-              color: "blue",
+              color: "black", 
+              
             }}
+            secureTextEntry={true}
             placeholder='password'
             onChangeText={(password) => setPassword(password)}
           />
