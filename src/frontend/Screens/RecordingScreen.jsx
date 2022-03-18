@@ -10,7 +10,7 @@ export default function RecordingScreen() {
 // note: eman look up stuff for img 
     return (
         <View style={styles.container}>
-            <Image onPress={() => {/*activate recording function*/}} 
+            <Image onPress={() => {createPost()}} 
                 style={styles.logo} source={{uri: 'https://images.squarespace-cdn.com/content/v1/614aadf6877b2634485954d0/b90c27ad-592e-4a7c-879b-00af65a421dc/voice.png?format=750w'}} />
         </View>
     );

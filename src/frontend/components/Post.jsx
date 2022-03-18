@@ -18,6 +18,7 @@ export default function Post({ userName, profileImg, msgContent, i }) {
     // Call feedComposer.composeFeed()
     throw new Error("Method not implemented.");
   };
+  
   const commentOnPost = () => {
     // Redirect to Recording page
     throw new Error("Method not implemented.");
@@ -28,7 +29,7 @@ export default function Post({ userName, profileImg, msgContent, i }) {
   };
 
   return (
-    <View key={i} style={PostStyles.subContainer}>
+    <View style={PostStyles.subContainer}>
       {playIcon}
       <Text>"Sleep is for the weak " {i}</Text>
     </View>
