@@ -1,9 +1,9 @@
 import { FlatList, ScrollView, View, Text, Image } from "react-native";
 import Post from "./Post";
-import PostStyles from "./CSSRoutes";
+import PostStyles from "./StyleSheets/PostStyles.jsx";
 
 export default function Feed({ feedFactory }) {
-  
+
   const createListOfPosts = () => {
 
     // The attributes for post below are temporary
@@ -18,16 +18,18 @@ export default function Feed({ feedFactory }) {
       msgContent: "“Fine I’ll do it myself.”"
     }
 
-    let Image_URL = {uri: post.profileImg};
+    let renderFeed = [];
 
-    const FEED = (
+      for (let i = 0; i < 10; i++) {
+      renderFeed.push(
       <Post
         userName={post.username}
-        profileImg={<Image source={Image_URL} style = {{height: 200, resizeMode : 'stretch', margin: 5 }} />}
+        profileImg={<Image source={{uri: post.profileImg}} style = {PostStyles.postImages} />}
         msgContent={post.msgContent}
-      />
-    );
-    return FEED;
+      />);
+      }
+
+    return renderFeed;
   };
 
 
@@ -35,15 +37,13 @@ export default function Feed({ feedFactory }) {
   return (
     //ScrollView works as just a wrapper. FlatList has better performance
     //but requires props and data objects to work. I will try to upgrade later. ~eman
-    <>
-      {/*SoundByte Feed Section:
+          /*SoundByte Feed Section:
         - utilizes element varible created above
         - need to add onPress functionality  
-      */}
-      <View style={PostStyles.rootContainer}>
-        {console.log(createListOfPosts())}
-        {createListOfPosts()}
-      </View>
+      */
+    <>
+      {createListOfPosts()}
+    
     </>
   );
 }

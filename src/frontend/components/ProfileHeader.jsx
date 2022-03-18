@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableHighlight } from "react-native";
 import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
-import PostStyle from './PostStyles';
+import PostStyle from './StyleSheets/PostStyles.jsx';
 
 export default function ProfileHeader({userName, profileImg, statusMsg, msgContent, followers, following}) {
   //Icon / Button varibles

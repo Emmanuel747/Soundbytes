@@ -16,10 +16,10 @@ import IconSet2 from "react-native-vector-icons/MaterialCommunityIcons";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import PostStyle from './components/CSSRoutes';
+import PostStyles from './components/StyleSheets/PostStyles.jsx';
 
 const Tab = createBottomTabNavigator();
-const homeIcon = <Icon style={PostStyle.icon2} name="home" size={25} color="blue" />;
+const homeIcon = <Icon style={PostStyles.icon2} name="home" size={25} color="blue" />;
 
 const Screens = {
   Profile: {
