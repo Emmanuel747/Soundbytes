@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import Post from "../components/Post";
+import Feed from "../components/Feed";
 
 import { GlobalFeedComposer, PostManager } from "../../backend";
 
@@ -20,5 +21,13 @@ export default function FeedScreen() {
         throw new Error("Method not implemented.");
     };
 
-    return <></>;
+    return (
+      <>
+        <ScrollView>
+          <Feed />
+        
+        </ScrollView>
+      
+      </>
+    );
 }

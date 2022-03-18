@@ -1,3 +1,3 @@
-import PostStyles from '../components/PostStyles.jsx';
+import PostStyles from './PostStyles';
 
 export default PostStyles;

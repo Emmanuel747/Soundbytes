@@ -16,45 +16,45 @@ import IconSet2 from "react-native-vector-icons/MaterialCommunityIcons";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import PostStyle from './PostStyles';
+import PostStyle from './components/CSSRoutes';
 
 const Tab = createBottomTabNavigator();
 const homeIcon = <Icon style={PostStyle.icon2} name="home" size={25} color="blue" />;
 
 const Screens = {
-    Profile: {
-        name: "Profile",
-        component: ProfileScreen,
-        IconSet2: {
-            normal: "crown",
-            focused: "crown-outline",
-        },
+  Profile: {
+    name: "Profile",
+    component: ProfileScreen,
+    IconSet2: {
+        normal: "crown",
+        focused: "crown-outline",
     },
-    Recording: {
-        name: "Recording",
-        component: RecordingScreen,
-    },
-    Login: {
-        name: "Login",
-        component: LoginScreen,
-    },
-    Feed: {
-        name: "Feed",
-        component: FeedScreen,
-    },
+  },
+  Recording: {
+      name: "Recording",
+      component: RecordingScreen,
+  },
+  Login: {
+      name: "Login",
+      component: LoginScreen,
+  },
+  Feed: {
+      name: "Feed",
+      component: FeedScreen,
+  },
 };
 
 export default function Navigator() {
     return (
         <NavigationContainer>
             <Tab.Navigator
-                initialRouteName={Screens.Profile.name}
+                initialRouteName={Screens.Feed.name} //Default Screen
                 screenOptions={({ route }) => ({
                     headerTitleAlign: "center",
                     tabBarHideOnKeyboard: true,
 
                     // This function will handle icons within the nav bar -Miguel 3/16/22
-                    //Can't use empty strings with Text component
+                    // Can't use empty strings with Text component
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
             
@@ -71,16 +71,15 @@ export default function Navigator() {
                         if (route.name === 'Feed') {
                             return iconName = focused ? <Ionicons name='md-home' size={size} color={color} /> : <Ionicons name='md-home-outline' size={size} color={color} />;
                         }
-                        
                       },
 
                 })}> 
                 {Object.entries(Screens).map(([key, val], i) => (
-                    <Tab.Screen
-                        name={key}
-                        component={val.component}
-                        key={i} // Need key for rendering lists
-                    />
+                  <Tab.Screen
+                      name={key}
+                      component={val.component}
+                      key={i} // Need key for rendering lists
+                  />
                 ))}
             </Tab.Navigator>
         </NavigationContainer>
