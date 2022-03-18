@@ -1,21 +1,23 @@
+//npm Packages
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import ProfileScreen from "./screens/ProfileScreen";
-import RecordingScreen from "./screens/RecordingScreen";
+//Screens
 import LoginScreen from "./screens/LoginScreen";
 import FeedScreen from "./screens/FeedScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import RecordingScreen from "./screens/RecordingScreen";
+
+//React Icons from installed packages [03/17/22]
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconSet2 from "react-native-vector-icons/MaterialCommunityIcons";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import React, { useState, useEffect } from 'react';
 import PostStyle from './PostStyles';
 
-
 const Tab = createBottomTabNavigator();
-
 const homeIcon = <Icon style={PostStyle.icon2} name="home" size={25} color="blue" />;
 
 const Screens = {
