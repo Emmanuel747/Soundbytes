@@ -1,8 +1,11 @@
 type Post = {
+    pid: string;
     title: string;
+    creator: string;
     audio: File; // Temporary
+    timestamp: string;
     likes: number;
-    comments: [Post]; // Maybe temporary
+    replies: [Post]; // Maybe temporary
 };
 
 type Feed = [Post];
