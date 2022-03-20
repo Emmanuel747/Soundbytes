@@ -71,10 +71,12 @@ const RecordButton = ({ children, onPress }) => {
 };
 
 export default function Navigator() {
+    const [isSignedIn, setIsSignedIn] = useState(false);
+
     return (
         <NavigationContainer>
             <Tab.Navigator
-                initialRouteName={Screens.Feed.name} //Default Screen
+                initialRouteName={Screens.Feed.name}
                 screenOptions={({ route }) => ({
                     tabBarHideOnKeyboard: true,
                     headerTitleAlign: "center",
@@ -89,27 +91,42 @@ export default function Navigator() {
                     },
                     tabBarIcon: ({ focused, color, size }) => {
                         let screen = Screens[route.name];
-                        return (
-                            <Icon
-                                name={
-                                    focused
-                                        ? screen.icons.focused
-                                        : screen.icons.normal
-                                }
-                                size={size}
-                                color={color}
-                            />
-                        );
+                        if (screen)
+                            return (
+                                <Icon
+                                    name={
+                                        focused
+                                            ? screen.icons.focused
+                                            : screen.icons.normal
+                                    }
+                                    size={size}
+                                    color={color}
+                                />
+                            );
+
+                        return <Icon name='lock' size={size} color={color} />;
                     },
                 })}>
-                {Object.entries(Screens).map(([key, val], i) => (
+                {isSignedIn ? (
+                    Object.entries(Screens).map(([key, val], i) => (
+                        <Tab.Screen
+                            name={key}
+                            component={val.component}
+                            options={val.options}
+                            key={i} // Need key for rendering lists
+                        />
+                    ))
+                ) : (
                     <Tab.Screen
-                        name={key}
-                        component={val.component}
-                        options={val.options}
-                        key={i} // Need key for rendering lists
+                        name='Login'
+                        children={({ props }) => (
+                            <LoginScreen
+                                {...props}
+                                onSuccess={() => setIsSignedIn(true)}
+                            />
+                        )}
                     />
-                ))}
+                )}
             </Tab.Navigator>
         </NavigationContainer>
     );
