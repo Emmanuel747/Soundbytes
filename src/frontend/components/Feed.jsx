@@ -38,6 +38,14 @@ export default function Feed({ feedFactory }) {
         return renderFeed;
     };
 
+    const genFeed = () => {
+        const posts_json = feedFactory.composeFeed();
+
+        const posts_comps = posts_json.map((data) => (
+            <Post userName={data.creator} />
+        ));
+    };
+
     return (
         //ScrollView works as just a wrapper. FlatList has better performance
         //but requires props and data objects to work. I will try to upgrade later. ~eman
@@ -45,6 +53,6 @@ export default function Feed({ feedFactory }) {
         - utilizes element varible created above
         - need to add onPress functionality  
       */
-        <>{createListOfPosts()}</>
+        <ScrollView>{createListOfPosts()}</ScrollView>
     );
 }
