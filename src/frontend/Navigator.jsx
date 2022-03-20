@@ -1,49 +1,73 @@
-//npm Packages
 import React, { useState, useEffect } from "react";
-import { Text } from "react-native";
+import { View, Text, TouchableHighlight } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-//Screens
+import Icon from "react-native-vector-icons/FontAwesome5";
+
 import LoginScreen from "./screens/LoginScreen";
 import FeedScreen from "./screens/FeedScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import RecordingScreen from "./screens/RecordingScreen";
 
-//React Icons from installed packages [03/17/22]
-import Icon from "react-native-vector-icons/AntDesign";
-import IconSet2 from "react-native-vector-icons/MaterialCommunityIcons";
-import FeatherIcon from "react-native-vector-icons/Feather";
-import AwesomeIcon from "react-native-vector-icons/FontAwesome";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import PostStyles from "./components/StyleSheets/PostStyles.jsx";
+import colors from "./colors";
+
+// Look into this for how to do the login auth flow
+// https://reactnavigation.org/docs/auth-flow
+// and this for the two tabs on the feed page
+// https://reactnavigation.org/docs/screen-options-resolution -Z
 
 const Tab = createBottomTabNavigator();
-const homeIcon = (
-    <Icon style={PostStyles.icon2} name='home' size={25} color='blue' />
-);
 
 const Screens = {
-    Profile: {
-        name: "Profile",
-        component: ProfileScreen,
-        IconSet2: {
-            normal: "crown",
-            focused: "crown-outline",
+    Feed: {
+        name: "Feed",
+        component: FeedScreen,
+        icons: {
+            normal: "list-ul",
+            focused: "list-ul",
         },
     },
     Recording: {
         name: "Recording",
         component: RecordingScreen,
+        options: {
+            tabBarButton: (props) => <RecordButton {...props} />,
+        },
+        icons: {
+            normal: "microphone",
+            focused: "microphone",
+        },
     },
-    Login: {
-        name: "Login",
-        component: LoginScreen,
+    Profile: {
+        name: "Profile",
+        component: ProfileScreen,
+        options: {},
+        icons: {
+            normal: "user-alt",
+            focused: "user-alt",
+        },
     },
-    Feed: {
-        name: "Feed",
-        component: FeedScreen,
-    },
+};
+
+const RecordButton = ({ children, onPress }) => {
+    return (
+        <TouchableHighlight
+            onPress={onPress}
+            style={{
+                backgroundColor: colors.primary,
+                justifyContent: "center",
+                alignContent: "center",
+                alignSelf: "center",
+                alignItems: "center",
+                width: 90,
+                height: 90,
+                elevation: 10,
+                borderRadius: 200,
+            }}>
+            <View>{children}</View>
+        </TouchableHighlight>
+    );
 };
 
 export default function Navigator() {
@@ -52,67 +76,37 @@ export default function Navigator() {
             <Tab.Navigator
                 initialRouteName={Screens.Feed.name} //Default Screen
                 screenOptions={({ route }) => ({
-                    headerTitleAlign: "center",
                     tabBarHideOnKeyboard: true,
-
-                    // This function will handle icons within the nav bar -Miguel 3/16/22
-                    // Can't use empty strings with Text component
+                    headerTitleAlign: "center",
+                    tabBarActiveTintColor: colors.active,
+                    tabBarInactiveTintColor: colors.disabled,
+                    // headerStyle: {},
+                    // headerShown: false,
+                    tabBarShowLabel: false,
+                    tabBarStyle: {
+                        height: 60,
+                        padding: 0,
+                    },
                     tabBarIcon: ({ focused, color, size }) => {
-                        let iconName;
-
-                        if (route.name === "Profile") {
-                            iconName = focused ? "profile" : "user";
-                            return (
-                                <Icon
-                                    name={iconName}
-                                    size={size}
-                                    color={color}
-                                />
-                            );
-                        }
-                        if (route.name === "Recording") {
-                            return (iconName = focused ? (
-                                <AwesomeIcon
-                                    name='microphone'
-                                    size={size}
-                                    color={color}
-                                />
-                            ) : (
-                                <FeatherIcon
-                                    name='mic'
-                                    size={size}
-                                    color={color}
-                                />
-                            ));
-                        }
-                        if (route.name === "Login") {
-                            return (iconName = focused ? (
-                                <Text>👀</Text>
-                            ) : (
-                                <Text>🔨</Text>
-                            ));
-                        }
-                        if (route.name === "Feed") {
-                            return (iconName = focused ? (
-                                <Ionicons
-                                    name='md-home'
-                                    size={size}
-                                    color={color}
-                                />
-                            ) : (
-                                <Ionicons
-                                    name='md-home-outline'
-                                    size={size}
-                                    color={color}
-                                />
-                            ));
-                        }
+                        let screen = Screens[route.name];
+                        return (
+                            <Icon
+                                name={
+                                    focused
+                                        ? screen.icons.focused
+                                        : screen.icons.normal
+                                }
+                                size={size}
+                                color={color}
+                            />
+                        );
                     },
                 })}>
                 {Object.entries(Screens).map(([key, val], i) => (
                     <Tab.Screen
                         name={key}
                         component={val.component}
+                        options={val.options}
                         key={i} // Need key for rendering lists
                     />
                 ))}
