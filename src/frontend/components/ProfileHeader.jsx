@@ -12,12 +12,8 @@ export default function ProfileHeader({
     following,
 }) {
     //Icon / Button varibles
-    const homeIcon = (
-        <Icon style={PostStyle.icon2} name='home' size={25} color='blue' />
-    );
-    const menuIcon = (
-        <Icon style={PostStyle.icon2} name='menufold' size={25} color='blue' />
-    );
+    const homeIcon = <Icon style={PostStyle.icon2} name='home' size={25} />;
+    const menuIcon = <Icon style={PostStyle.icon2} name='menufold' size={25} />;
 
     //API request
     const getFeed = () => {
@@ -41,41 +37,38 @@ export default function ProfileHeader({
     return (
         //ScrollView works as just a wrapper. FlatList has better performance
         //but requires props and data objects to work. I will try to upgrade later. ~eman
-        <>
-            <View>
-                <View style={PostStyle.headerBtnContainer}>
-                    {homeIcon}
-                    {menuIcon}
-                </View>
-                {/* Header: middle section */}
-                <View style={PostStyle.imgContainer}>
-                    <Image
-                        style={PostStyle.Logo}
-                        source={{
-                            uri: "https://cdn.discordapp.com/attachments/178196683727962112/953082990806831176/unknown.png",
-                        }}
-                        size={50}
-                    />
-                    <Text style={{ textAlign: "center" }}> {userName} </Text>
-                    <Text style={PostStyle.centerRowAligment}>{statusMsg}</Text>
-                    <View style={PostStyle.subInfo}>
-                        <Text
-                            onPress={() => {
-                                setCount();
-                            }}>
-                            {" "}
-                            Followers: {count}
-                        </Text>
-                        <Text
-                            onPress={() => {
-                                minusFollowing();
-                            }}>
-                            {" "}
-                            Following: {followCount}{" "}
-                        </Text>
-                    </View>
+
+        <View>
+            <View style={PostStyle.headerBtnContainer}>
+                {homeIcon}
+                {menuIcon}
+            </View>
+            {/* Header: middle section */}
+            <View style={PostStyle.imgContainer}>
+                <Image
+                    style={PostStyle.Logo}
+                    source={{
+                        uri: "https://cdn.discordapp.com/attachments/178196683727962112/953082990806831176/unknown.png",
+                    }}
+                    size={50}
+                />
+                <Text style={{ textAlign: "center" }}> {userName} </Text>
+                <Text style={PostStyle.centerRowAligment}>{statusMsg}</Text>
+                <View style={PostStyle.subInfo}>
+                    <Text
+                        onPress={() => {
+                            setCount();
+                        }}>
+                        Followers: {count}
+                    </Text>
+                    <Text
+                        onPress={() => {
+                            minusFollowing();
+                        }}>
+                        Following: {followCount}
+                    </Text>
                 </View>
             </View>
-        </>
+        </View>
     );
 }
