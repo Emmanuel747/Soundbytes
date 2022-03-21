@@ -5,7 +5,8 @@ const colors = {
 
     primary: "#2b47d6",
     active: "#6e80db",
-    disabled: "#9397ab",
+    disabled: "#ABB3D9",
+    error: "#f25e57",
 };
 
 export default colors;

@@ -32,7 +32,9 @@ const Screens = {
         name: "Recording",
         component: RecordingScreen,
         options: {
-            tabBarButton: (props) => <RecordButton {...props} />,
+            tabBarIcon: ({ focused, color, size }) => (
+                <RecordButton focused={focused} color={color} size={size} />
+            ),
         },
         icons: {
             normal: "microphone",
@@ -50,12 +52,11 @@ const Screens = {
     },
 };
 
-const RecordButton = ({ children, onPress }) => {
+const RecordButton = ({ focused, color, size }) => {
     return (
-        <TouchableHighlight
-            onPress={onPress}
+        <View
             style={{
-                backgroundColor: colors.primary,
+                backgroundColor: focused ? "white" : colors.primary,
                 justifyContent: "center",
                 alignContent: "center",
                 alignSelf: "center",
@@ -65,8 +66,8 @@ const RecordButton = ({ children, onPress }) => {
                 elevation: 10,
                 borderRadius: 200,
             }}>
-            <View>{children}</View>
-        </TouchableHighlight>
+            <Icon name='microphone' color={color} size={size * 1.5} />
+        </View>
     );
 };
 
@@ -104,6 +105,7 @@ export default function Navigator() {
                                 />
                             );
 
+                        // This is for the login page, since it is not defined in Screens
                         return <Icon name='lock' size={size} color={color} />;
                     },
                 })}>
