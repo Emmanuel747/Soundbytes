@@ -22,11 +22,8 @@ export default function FeedScreen() {
     };
 
     return (
-
         <ScrollView>
-          <Feed />
-        
+            <Feed />
         </ScrollView>
-      
     );
 }

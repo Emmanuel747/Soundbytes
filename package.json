@@ -13,6 +13,7 @@
         "@react-navigation/bottom-tabs": "^6.2.0",
         "@react-navigation/native": "^6.0.8",
         "expo": "~44.0.0",
+        "expo-av": "^10.2.1",
         "expo-status-bar": "~1.2.0",
         "firebase": "^9.6.7",
         "node-fetch": "^3.2.3",

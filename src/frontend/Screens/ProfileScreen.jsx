@@ -15,17 +15,21 @@ export default function ProfileScreen() {
     };
     const string = "Testing Proptext";
 
-  return (
-    <>
-      <ProfileHeader
-        userName={"@badmamajama420"}
-        statusMsg={'"I make great life decisions"'}
-      />
-      <ScrollView>
-        <Post msgContent={string} />
-        <Image source={{ uri: 'https://i.vimeocdn.com/portrait/58832_300x300.jpg' }} style={{ width: 120, resizeMode: 'center', margin: 5 }} />
-      </ScrollView>
-
-    </>
-  );
+    return (
+        <View>
+            <ProfileHeader
+                userName='@badmamajama420'
+                statusMsg='I make great life decisions'
+            />
+            <ScrollView>
+                <Post msgContent={string} />
+                <Image
+                    source={{
+                        uri: "https://i.vimeocdn.com/portrait/58832_300x300.jpg",
+                    }}
+                    style={{ width: 120, resizeMode: "center", margin: 5 }}
+                />
+            </ScrollView>
+        </View>
+    );
 }
