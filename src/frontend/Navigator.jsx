@@ -120,7 +120,7 @@ export default function Navigator() {
           <Tab.Screen
             name="Login"
             children={({ props }) => (
-              <LoginScreen {...props} onSuccess={() => setIsSignedIn(true)} />
+              <LoginScreen {...props} onSuccess={() => setIsSignedIn(true)} /> //This sets the is signed in variable to true.
             )}
           />
         )}
