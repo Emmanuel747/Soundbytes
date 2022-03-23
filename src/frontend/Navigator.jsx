@@ -119,15 +119,26 @@ export default function Navigator() {
                         />
                     ))
                 ) : (
-                    <Tab.Screen
-                        name='Login'
-                        children={({ props }) => (
-                            <LoginScreen
-                                {...props}
-                                onSuccess={() => setIsSignedIn(true)}
-                            />
-                        )}
-                    />
+                    <>
+                        <Tab.Screen
+                            name='Login'
+                            children={({ props }) => (
+                                <LoginScreen
+                                    {...props}
+                                    onSuccess={() => setIsSignedIn(true)}
+                                />
+                            )}
+                        />
+                        <Tab.Screen
+                            name='Sign up'
+                            children={({ props }) => (
+                                <LoginScreen
+                                    {...props}
+                                    onSuccess={() => setIsSignedIn(true)}
+                                />
+                            )}
+                        />
+                    </>
                 )}
             </Tab.Navigator>
         </NavigationContainer>
