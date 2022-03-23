@@ -14,7 +14,7 @@ var correctAttempts = 0;
 
 export default function LoginScreen({ onSuccess }) {
     const userManager = new UserManager();
-    const auth = new FireAuth();
+    // const auth = new FireAuth();
 
     const [username, setUsername] = useState("Empty_Username_Field");
     const [password, setPassword] = useState("Empty_Password_Field");
@@ -48,31 +48,15 @@ export default function LoginScreen({ onSuccess }) {
                             justifyContent: "center",
                             alignItems: "center",
                         }}>
-                        ♪ SoundBytes ♪
+                        ♪ Notify ♪
                     </Text>
                     <TextInput
-                        style={{
-                            height: 60,
-                            width: 320,
-                            margin: 12,
-                            borderWidth: 3,
-                            padding: 10,
-                            fontSize: 24,
-                            color: "black",
-                        }}
+                        style={styles.textbox}
                         placeholder='username'
                         onChangeText={(username) => setUsername(username)}
                     />
                     <TextInput
-                        style={{
-                            height: 60,
-                            width: 320,
-                            margin: 12,
-                            borderWidth: 3,
-                            padding: 10,
-                            fontSize: 24,
-                            color: "black",
-                        }}
+                        style={styles.textbox}
                         secureTextEntry={true}
                         placeholder='password'
                         onChangeText={(password) => setPassword(password)}
@@ -125,5 +109,14 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: "black",
+    },
+    textbox: {
+        height: 60,
+        width: 320,
+        margin: 12,
+        borderWidth: 3,
+        padding: 10,
+        fontSize: 24,
+        color: "black",
     },
 });

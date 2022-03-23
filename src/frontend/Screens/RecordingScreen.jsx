@@ -37,7 +37,7 @@ const RecordButton = ({ canRecord, setRecordingURI }) => {
     }
 
     return (
-        <View title={recording ? "Stop Recording" : "Start Recording"}>
+        <View>
             {/* For some reason the icons get scooted off-center ONLY when the slash mic
                 icon is displayed and the keyboard is dismissed from the screen.
                 If you clear the recording (to get the regular mic icon to show up) 

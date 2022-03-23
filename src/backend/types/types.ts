@@ -2,7 +2,7 @@ type Post = {
     pid?: string;
     title: string;
     creator: string;
-    // audio: File;
+    audioURI: string;
     timestamp: string;
     likes: number;
     replies?: Post[] | string[]; // Post IDs

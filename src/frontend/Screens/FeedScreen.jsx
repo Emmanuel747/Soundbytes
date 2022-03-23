@@ -37,14 +37,14 @@ export default function FeedScreen() {
                     justifyContent: "space-around",
                 }}>
                 <Button
-                    title='Global Feed'
-                    disabled={isOnGlobalFeed}
-                    onPress={() => showGlobalFeed(true)}
-                />
-                <Button
                     title='Local Feed'
                     disabled={!isOnGlobalFeed}
                     onPress={() => showGlobalFeed(false)}
+                />
+                <Button
+                    title='Global Feed'
+                    disabled={isOnGlobalFeed}
+                    onPress={() => showGlobalFeed(true)}
                 />
             </View>
             <Text style={{ textAlign: "center" }}>
