@@ -18,4 +18,4 @@ const FireAuth = getAuth(app);
 const FireDB = getFirestore(app);
 const FireStorage = getStorage(app);
 
-export default { FireAuth, FireDB, FireStorage };
+export { FireAuth, FireDB, FireStorage };
