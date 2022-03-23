@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import colors from "../colors";
 
 import { PostManager } from "../../backend";
+import useOnce from "../hooks/useOnce";
 
 const RecordButton = ({ canRecord, setRecordingURI }) => {
     const [recording, setRecording] = useState();
@@ -92,10 +93,22 @@ export default function RecordingScreen() {
     const [title, setTitle] = useState("");
     const [recordingURI, setRecordingURI] = useState("");
 
+    const postManager = useOnce(new PostManager());
+
     const createPost = () => {
-        const postManager = new PostManager();
-        // Call postManager.createPost()
-        throw new Error("Method not implemented.");
+        const post = {
+            title: title,
+            creator: "TempUsername",
+            audio: recordingURI,
+            timestamp: Date.now(),
+            likes: 0,
+        };
+
+        postManager.createPost(post);
+
+        // Clear fields
+        setRecordingURI("");
+        setTitle("");
     };
 
     return (
@@ -112,8 +125,8 @@ export default function RecordingScreen() {
             <View style={styles.editorContainter}>
                 <Text style={{ fontSize: 22 }}>Add a title: </Text>
                 <TextInput
-                    onChangeText={(text) => setTitle(text)}
                     placeholder='Title'
+                    onChangeText={(text) => setTitle(text)}
                     style={styles.textbox}
                 />
                 <Text style={{ fontSize: 22 }}>Record: </Text>
@@ -123,8 +136,8 @@ export default function RecordingScreen() {
                 />
                 <PlaybackButton recordingURI={recordingURI} />
                 <Button
+                    title='Clear'
                     disabled={!recordingURI}
-                    title='clear'
                     onPress={() => setRecordingURI("")}
                 />
             </View>
