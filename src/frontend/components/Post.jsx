@@ -32,18 +32,18 @@ const PlayIcon = ({ onPress, isPlaying }) => (
     </View>
 );
 
-export default function Post({ userName, profileImg, msgContent }) {
+export default function Post({
+    title,
+    creator,
+    profileImage,
+    timestamp,
+    likes,
+}) {
     const [isPlaying, setIsPlaying] = useState(false);
 
     const toggleIsPlaying = () => setIsPlaying(!isPlaying);
 
-    const feedComposer = new GlobalFeedComposer();
-    const postManager = new PostManager();
-
-    const getFeed = () => {
-        // Call feedComposer.composeFeed()
-        throw new Error("Method not implemented.");
-    };
+    // const postManager = new PostManager();
 
     const commentOnPost = () => {
         // Redirect to Recording page
@@ -58,10 +58,12 @@ export default function Post({ userName, profileImg, msgContent }) {
         <View style={PostStyles.subContainer}>
             <PlayIcon isPlaying={isPlaying} onPress={toggleIsPlaying} />
             <View>
-                <Text>{msgContent}</Text>
-                <Text style={{ fontSize: 12 }}>- {userName}</Text>
+                <Text>{title}</Text>
+                <Text style={{ fontSize: 12 }}>
+                    {likes} - {creator}
+                </Text>
+                <Text>{timestamp}</Text>
             </View>
-            {profileImg}
         </View>
     );
 }
