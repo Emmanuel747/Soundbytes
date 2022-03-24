@@ -11,13 +11,14 @@ import React, { useState } from "react";
 import { FireAuth, UserManager } from "../../backend";
 
 let correctAttempts = 0;
-const auth = new FireAuth();
+// const auth = new FireAuth();
 
 export default function LoginScreen({ onSuccess }) {
   const userManager = new UserManager();
 
   const [username, setUsername] = useState("Empty_Username_Field");
   const [password, setPassword] = useState("Empty_Password_Field");
+  const [email, setEmail] = useState("Empty_Email_Field");
 
   return (
     <SafeAreaView style={LoginStyle.rootContainer}>
@@ -27,17 +28,28 @@ export default function LoginScreen({ onSuccess }) {
       >
         <View style={LoginStyle.btnContainer}>
           <Text style={LoginStyle.titleText}>
-            ♪ SoundBytes ♪
+            ♪ Join SoundBytes ♪
           </Text>
           <TextInput
             style={LoginStyle.inputbox}
-            placeholder="username"
+            placeholder="Username"
             onChangeText={(username) => setUsername(username)}
           />
           <TextInput
             style={LoginStyle.inputbox}
+            placeholder="Email"
+            onChangeText={(email) => setEmail(username)}
+          />
+          <TextInput
+            style={LoginStyle.inputbox}
             secureTextEntry={true}
-            placeholder="password"
+            placeholder="Password"
+            onChangeText={(password) => setPassword(password)}
+          />
+          <TextInput
+            style={LoginStyle.inputbox}
+            secureTextEntry={true}
+            placeholder="re-enter Password"
             onChangeText={(password) => setPassword(password)}
           />
           {/*This 'enter' button will take in the inputted username and password 
@@ -49,7 +61,7 @@ export default function LoginScreen({ onSuccess }) {
                 onSuccess();
               }
             }}
-            title="Login"
+            title="submit"
           />
         </View>
       </SafeAreaView>
@@ -85,11 +97,12 @@ const LoginStyle = StyleSheet.create({
     /*   backgroundColor: "#61E5F9", */
   },
   subContainer: {
-    width: 350,
+    width: 370,
     height: 375,
     borderColor: "#000000",
     borderWidth: 4,
     justifyContent: "center",
+    flex: 1,
 
   },
   btnContainer: {

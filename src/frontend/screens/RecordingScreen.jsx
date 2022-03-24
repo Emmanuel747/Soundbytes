@@ -27,7 +27,7 @@ const RecordButton = ({ canRecord, setRecordingURI }) => {
     } catch (err) {
       console.log("Failed to start recording");
     }
-
+  }
     return (
         <View>
             {/* For some reason the icons get scooted off-center ONLY when the slash mic

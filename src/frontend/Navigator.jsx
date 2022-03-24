@@ -4,8 +4,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Icon from "react-native-vector-icons/FontAwesome5";
+import AntIcon from "react-native-vector-icons/AntDesign";
 
 import LoginScreen from "./screens/LoginScreen";
+import SignupScreen from "./screens/SignupScreen";
 import FeedScreen from "./screens/FeedScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import RecordingScreen from "./screens/RecordingScreen";
@@ -106,7 +108,9 @@ export default function Navigator() {
                             );
 
                         // This is for the login page, since it is not defined in Screens
-                        return <Icon name='lock' size={size} color={color} />;
+                        if (route.name === 'Login')
+                          return <Icon name='lock' size={size} color={color} />;
+                        else return <AntIcon name='form' size={size} color={color} />;
                     },
                 })}>
                 {isSignedIn ? (
@@ -121,16 +125,17 @@ export default function Navigator() {
                 ) : (
                     <>
                         <Tab.Screen
-                            name='Login'
+                            name='Sign up'
                             children={({ props }) => (
-                                <LoginScreen
+                              //replace with signup screen
+                                <SignupScreen
                                     {...props}
                                     onSuccess={() => setIsSignedIn(true)}
                                 />
                             )}
                         />
                         <Tab.Screen
-                            name='Sign up'
+                            name='Login'
                             children={({ props }) => (
                                 <LoginScreen
                                     {...props}
