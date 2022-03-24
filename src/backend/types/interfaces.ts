@@ -29,6 +29,6 @@ interface IValidator {
 }
 
 interface IPostManager {
-    createPost(post: Post): void;
+    createPost(title: string, recording): void;
     updatingPost(post: Post): void;
 }

@@ -1,7 +1,14 @@
-import { ref, uploadBytes } from "firebase/storage";
+import * as FileSystem from "expo-file-system";
+
+import {
+    ref,
+    StringFormat,
+    uploadString,
+    updateMetadata,
+} from "firebase/storage";
 import { collection, doc, setDoc } from "firebase/firestore";
 
-import { FireDB, FireStorage } from ".";
+import { FireDB, FireStorage } from "./Fire";
 
 class PostManager implements IPostManager {
     async uploadToDB(post: Post) {
@@ -16,17 +23,42 @@ class PostManager implements IPostManager {
         await setDoc(postDoc, post);
     }
 
-    uploadToStorage(uri: string) {
-        const storage = ref(FireStorage, "sounds");
+    async uploadToStorage(uri: string, filename: string) {
+        const postRef = ref(FireStorage, "sounds/" + filename);
 
-        const file = fetch(uri);
+        const file = await FileSystem.readAsStringAsync(uri, {
+            encoding: FileSystem.EncodingType.Base64,
+        });
+        console.log("file2", file);
+
+        const info = await FileSystem.getInfoAsync(uri);
+        console.log("info", info);
+
+        // Create file metadata to update
+        const newMetadata = {
+            contentType: "audio/m4a",
+        };
+
+        uploadString(postRef, file, StringFormat.RAW)
+            .catch((error) => {
+                console.log("Upload error: ", error);
+            })
+            .then(() => {
+                // Update metadata properties
+                updateMetadata(postRef, newMetadata).catch((error) => {
+                    console.log("Metadata error: ", error);
+                });
+            });
     }
 
     createPost(post: Post): void {
-        console.log("Storing", post);
+        // console.log("Storing", post);
 
-        this.uploadToDB(post);
-        this.uploadToStorage(post.audioURI);
+        const brokenPath = post.audioURI.split("/");
+        const localFilename = brokenPath[brokenPath.length - 1];
+
+        // this.uploadToDB(post);
+        // this.uploadToStorage(post.audioURI, Date.now() + "-" + localFilename);
     }
 
     updatingPost(post: Post): void {
