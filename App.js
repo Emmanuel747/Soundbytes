@@ -4,6 +4,11 @@ import colors from "./src/frontend/colors";
 
 import Navigator from "./src/frontend/Navigator";
 
+// Suppress warnings
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs(["Setting a timer", "Asy"]);
+
 export default function App() {
     return (
         <View style={{ height: "100%" }}>

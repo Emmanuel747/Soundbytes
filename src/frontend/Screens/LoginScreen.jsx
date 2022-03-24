@@ -118,6 +118,4 @@ const LoginStyle = StyleSheet.create({
     fontSize: 24,
     color: "black",
   }
-  
-
 });
