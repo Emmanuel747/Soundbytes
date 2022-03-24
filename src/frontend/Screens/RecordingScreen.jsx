@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import colors from "../colors";
 
 import { PostManager } from "../../backend";
+import useOnce from "../hooks/useOnce";
 
 const RecordButton = ({ canRecord, setRecordingURI }) => {
   const [recording, setRecording] = useState();
@@ -26,18 +27,10 @@ const RecordButton = ({ canRecord, setRecordingURI }) => {
     } catch (err) {
       console.log("Failed to start recording");
     }
-  }
 
-  async function stopRecording() {
-    setRecording(undefined);
-    await recording.stopAndUnloadAsync();
-    const uri = recording.getURI();
-    setRecordingURI(uri);
-  }
-
-  return (
-    <View title={recording ? "Stop Recording" : "Start Recording"}>
-      {/* For some reason the icons get scooted off-center ONLY when the slash mic
+    return (
+        <View>
+            {/* For some reason the icons get scooted off-center ONLY when the slash mic
                 icon is displayed and the keyboard is dismissed from the screen.
                 If you clear the recording (to get the regular mic icon to show up) 
                 and dismiss the keyboard again, it fixes itself. :( - Z */}
@@ -85,54 +78,64 @@ const PlaybackButton = ({ recordingURI }) => {
 };
 
 export default function RecordingScreen() {
-  const [title, setTitle] = useState("");
-  const [recordingURI, setRecordingURI] = useState("");
+    const [title, setTitle] = useState("");
+    const [recordingURI, setRecordingURI] = useState("");
 
-  const createPost = (title, recording) => {
-    const postManager = new PostManager();
-    // Call postManager.createPost()
-    //Not yet implemented, just prints that a post was created to the console.
-    postManager.createPost(title, recording);
-  };
+    const postManager = useOnce(new PostManager());
 
-  return (
-    <View style={styles.container}>
-      <Text
-        style={{
-          textAlign: "left",
-          width: "100%",
-          fontWeight: "bold",
-          fontSize: 26,
-        }}
-      >
-        Make a new post:
-      </Text>
-      <View style={styles.editorContainter}>
-        <Text style={{ fontSize: 22 }}>Add a title: </Text>
-        <TextInput
-          onChangeText={(text) => setTitle(text)}
-          placeholder="Title"
-          style={styles.textbox}
-        />
-        <Text style={{ fontSize: 22 }}>Record: </Text>
-        <RecordButton
-          setRecordingURI={setRecordingURI}
-          canRecord={recordingURI ? false : true}
-        />
-        <PlaybackButton recordingURI={recordingURI} />
-        <Button
-          disabled={!recordingURI}
-          title="clear"
-          onPress={() => setRecordingURI("")}
-        />
-      </View>
-      <Button
-        title="Submit"
-        onPress={() => createPost(title, recordingURI)}
-        disabled={!recordingURI || !title}
-      />
-    </View>
-  );
+    const createPost = () => {
+        const post = {
+            title: title,
+            creator: "TempUsername",
+            audio: recordingURI,
+            timestamp: Date.now(),
+            likes: 0,
+        };
+
+        postManager.createPost(post);
+
+        // Clear fields
+        setRecordingURI("");
+        setTitle("");
+    };
+
+    return (
+        <View style={styles.container}>
+            <Text
+                style={{
+                    textAlign: "left",
+                    width: "100%",
+                    fontWeight: "bold",
+                    fontSize: 26,
+                }}>
+                Make a new post:
+            </Text>
+            <View style={styles.editorContainter}>
+                <Text style={{ fontSize: 22 }}>Add a title: </Text>
+                <TextInput
+                    placeholder='Title'
+                    onChangeText={(text) => setTitle(text)}
+                    style={styles.textbox}
+                />
+                <Text style={{ fontSize: 22 }}>Record: </Text>
+                <RecordButton
+                    setRecordingURI={setRecordingURI}
+                    canRecord={recordingURI ? false : true}
+                />
+                <PlaybackButton recordingURI={recordingURI} />
+                <Button
+                    title='Clear'
+                    disabled={!recordingURI}
+                    onPress={() => setRecordingURI("")}
+                />
+            </View>
+            <Button
+                title='Submit'
+                onPress={createPost}
+                disabled={!recordingURI || !title}
+            />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({

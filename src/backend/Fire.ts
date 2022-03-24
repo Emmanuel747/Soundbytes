@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { Firestore, getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAJ9HdGf3c7Y-jK1CDWQPtmHR8vHzwfgpo",
@@ -12,35 +14,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const FireAuth = getAuth(app);
+const FireDB = getFirestore(app);
+const FireStorage = getStorage(app);
 
-// Temporary Substitution for Firebase ----------------------------------------
-
-class FireAuth implements IAuthenticator {
-    authenticateUser(username: String, password: String): boolean {
-        return true;
-    }
-    updateProfile(details: Object): void {
-        throw new Error("Method not implemented.");
-    }
-}
-
-class FireDB implements IDatabase {
-    updateUserProfile(user: any): void {
-        throw new Error("Method not implemented.");
-    }
-    getFeedData(): Object {
-        throw new Error("Method not implemented.");
-    }
-    getUserProfile(): Object {
-        throw new Error("Method not implemented.");
-    }
-    createPost(post: Post): void {
-        throw new Error("Method not implemented.");
-    }
-    updatePost(post: Post): void {
-        throw new Error("Method not implemented.");
-    }
-}
-
-export { FireAuth, FireDB };
+export { FireAuth, FireDB, FireStorage };

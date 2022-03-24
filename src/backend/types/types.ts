@@ -1,13 +1,13 @@
 type Post = {
-    pid: string;
+    pid?: string;
     title: string;
     creator: string;
-    audio: File; // Temporary
+    audioURI: string;
     timestamp: string;
     likes: number;
-    replies: [Post]; // Maybe temporary
+    replies?: Post[] | string[]; // Post IDs
 };
 
-type Feed = [Post];
+type Feed = Post[] | string[];
 
 // Make type for user, profile details
