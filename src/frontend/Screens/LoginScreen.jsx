@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import { FireAuth, UserManager } from "../../backend";
 
-var correctAttempts = 0;
+let correctAttempts = 0;
 const auth = new FireAuth();
 
 export default function LoginScreen({ onSuccess }) {
@@ -20,67 +20,28 @@ export default function LoginScreen({ onSuccess }) {
   const [password, setPassword] = useState("Empty_Password_Field");
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={LoginStyle.rootContainer}>
       <SafeAreaView
-        style={{
-          width: 350,
-          height: 380,
-          borderColor: "#000000",
-          borderWidth: 2,
-          borderRadius: 9,
-          justifyContent: "center",
-        }}
+        //adding addtional inline style to a styleobject ~eman
+        style={[LoginStyle.subContainer, {borderRadius: 12,} ]}
       >
-        <View
-          style={{
-            position: "absolute",
-            top: -90,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 35,
-              padding: 15,
-              fontWeight: "bold",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
+        <View style={LoginStyle.btnContainer}>
+          <Text style={LoginStyle.titleText}>
             ♪ SoundBytes ♪
           </Text>
           <TextInput
-            style={{
-              height: 60,
-              width: 320,
-              margin: 12,
-              borderWidth: 3,
-              padding: 10,
-              fontSize: 24,
-              color: "black",
-            }}
+            style={LoginStyle.inputbox}
             placeholder="username"
             onChangeText={(username) => setUsername(username)}
           />
           <TextInput
-            style={{
-              height: 60,
-              width: 320,
-              margin: 12,
-              borderWidth: 3,
-              padding: 10,
-              fontSize: 24,
-              color: "black",
-            }}
+            style={LoginStyle.inputbox}
             secureTextEntry={true}
             placeholder="password"
             onChangeText={(password) => setPassword(password)}
           />
-          {/*This 'enter' button will take in the inputted username and password and check the database for a profile by calling Validate()*/}
+          {/*This 'enter' button will take in the inputted username and password 
+            and check the database for a profile by calling Validate()*/}
 
           <Button
             onPress={() => {
@@ -116,19 +77,47 @@ const Validate = (username, password) => {
   }
 };
 
-const styles = StyleSheet.create({
-  container: {
+const LoginStyle = StyleSheet.create({
+  rootContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     /*   backgroundColor: "#61E5F9", */
   },
-  textContainer: {
-    fontSize: 34,
+  subContainer: {
+    width: 350,
+    height: 375,
+    borderColor: "#000000",
+    borderWidth: 4,
+    justifyContent: "center",
+
+  },
+  btnContainer: {
+    position: "absolute",
+    top: -90,
+    left: 0,
+    right: 0,
+    bottom: 0,
     justifyContent: "center",
     alignItems: "center",
   },
-  button: {
-    backgroundColor: "black",
+  titleText: {
+    fontSize: 35,
+    padding: 15,
+    fontWeight: "bold",
+    justifyContent: "center",
+    alignItems: "center",
   },
+  inputbox: {
+    height: 60,
+    width: 320,
+    margin: 12,
+    borderWidth: 3,
+    borderRadius: 15,
+    padding: 8,
+    fontSize: 24,
+    color: "black",
+  }
+  
+
 });
