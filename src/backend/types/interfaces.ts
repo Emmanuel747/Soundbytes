@@ -1,34 +1,40 @@
 interface IFeedComposer {
-    database: IDatabase;
     composeFeed(): Feed;
 }
 
 interface IDatabase {
-    getFeedData(): Object;
-    getUserProfile(): Object;
-    updateUserProfile(user: any): void;
-    createPost(post: Post): void;
-    updatePost(post: Post): void;
+    getPost(pid: PID): Post;
+    makePost(post: Post): void;
+    editPost(post: PostEditable, pid: PID): void;
+
+    getUser(uid: UID): User;
+    makeUser(user: User, uid: UID): void;
+    editUser(user: UserEditable, uid: UID): void;
+
+    getAllPosts(): Promise<Post[]>;
+    getPostsFromUsers(uids: UID[]): Promise<Post[]>;
+    getAllUsernames(): Promise<any[]>;
+}
+
+interface IMediaStorage {
+    getLink(path: string): Promise<string>;
+    upload(path: string, file: Blob): void;
+}
+
+interface IPostBuilder {
+    makePost(title: string, file: Blob, uid: UID, username: string): void;
+    makeReply(
+        parentPID: PID,
+        title: string,
+        file: Blob,
+        uid: UID,
+        username: string
+    ): void;
+    editLikes(pid: PID, delta: number): void;
 }
 
 interface IAuthenticator {
-    authenticateUser(username: String, password: String): void;
-    updateProfile(details: Object): void;
-}
-
-interface IUserManager {
-    validator: IValidator;
-    database: IDatabase;
-    submitOnValid(user: any): void;
-    updateUser(user: any): void;
-    createUser(user: any): void;
-}
-
-interface IValidator {
-    validate(data: any): boolean;
-}
-
-interface IPostManager {
-    createPost(title: string, recording): void;
-    updatingPost(post: Post): void;
+    signUp(username: string, email: string, password: string): UID;
+    signIn(username: string, password: string): UID;
+    signOut(): void;
 }

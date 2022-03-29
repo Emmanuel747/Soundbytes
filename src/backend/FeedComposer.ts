@@ -1,26 +1,16 @@
-import { FireDB } from ".";
+// TODO
 
-// Potential Abstract Factory
+// Abstract Factory Pattern
+
 class AbstractFeedComposer implements IFeedComposer {
-    database: IDatabase;
-
     composeFeed(): Feed {
         throw new Error("Method not implemented.");
     }
 }
 
 class GlobalFeedComposer extends AbstractFeedComposer {
-    // type Post = {
-    //     pid?: string;
-    //     title: string;
-    //     creator: string;
-    //     audio: File;
-    //     timestamp: string;
-    //     likes: number;
-    //     replies?: [String]; // Post IDs
-    // };
-
     composeFeed(): Feed {
+        // Return Database.getAllPosts()
         return [
             {
                 title: "Title from Global",
@@ -40,6 +30,9 @@ class GlobalFeedComposer extends AbstractFeedComposer {
 
 class LocalFeedComposer extends AbstractFeedComposer {
     composeFeed(): Feed {
+        // Get current user's following list: UID[]
+        // from Database.getUser
+        // Return Database.getPostsFromUsers(following)
         return [
             {
                 title: "Title from Local",
@@ -64,19 +57,22 @@ class LocalFeedComposer extends AbstractFeedComposer {
 }
 
 class ProfileFeedComposer extends AbstractFeedComposer {
-    // username or uid
-    user: string;
+    // Might be necessary
+    // user: string;
 
-    constructor(user: string) {
-        super();
-        this.user = user;
-    }
+    // constructor(user: string) {
+    //     super();
+    //     this.user = user;
+    // }
 
     composeFeed(): Feed {
+        // Return Database.getPostsFromUsers([currentUID])
+        // Note: the function expects an array,
+        // so just have the one UID in the array
         return [
             {
                 title: "Title from Profile",
-                creator: this.user,
+                creator: "Zeke",
                 timestamp: "1/1/22 10:42:36",
                 likes: 0,
             },
