@@ -4,6 +4,7 @@ import { ProfileFeedComposer, Database } from "../../backend";
 import { Feed, IconButton, TextInput } from "../components";
 import { UserContext } from "../hooks/UserContext";
 import useProtectedRoute from "../hooks/useProtectedRoute";
+import useAsync from "../hooks/useAsync";
 
 const SearchBar = () => {
     const getAllUsernames = () => {
@@ -39,7 +40,7 @@ const OtherProfile = ({ username, uid }) => {
 };
 
 export default function ProfilePage() {
-    useProtectedRoute();
+    // useProtectedRoute();
     const { username } = useParams();
     const { currentUser } = useContext(UserContext);
 
@@ -49,13 +50,14 @@ export default function ProfilePage() {
 
         return uid;
     };
+    const uid = useAsync(getUID);
 
     return (
         <div>
             <SearchBar />
             <h1>Profile</h1>
             {username ? (
-                <OtherProfile username={username} uid={getUID()} />
+                <OtherProfile username={username} uid={uid} />
             ) : (
                 <YourProfile user={currentUser} />
             )}
