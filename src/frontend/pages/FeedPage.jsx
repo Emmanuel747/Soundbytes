@@ -1,9 +1,13 @@
+import { useContext } from "react";
+
 import { GlobalFeedComposer, LocalFeedComposer } from "../../backend";
 import { Feed } from "../components";
+import { UserContext } from "../hooks/UserContext";
 import useProtectedRoute from "../hooks/useProtectedRoute";
 
 export default function FeedPage() {
     useProtectedRoute();
+    const { currentUser } = useContext(UserContext);
 
     return (
         <div>
@@ -14,7 +18,7 @@ export default function FeedPage() {
             </div>
             <div>
                 <h2>Local Feed</h2>
-                <Feed feedFactory={new LocalFeedComposer()} />
+                <Feed feedFactory={new LocalFeedComposer(currentUser)} />
             </div>
         </div>
     );
