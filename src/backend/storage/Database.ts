@@ -1,3 +1,5 @@
+// TODO
+
 import {
     collection,
     doc,
@@ -7,8 +9,6 @@ import {
     updateDoc,
 } from "firebase/firestore";
 import { FireDB } from "../Fire";
-
-// TODO
 
 class Database implements IDatabase {
     getPost(pid: string): Post {
@@ -29,7 +29,7 @@ class Database implements IDatabase {
         throw new Error("Method not implemented.");
     }
 
-    getUser(uid: string): User {
+    getUser(uid: string): Promise<User> {
         // Simply get user by UID
         throw new Error("Method not implemented.");
     }

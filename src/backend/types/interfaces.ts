@@ -1,5 +1,5 @@
 interface IFeedComposer {
-    composeFeed(): Feed;
+    composeFeed(): Promise<Feed>;
 }
 
 interface IDatabase {
@@ -7,7 +7,7 @@ interface IDatabase {
     makePost(post: Post): void;
     editPost(post: PostEditable, pid: PID): void;
 
-    getUser(uid: UID): User;
+    getUser(uid: UID): Promise<User>;
     makeUser(user: User, uid: UID): void;
     editUser(user: UserEditable, uid: UID): void;
 
