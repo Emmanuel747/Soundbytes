@@ -1,3 +1,5 @@
 The icon libary I am using
   https://oblador.github.io/react-native-vector-icons/
  - The Docs: https://www.npmjs.com/package/react-native-vector-icons
+ - Search for Icons: https://oblador.github.io/react-native-vector-icons/.
+ 
