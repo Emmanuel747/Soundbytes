@@ -11,6 +11,7 @@ interface IDatabase {
     makeUser(user: User, uid: UID): void;
     editUser(user: UserEditable, uid: UID): void;
 
+    getUIDfromUsername(username: string): Promise<UID>;
     getAllPosts(): Promise<Post[]>;
     getPostsFromUsers(uids: UID[]): Promise<Post[]>;
     getAllUsernames(): Promise<any[]>;

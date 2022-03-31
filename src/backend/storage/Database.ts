@@ -50,13 +50,22 @@ class Database implements IDatabase {
         throw new Error("Method not implemented.");
     }
 
+    async getUIDfromUsername(username: string): Promise<UID> {
+        // Get users/usernames, find given username, and return UID
+        const docRef = doc(FireDB, "users", "usernames");
+        const usernames = await getDoc(docRef);
+
+        if (usernames.exists()) return usernames.data().uid;
+        else throw new Error("No usernames found");
+    }
+
     async getAllPosts(): Promise<Post[]> {
         // Get every post from the server
         const postsRef = collection(FireDB, "posts");
-        const querySnapshot = await getDocs(postsRef);
+        const allDocs = await getDocs(postsRef);
 
         let posts: Post[] = [];
-        querySnapshot.forEach((doc) => {
+        allDocs.forEach((doc) => {
             posts.push(doc.data() as Post);
         });
 
