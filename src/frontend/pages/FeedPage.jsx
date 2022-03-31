@@ -6,7 +6,7 @@ import { UserContext } from "../hooks/UserContext";
 import useProtectedRoute from "../hooks/useProtectedRoute";
 
 export default function FeedPage() {
-    useProtectedRoute();
+    // useProtectedRoute();
     const { currentUser } = useContext(UserContext);
 
     return (
