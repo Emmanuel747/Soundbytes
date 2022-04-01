@@ -4,7 +4,7 @@ import {
   Switch,
   Route,
   Link,
-  NavLink
+  NavLink,
 } from "react-router-dom";
 
 
@@ -64,7 +64,7 @@ export default function Navbar() {
           className={isActive =>
             "nav-link" + (!isActive ? " unselected" : "")
           }
-        > Profile </NavLink>
+        > Profiles </NavLink>
       </div>
     </div>
 

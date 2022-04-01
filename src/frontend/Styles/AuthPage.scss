@@ -50,6 +50,18 @@ input[type='submit'] {
   cursor: pointer;
 }
 
+.disabled{
+  pointer-events: none;
+  background-color: grey;
+  color: black;
+}
+// button:disabled,
+// button[disabled]{
+//   border: 1px solid #999999;
+//   background-color: #cccccc;
+//   color: #666666;
+// }
+
 /**
  * Bounce to the left side
  */

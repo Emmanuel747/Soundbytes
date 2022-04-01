@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { TextInput, TextButton } from "../components";
 import { UserContext } from "../hooks/UserContext";
@@ -7,27 +7,12 @@ import { UserContext } from "../hooks/UserContext";
 import '../Styles/AuthPage.scss';
 
 export default function AuthPage() {
+  const navigate = useNavigate();
     const { currentUID, setCurrentUID, currentUsername, setCurrentUsername } =
-        useContext(UserContext);
+      useContext(UserContext);
 
- 
-
-    const handleSignIn = (e, username, password) => {
-        // Set all UserContext variables and call something
-        // like signInWithEmailAndPassword() from Authenticator
-        e.preventDefault();
-        setCurrentUsername(username);
-    };
-
-    const handleSignUp = ( e, username, password, email) => {
-        // Set all UserContext variables and call something
-        // like signUpWithEmailAndPassword() from Authenticator
-        e.preventDefault();
-        setCurrentUsername(username);
-    };
-
-   
     const userForms = document.getElementById('user_options-forms');
+    const authBtns = document.getElementById('authBtn');
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [repassword, setRepassword] = useState("");
@@ -44,6 +29,55 @@ export default function AuthPage() {
       userForms.classList.remove('bounceLeft');
       userForms.classList.add('bounceRight');
     }
+
+    
+    const handleSignIn = (e, email, password) => {
+      // Set all UserContext variables and call something
+      // like signInWithEmailAndPassword() from Authenticator
+      e.preventDefault();
+      setCurrentUsername(username);
+      
+      //Hardcoded user account.
+      if (email === 'test@gmail.com') {
+        try {
+  
+          //Insert Auth checker from Backend HERE <---
+
+          navigate('/Feed');
+        } catch (err) {
+          setErrMsgText("" + err);
+          console.log(err);
+        }
+      } else {
+        setErrMsgText("Please type 'test@gmail.com' into username field");
+      }
+    };
+
+    const handleSignUp = ( e, username, password, email) => {
+        // Set all UserContext variables and call something
+        // like signUpWithEmailAndPassword() from Authenticator
+        e.preventDefault();
+        setCurrentUsername(username);
+
+        if (repassword === password) {
+          try {
+
+            //Auth User functions goes HERE <---
+            setTimeout(function() {
+              rmBounceL();
+              navigate('/');
+
+            }, 2000);
+            setErrMsgText("Thank you for signing up.");
+            
+          } catch (err) {
+            setErrMsgText("" + err);
+            console.log(err);
+          }
+        } else 
+          setErrMsgText("Minimum 6 characters or Passwords Do not Match.");
+          e.preventDefault();
+    };
 
     return (
         // <div>
@@ -66,9 +100,9 @@ export default function AuthPage() {
         <div class="user_options-container">
           <div class="user_options-text">
             <div class="user_options-unregistered">
-              <h2 class="user_unregistered-title">Don't have a SoundByte🎙 account?</h2>
+              <h2 class="user_unregistered-title">Don't have a SoundBytes🎙 account?</h2>
               <p class="user_unregistered-text">
-                Join SoundByte🎙 now and start posting today!
+                Join SoundBytes🎙 now and start posting today!
               </p>
               <button class="user_unregistered-signup" id="signup-button"
                 onClick={rmBounceR}
@@ -101,15 +135,15 @@ export default function AuthPage() {
               <form class="forms_form" onSubmit={(e) => {handleSignIn( e, username, password)}}>
                 <fieldset class="forms_fieldset">
                   <div class="forms_field">
-                    <input type="text" class="forms_field-input" required 
+                    <input type="email" class="forms_field-input" required 
                       onChange={(event) => {
                         setUsername(event.target.value);
                       }}
                     />
-                    <label class="forms_field-label">Username</label>
+                    <label class="forms_field-label">Email</label>
                   </div>
                   <div class="forms_field">
-                    <input type="password" class="forms_field-input" minlength="6" required 
+                    <input type="password" class="forms_field-input" minLength="6" required 
                       onChange={(event) => {
                         setPassword(event.target.value);
                       }}
@@ -124,7 +158,8 @@ export default function AuthPage() {
                   <input
                     type="submit"
                     value="Login"
-                    class="forms_buttons-action"                 
+                    class="forms_buttons-action"
+                    id="authBtn"                 
                   />
                 </div>
               </form>
@@ -145,7 +180,7 @@ export default function AuthPage() {
                     <label class="forms_field-label"> Username </label>
                   </div>
                   <div class="forms_field">
-                    <input type="text" class="forms_field-input" required 
+                    <input type="email" class="forms_field-input" required 
                       onChange={(event) => {
                         setEmail(event.target.value);
                       }} 
@@ -173,7 +208,8 @@ export default function AuthPage() {
                   <input
                     type="submit"
                     value="Sign up"
-                    class="forms_buttons-action"                 
+                    class="forms_buttons-action"
+                    id="authBtn"              
                   />
                 </div>
               </form>
