@@ -1,14 +1,25 @@
+import useAsync from "../hooks/useAsync";
 import Post from "./Post";
 
 export default function Feed({ feedFactory }) {
-    const getFeed = () =>
-        feedFactory
-            .composeFeed()
-            .map((post_data, i) => <Post post={post_data} key={i} />);
+    const genFeed = async () => {
+        const feedData = await feedFactory.composeFeed();
+        return feedData.map((postData, i) => <Post post={postData} key={i} />);
+    };
+    const posts = useAsync(genFeed);
+
     return (
-        <div className='border border-black'>
-            <p>Feed</p>
-            {getFeed()}
+        <div className='border border-black'
+          style={{
+            padding:'10px', 
+            backgroundColor: '#0f467e6c',
+            minWidth: '355px'
+          }}
+        >
+            <p 
+              style={{textAlign:'center', padding: '5px'}}
+            >Feed</p>
+            {posts}
         </div>
     );
 }

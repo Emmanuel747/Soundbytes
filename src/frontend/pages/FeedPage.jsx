@@ -1,21 +1,35 @@
+import { useContext } from "react";
+
 import { GlobalFeedComposer, LocalFeedComposer } from "../../backend";
 import { Feed } from "../components";
+import { UserContext } from "../hooks/UserContext";
 import useProtectedRoute from "../hooks/useProtectedRoute";
 
-export default function FeedPage() {
-   /* useProtectedRoute(); */
+import "../Styles/FeedPage.scss"
 
-    return (
-        <div>
-            <h1>Feed Page</h1>
-            <div>
-                <h2>Global Feed</h2>
-                <Feed feedFactory={new GlobalFeedComposer()} />
-            </div>
-            <div>
-                <h2>Local Feed</h2>
-                <Feed feedFactory={new LocalFeedComposer()} />
-            </div>
+export default function FeedPage() {
+<<<<<<< HEAD
+   /* useProtectedRoute(); */
+=======
+    // useProtectedRoute();
+    const { currentUser } = useContext(UserContext);
+>>>>>>> 96054f9b2dc2c39114f7117c785951d2eaf25a9c
+
+  return (
+    <div className="RootContainer">
+      <div className="title text-center p-3">
+        <h1 className="font-mono tracking-widest">Feed Page</h1>
+      </div>
+      <div className="feedContainer">
+        <div className="globalFeedContainer p-2">
+          <h2>Global Feed</h2>
+          <Feed feedFactory={new GlobalFeedComposer()} />
         </div>
-    );
+        <div className="localFeedContainer p-2">
+          <h2>Local Feed</h2>
+          <Feed feedFactory={new LocalFeedComposer(currentUser)} />
+        </div>
+      </div>
+    </div>
+  );
 }

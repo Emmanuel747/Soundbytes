@@ -1,7 +1,7 @@
+// Complete
+
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { FireStorage } from "../Fire";
-
-// Complete
 
 class MediaStorage implements IMediaStorage {
     async getLink(path: string): Promise<string> {

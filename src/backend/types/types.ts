@@ -4,8 +4,8 @@ type PID = string;
 type User = {
     username: string;
     pfpURL: string;
-    following: User[];
-    followers: User[];
+    following: UID[];
+    followers: UID[];
     posts: Feed;
 };
 
