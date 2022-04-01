@@ -3,7 +3,7 @@ import { Feed } from "../components";
 import useProtectedRoute from "../hooks/useProtectedRoute";
 
 export default function FeedPage() {
-    useProtectedRoute();
+   /* useProtectedRoute(); */
 
     return (
         <div>
