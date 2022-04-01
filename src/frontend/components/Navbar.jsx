@@ -1,3 +1,67 @@
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  NavLink
+} from "react-router-dom";
+
+
 export default function Navbar() {
-    return <p>Navbar</p>;
+  return (
+    <div>
+      <p
+        style={{fontWeight: 'bold', textAlign: 'center', margin: '10px'}}
+      >Welcome to SoundBytes</p>
+      <div
+        style={{
+          fontWeight: 'bold', 
+          textAlign: 'center',
+          display: 'flex',
+          justifyContent: 'space-evenly',
+          padding: '5px',
+          marginBottom: '10px',
+          color: 'teal',
+          backgroundColor: 'lightGrey'
+        }}
+      >
+        <NavLink 
+          to="/feed"
+          // style={isActive => ({
+          //   color: isActive ? "green" : "blue"
+          // })}
+          className={isActive =>
+            "nav-link" + (!isActive ? " unselected" : "")
+          }
+        > Home </NavLink>
+
+        <NavLink 
+          to="/auth"
+          className={isActive =>
+            "nav-link" + (!isActive ? " unselected" : "")
+          }
+        > Login/Sign up </NavLink>
+
+        <NavLink 
+          to="/recording"
+          // style={isActive => ({
+          //   color: isActive ? "green" : "blue",
+          //   fontWeight: isActive ? "bold" : "normal"
+          // })}
+          className={isActive =>
+            "nav-link" + (!isActive ? " unselected" : "")
+          }
+        > Create Byte </NavLink>
+
+        <NavLink
+          to="/profile"
+          className={isActive =>
+            "nav-link" + (!isActive ? " unselected" : "")
+          }
+        > Profile </NavLink>
+      </div>
+    </div>
+
+  );
 }
