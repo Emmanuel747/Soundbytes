@@ -19,9 +19,10 @@ class PostBuilder implements IPostBuilder {
         throw new Error("Method not implemented.");
     }
 
-    editLikes(pid: string, delta: number): void {
+    editLikes(uid: string, pid: string, delta: number): void {
         // Get likes from database,
-        // update likes with likes + delta
+        // Update likes with likes + delta
+        // Append pid to likedPosts on user
         throw new Error("Method not implemented.");
     }
 }

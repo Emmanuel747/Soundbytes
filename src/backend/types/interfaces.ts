@@ -31,7 +31,7 @@ interface IPostBuilder {
         uid: UID,
         username: string
     ): void;
-    editLikes(pid: PID, delta: number): void;
+    editLikes(uid: UID, pid: PID, delta: number): void;
 }
 
 interface IAuthenticator {
