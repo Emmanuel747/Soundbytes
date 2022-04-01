@@ -35,7 +35,7 @@ interface IPostBuilder {
 }
 
 interface IAuthenticator {
-    signUp(username: string, email: string, password: string): UID;
-    signIn(username: string, password: string): UID;
+    signUp(username: string, email: string, password: string): Promise<UID>;
+    signIn(email: string, password: string): Promise<UID>;
     signOut(): void;
 }

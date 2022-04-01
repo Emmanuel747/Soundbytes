@@ -71,6 +71,7 @@ export default function Navbar({userData, setUserData, isAuth, setIsAuth}) {
           <a
             href="/auth"
             onClick={devLogout}
+            style={{color: 'red'}}
           >
             Sign Out
           </a> :
