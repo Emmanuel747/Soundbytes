@@ -11,7 +11,6 @@ export default function FeedPage() {
 
     // useProtectedRoute();
     const { currentUser } = useContext(UserContext);
->>>>>>> 96054f9b2dc2c39114f7117c785951d2eaf25a9c
 
   return (
     <div className="RootContainer">
