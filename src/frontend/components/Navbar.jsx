@@ -10,9 +10,15 @@ import {
 
 export default function Navbar() {
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: 'black',
+        color: 'White',
+
+      }}
+    >
       <p
-        style={{fontWeight: 'bold', textAlign: 'center', margin: '10px'}}
+        style={{fontWeight: 'bold', textAlign: 'center', padding: '10px'}}
       >Welcome to SoundBytes</p>
       <div
         style={{
@@ -20,10 +26,9 @@ export default function Navbar() {
           textAlign: 'center',
           display: 'flex',
           justifyContent: 'space-evenly',
-          padding: '5px',
-          marginBottom: '10px',
+          padding: '10px',
           color: 'teal',
-          backgroundColor: 'lightGrey'
+          backgroundColor: 'lightGrey',
         }}
       >
         <NavLink 

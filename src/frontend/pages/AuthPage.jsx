@@ -15,12 +15,14 @@ export default function AuthPage() {
     const handleSignIn = (e, username, password) => {
         // Set all UserContext variables and call something
         // like signInWithEmailAndPassword() from Authenticator
+        e.preventDefault();
         setCurrentUsername(username);
     };
 
     const handleSignUp = ( e, username, password, email) => {
         // Set all UserContext variables and call something
         // like signUpWithEmailAndPassword() from Authenticator
+        e.preventDefault();
         setCurrentUsername(username);
     };
 
