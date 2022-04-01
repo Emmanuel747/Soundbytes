@@ -1,6 +1,6 @@
-import { FireDB, FireAuth } from "./Fire";
-
 // TODO - these should all be pretty self-explanatory
+
+import { FireDB, FireAuth } from "./Fire";
 
 class Authenticator implements IAuthenticator {
     signUp(username: string, email: string, password: string): string {
