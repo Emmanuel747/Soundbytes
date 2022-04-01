@@ -9,16 +9,8 @@ export default function Feed({ feedFactory }) {
     const posts = useAsync(genFeed);
 
     return (
-        <div className='border border-black'
-          style={{
-            padding:'10px', 
-            backgroundColor: '#0f467e6c',
-            minWidth: '355px'
-          }}
-        >
-            <p 
-              style={{textAlign:'center', padding: '5px'}}
-            >Feed</p>
+        <div className='border border-black p-3, bg-slate-400'>
+            <p className='p-1 text-center'>Feed</p>
             {posts}
         </div>
     );
