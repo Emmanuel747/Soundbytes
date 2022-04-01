@@ -8,10 +8,10 @@ class PostBuilder implements IPostBuilder {
     }
 
     makeReply(
-        parentPID: string,
+        parentPID: PID,
         title: string,
         file: Blob,
-        uid: string,
+        uid: UID,
         username: string
     ): void {
         // Call makePost, then append reply
@@ -19,7 +19,7 @@ class PostBuilder implements IPostBuilder {
         throw new Error("Method not implemented.");
     }
 
-    editLikes(uid: string, pid: string, delta: number): void {
+    editLikes(uid: UID, pid: PID, delta: number): void {
         // Get likes from database,
         // Update likes with likes + delta
         // Append pid to likedPosts on user
