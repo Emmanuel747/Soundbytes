@@ -1,21 +1,30 @@
 import { useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { 
+  Routes, 
+  Route, 
+  Link, 
+  Navigate,
+  useNavigate, 
+  Outlet } from "react-router-dom";
 import { onAuthStateChanged } from "@firebase/auth";
 
 import { FireAuth } from "../../backend";
 
 export default function useProtectedRoute() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const unsub = onAuthStateChanged(FireAuth, function (user) {
-            if (!user) {
-                navigate("/auth");
-                // window.alert("You needed to be logged in to see that page.");
-            }
-        });
-
-        return unsub;
-    }, [navigate]);
+  useEffect(() => {
+    const ProtectedRoute = ({
+      isAuth,
+      redirectPath = '/auth',
+      children,
+    }) => {
+      if (!isAuth) {
+        return <Navigate to={redirectPath} replace /> ;
+      }
+      return children ? children : <Outlet />;
+    };
+      return ProtectedRoute;
+  }, [navigate]);
 }
