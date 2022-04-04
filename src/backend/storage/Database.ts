@@ -19,7 +19,7 @@ class Database implements IDatabase {
         else throw new Error("Post does not exist.");
     }
 
-    async makePost(post: Post): Promise<void> {
+    async makePost(post: Post): Promise<PID> {
         // Add a post to the 'posts' collection
         const postsRef = doc(FireDB, "posts");
         await setDoc(postsRef, post);
@@ -30,6 +30,8 @@ class Database implements IDatabase {
         await updateDoc(userRef, {
             posts: userPosts.push(post),
         });
+
+        return postsRef.id;
     }
 
     async editPost(post: PostEditable, pid: PID, uid: UID): Promise<void> {
@@ -49,7 +51,7 @@ class Database implements IDatabase {
         throw new Error("Method not implemented.");
     }
 
-    async makeUser(user: User, uid: UID): Promise<void> {
+    async makeUser(user: User, uid: UID): Promise<UID> {
         // Add a User to the 'users' collection
         // Add username to the 'usernames' doc in 'users'
 

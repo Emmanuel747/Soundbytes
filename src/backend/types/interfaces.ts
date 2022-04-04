@@ -4,11 +4,11 @@ interface IFeedComposer {
 
 interface IDatabase {
     getPost(pid: PID): Promise<Post>;
-    makePost(post: Post): void;
+    makePost(post: Post): Promise<PID>;
     editPost(post: PostEditable, pid: PID, uid: UID): void;
 
     getUser(uid: UID): Promise<User>;
-    makeUser(user: User, uid: UID): void;
+    makeUser(user: User, uid: UID): Promise<UID>;
     editUser(user: UserEditable, uid: UID): void;
 
     getUIDfromUsername(username: string): Promise<UID>;
@@ -23,13 +23,13 @@ interface IMediaStorage {
 }
 
 interface IPostBuilder {
-    makePost(title: string, file: Blob, uid: UID, username: string): void;
+    makePost(title: string, file: Blob, uid: UID): void;
     makeReply(
         parentPID: PID,
+        parentUID: UID,
         title: string,
         file: Blob,
-        uid: UID,
-        username: string
+        uid: UID
     ): void;
     editLikes(uid: UID, pid: PID, delta: number): void;
 }

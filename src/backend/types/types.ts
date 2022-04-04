@@ -24,13 +24,13 @@ type Post = {
     audioURL: string;
     timestamp: string;
     likes: number;
-    replies: Feed;
+    replies: PID[];
     deleted: boolean;
 };
 
 type PostEditable = {
     likes?: number;
-    replies?: Feed;
+    replies?: PID[];
     deleted?: boolean;
 };
 

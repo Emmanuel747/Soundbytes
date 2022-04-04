@@ -1,58 +1,68 @@
 // TODO
 
 import { removeTypeDuplicates } from "@babel/types";
+import { doc, updateDoc } from "firebase/firestore";
+import { FireDB } from "./Fire";
 import { Database } from "./storage/Database";
 import { MediaStorage } from "./storage/MediaStorage";
 
 class PostBuilder implements IPostBuilder {
-    database: IDatabase;
-    mediaStorage: IMediaStorage; 
-
-    constructor() {
-        this.database = new Database();
-        this.mediaStorage = new MediaStorage();
-    }
-
-    makePost(title: string, file: Blob, uid: string, username: string): void {
+    async makePost(title: string, file: Blob, uid: string): Promise<PID> {
         // Call MediaStorage.upload and MediaStorage.getLink.
         // Create a Post object, then call Database.makePost.
         // likes are 0, replies are an empty array, create a timestamp
-        likes: 0;
-        replies: Array<Post>();
-        timestamp: 0;
 
-        this.mediaStorage.upload(this.mediaStorage.path, this.mediaStorage.file);
-        this.mediaStorage.getLink(this.mediaStorage.path, this.mediaStorage.file);
+        const now = Date.now().toString();
+        const firePath = `sounds/${uid}-${now}`;
 
-        post: Database.getPost(title);
-        this.database.makePost(post);
+        // Upload media
+        const ms = new MediaStorage();
 
-        // throw new Error("Method not implemented.");
+        ms.upload(firePath, file);
+        const url = await ms.getLink(firePath);
+
+        // Upload data to Firestore
+        const post: Post = {
+            title: title,
+            uid: uid,
+            audioURL: url,
+            timestamp: now,
+            likes: 0,
+            replies: [],
+            deleted: false,
+        };
+
+        const pid = await new Database().makePost(post);
+        return pid;
     }
 
-    makeReply(
+    async makeReply(
         parentPID: PID,
+        parentUID: UID,
         title: string,
         file: Blob,
-        uid: UID,
-        username: string
-    ): void {
+        uid: UID
+    ): Promise<void> {
         // Call makePost, then append reply
         // to parent post's replies list.
-        
-        replies.push(this.database.makePost(post));
-        
-        // throw new Error("Method not implemented.");
+
+        const db = new Database();
+
+        const newPID = await this.makePost(title, file, uid);
+        const replies = (await db.getPost(parentPID)).replies;
+        replies.push(newPID);
+
+        await db.editPost({ replies: replies }, parentPID, parentUID);
     }
 
-    editLikes(uid: UID, pid: PID, delta: number): void {
+    async editLikes(uid: UID, pid: PID, delta: number): Promise<void> {
         // Get likes from database,
         // update likes with likes + delta
         // create post editable object, create object with just likes +/- 1
-        
-        
 
-        // throw new Error("Method not implemented.");
+        const db = new Database();
+        const likes = (await db.getPost(pid)).likes + delta;
+        await db.editPost({ likes: likes }, pid, uid);
     }
 }
 
