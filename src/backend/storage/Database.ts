@@ -1,4 +1,4 @@
-// TODO
+// TODO - User-related stuff isn't complete
 
 import {
     collection,
@@ -6,69 +6,67 @@ import {
     getDoc,
     getDocs,
     setDoc,
-    query,
     updateDoc,
 } from "firebase/firestore";
 import { FireDB } from "../Fire";
 
 class Database implements IDatabase {
-    async getPost(pid: string): Promise<Post> {
+    async getPost(pid: PID): Promise<Post> {
         // Simply get post by PID
-        const docRef = doc(FireDB, "posts", pid);
-        const docSnap = await getDoc(docRef);
+        const docSnap = await getDoc(doc(FireDB, "posts", pid));
 
-        if (docSnap.exists()) {
-            return docSnap.data() as Post;
-        } else {
-            throw new Error("Method not implemented.");
-        }
+        if (docSnap.exists()) return docSnap.data() as Post;
+        else throw new Error("Post does not exist.");
     }
 
     async makePost(post: Post): Promise<void> {
         // Add a post to the 'posts' collection
-        //   + the 'users' collection (users/UID/post) X
-        const docRef = doc(FireDB, "posts");
-        await setDoc(docRef, post);
-        //WE NEED TO DO THE USERS PART :O
+        const postsRef = doc(FireDB, "posts");
+        await setDoc(postsRef, post);
+
+        // Add a post to the 'users/uid' document
+        const userRef = doc(FireDB, "users", post.uid);
+        const userPosts = await this.getPostsFromUsers([post.uid]);
+        await updateDoc(userRef, {
+            posts: userPosts.push(post),
+        });
     }
 
-    async editPost(post: PostEditable, pid: string): Promise<void> {
-        // Update doc with the changes
-        // WARNING: change in bot 'users' and 'posts'
-        // (We have redundant data on purpose)
-        const docRef = doc(FireDB, "posts", pid);
-        this.getPost(pid);
-        throw new Error("Method not implemented.");
+    async editPost(post: PostEditable, pid: PID, uid: UID): Promise<void> {
+        // Update posts in both docs with the changes
+
+        // Update 'posts/pid' document
+        const postPostRef = doc(FireDB, "posts", pid);
+        await updateDoc(postPostRef, post);
+
+        // Update 'users/uid' document
+        const userPostRef = doc(FireDB, "users", uid);
+        await updateDoc(userPostRef, post);
     }
 
-    async getUser(uid: string): Promise<User> {
+    async getUser(uid: UID): Promise<User> {
         // Simply get user by UID
         throw new Error("Method not implemented.");
     }
 
-    makeUser(user: User, uid: string): void {
+    async makeUser(user: User, uid: UID): Promise<void> {
         // Add a User to the 'users' collection
         // Add username to the 'usernames' doc in 'users'
-        //
-        // This one will probably be odd because FireAuth stores
-        // some things about the user (like password, uid,
-        // and email) behind the scenes in its own database.
-        // DON'T ADD THE PASSWORD
+
         throw new Error("Method not implemented.");
     }
 
-    editUser(user: UserEditable, uid: string): void {
+    async editUser(user: UserEditable, uid: string): Promise<void> {
         // Update doc with the changes
         throw new Error("Method not implemented.");
     }
 
     async getUIDfromUsername(username: string): Promise<UID> {
-        // Get users/usernames, find given username, and return UID
-        const docRef = doc(FireDB, "users", "usernames");
-        const usernames = await getDoc(docRef);
+        // Get 'users/usernames' document, find given username, and return UID
+        const usernames = await getDoc(doc(FireDB, "users", "usernames"));
 
-        if (usernames.exists()) return usernames.data().uid;
-        else throw new Error("No usernames found");
+        if (usernames.exists()) return usernames.data()[username].uid;
+        else throw new Error("No usernames found.");
     }
 
     async getAllPosts(): Promise<Post[]> {
@@ -84,7 +82,7 @@ class Database implements IDatabase {
         return posts;
     }
 
-    async getPostsFromUsers(uids: string[]): Promise<Post[]> {
+    async getPostsFromUsers(uids: UID[]): Promise<Post[]> {
         // Get a list of all posts from a list of UIDs
         const usersRef = collection(FireDB, "users");
 
@@ -92,17 +90,18 @@ class Database implements IDatabase {
 
         uids.forEach(async (uid) => {
             const userDoc = await getDoc(doc(usersRef, uid));
-            if (userDoc.exists()) posts.concat(userDoc.data() as Post[]);
+            if (userDoc.exists()) posts.concat((userDoc.data() as User).posts);
+            else throw new Error("User ID not found.");
         });
 
         return posts;
     }
 
-    async getAllUsernames(): Promise<any[]> {
+    async getAllUsernames(): Promise<string[]> {
         // Grab all currently existing usernames, uid pairs
-        const usernamesRef = doc(collection(FireDB, "users"), "usernames");
-        const allUsernames = await getDoc(usernamesRef);
-        return allUsernames.data() as any[];
+        const allUsernames = await getDoc(doc(FireDB, "users", "usernames"));
+        if (allUsernames.exists()) return allUsernames.data() as string[];
+        else throw new Error("No usernames found.");
     }
 }
 
