@@ -1,5 +1,3 @@
-// TODO - User-related stuff isn't complete
-
 import {
     collection,
     doc,

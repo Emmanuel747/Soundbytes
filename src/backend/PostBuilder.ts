@@ -1,8 +1,3 @@
-// TODO
-
-import { removeTypeDuplicates } from "@babel/types";
-import { doc, updateDoc } from "firebase/firestore";
-import { FireDB } from "./Fire";
 import { Database } from "./storage/Database";
 import { MediaStorage } from "./storage/MediaStorage";
 

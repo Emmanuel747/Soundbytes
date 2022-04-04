@@ -5,7 +5,7 @@ import { Feed, IconButton, TextInput } from "../components";
 import { UserContext } from "../hooks/UserContext";
 import useProtectedRoute from "../hooks/useProtectedRoute";
 import useAsync from "../hooks/useAsync";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { AiFillHome } from "react-icons/ai";
 
@@ -33,7 +33,9 @@ const SearchBar = () => {
     );
 };
 
-const YourProfile = ({ user, uid }) => {
+const PersonalProfile = () => {
+    const { currentUsername, currentUID } = useContext(UserContext);
+
     return (
         <div className='flex flex-col headerContainer'>
             <img
@@ -42,26 +44,14 @@ const YourProfile = ({ user, uid }) => {
                 src='https://cdn.discordapp.com/attachments/178196683727962112/953082990806831176/unknown.png'
             />
             <div className='flex-col items-center justify-center text-center profileContainer'>
-                <h3>{"Badmamajama420"}</h3>
+                <h3>{currentUsername}</h3>
                 <h4>{'"I make great life decisions"'}</h4>
             </div>
             <div className='flex justify-around followerContainer'>
-                <p
-                    onClick={() => {
-                        //implement displayAllFollowers();
-                    }}>
-                    {" "}
-                    Followers: {50}
-                </p>
-                <p
-                    onClick={() => {
-                        //implement displayAllFollowing();
-                    }}>
-                    {" "}
-                    Following: {17}
-                </p>
+                <p>Followers: {50}</p>
+                <p>Following: {17}</p>
             </div>
-            <Feed feedFactory={new ProfileFeedComposer(uid)} />
+            <Feed feedFactory={new ProfileFeedComposer(currentUID)} />
         </div>
     );
 };
@@ -85,9 +75,8 @@ const OtherProfile = ({ username }) => {
 };
 
 export default function ProfilePage() {
-    // useProtectedRoute();
+    useProtectedRoute();
     const { username } = useParams();
-    const { currentUser, currentUID } = useContext(UserContext);
 
     return (
         <div>
@@ -95,7 +84,7 @@ export default function ProfilePage() {
             {username ? (
                 <OtherProfile username={username} />
             ) : (
-                <YourProfile user={currentUser} uid={currentUID} />
+                <PersonalProfile />
             )}
         </div>
     );

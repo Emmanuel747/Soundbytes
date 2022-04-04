@@ -9,7 +9,7 @@ import useProtectedRoute from "../hooks/useProtectedRoute";
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export default function RecordingPage() {
-    // useProtectedRoute();
+    useProtectedRoute();
 
     const [title, setTitle] = useState("");
     const [isRecording, setIsRecording] = useState(false);

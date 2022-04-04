@@ -8,7 +8,7 @@ import useProtectedRoute from "../hooks/useProtectedRoute";
 import "../Styles/FeedPage.scss";
 
 export default function FeedPage() {
-    // useProtectedRoute();
+    useProtectedRoute();
     const { currentUID } = useContext(UserContext);
 
     return (

@@ -1,5 +1,3 @@
-// TODO
-
 import { FireAuth } from "./Fire";
 import { Database } from "../backend/storage/Database";
 import {

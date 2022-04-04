@@ -1,5 +1,3 @@
-// Complete
-
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { FireStorage } from "../Fire";
 

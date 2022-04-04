@@ -1,5 +1,3 @@
-// Complete
-
 import { Database } from "./storage/Database";
 
 // Abstract Factory Pattern
@@ -30,15 +28,21 @@ class LocalFeedComposer extends AbstractFeedComposer {
     async composeFeed(): Promise<Feed> {
         // Get current user's following list: UID[]
         // from Database.getUser, and then return all their posts
-        const following = (await this.database.getUser(this.uid)).following;
-        return this.database.getPostsFromUsers(following);
+        if (this.uid) {
+            const following = (await this.database.getUser(this.uid)).following;
+            return this.database.getPostsFromUsers(following);
+        }
+        return [];
     }
 }
 
 class ProfileFeedComposer extends LocalFeedComposer {
     async composeFeed(): Promise<Feed> {
         // Get feed composed of just a specific user's posts
-        return (await this.database.getPostsFromUsers([this.uid])) as Feed;
+        if (this.uid) {
+            return (await this.database.getPostsFromUsers([this.uid])) as Feed;
+        }
+        return [];
     }
 }
 
