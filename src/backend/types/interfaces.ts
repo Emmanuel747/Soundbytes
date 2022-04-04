@@ -5,7 +5,7 @@ interface IFeedComposer {
 interface IDatabase {
     getPost(pid: PID): Promise<Post>;
     makePost(post: Post): void;
-    editPost(post: PostEditable, pid: PID): void;
+    editPost(post: PostEditable, pid: PID, uid: UID): void;
 
     getUser(uid: UID): Promise<User>;
     makeUser(user: User, uid: UID): void;
@@ -14,7 +14,7 @@ interface IDatabase {
     getUIDfromUsername(username: string): Promise<UID>;
     getAllPosts(): Promise<Post[]>;
     getPostsFromUsers(uids: UID[]): Promise<Post[]>;
-    getAllUsernames(): Promise<any[]>;
+    getAllUsernames(): Promise<string[]>;
 }
 
 interface IMediaStorage {
@@ -31,11 +31,11 @@ interface IPostBuilder {
         uid: UID,
         username: string
     ): void;
-    editLikes(pid: PID, delta: number): void;
+    editLikes(uid: UID, pid: PID, delta: number): void;
 }
 
 interface IAuthenticator {
-    signUp(username: string, email: string, password: string): UID;
-    signIn(username: string, password: string): UID;
+    signUp(username: string, email: string, password: string): Promise<UID>;
+    signIn(email: string, password: string): Promise<UID>;
     signOut(): void;
 }

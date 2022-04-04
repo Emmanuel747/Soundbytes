@@ -7,6 +7,7 @@ type User = {
     following: UID[];
     followers: UID[];
     posts: Feed;
+    likedPosts: PID[];
 };
 
 type UserEditable = {
@@ -14,20 +15,23 @@ type UserEditable = {
     following?: UID[];
     followers?: UID[];
     posts?: Feed;
+    likedPosts: PID[];
 };
 
 type Post = {
     title: string;
-    creator: UID; // Might need to be User
+    uid: UID;
     audioURL: string;
     timestamp: string;
     likes: number;
     replies: Feed;
+    deleted: boolean;
 };
 
 type PostEditable = {
     likes?: number;
     replies?: Feed;
+    deleted?: boolean;
 };
 
-type Feed = Post[] | PID[];
+type Feed = Post[];

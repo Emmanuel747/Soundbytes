@@ -5,11 +5,7 @@ import { Database } from "./storage/Database";
 // Abstract Factory Pattern
 
 class AbstractFeedComposer implements IFeedComposer {
-    database: IDatabase;
-
-    constructor() {
-        this.database = new Database();
-    }
+    database: IDatabase = new Database();
 
     composeFeed(): Promise<Feed> {
         throw new Error("Method not implemented.");
@@ -24,9 +20,9 @@ class GlobalFeedComposer extends AbstractFeedComposer {
 }
 
 class LocalFeedComposer extends AbstractFeedComposer {
-    uid: string;
+    uid: UID;
 
-    constructor(uid: string) {
+    constructor(uid: UID) {
         super();
         this.uid = uid;
     }
@@ -41,9 +37,7 @@ class LocalFeedComposer extends AbstractFeedComposer {
 
 class ProfileFeedComposer extends LocalFeedComposer {
     async composeFeed(): Promise<Feed> {
-        // Return Database.getPostsFromUsers([currentUID])
-        // Note: the function expects an array,
-        // so just have the one UID in the array
+        // Get feed composed of just a specific user's posts
         return (await this.database.getPostsFromUsers([this.uid])) as Feed;
     }
 }
