@@ -7,7 +7,7 @@ import useProtectedRoute from "../hooks/useProtectedRoute";
 import useAsync from "../hooks/useAsync";
 import React, { useState, useEffect } from "react";
 
-import { IconName } from "react-icons/ai";
+import { AiFillHome } from "react-icons/ai";
 
 import '../Styles/ProfilePage.scss';
 
@@ -18,8 +18,12 @@ const SearchBar = () => {
 
     return (
         <div>
-            <TextInput placeHolder='Search Users' />
-            <IconName AiFillHome='' />
+            <TextInput
+                style={{border: '10px',borderStyle:'solid',borderWidth: 1,borderColor: 'black',  //This styling does not work, but I am
+                borderRadius: 5}}                                                                //too tired to figure that out tonight.
+                placeHolder='Search Users' />                                                    
+            <AiFillHome 
+                style={{fontSize:'64px'}} />
         </div>
     );
 };
@@ -37,15 +41,13 @@ const YourProfile = ({ user }) => {
 				<h4>{"\"I make great life decisions\""}</h4>
 					
 			</div>
-            <div className="followerContainer flex flex-row self-center"> 
+            <div className="followerContainer flex justify-around"> 
             <p onClick={() => {
-                //displayAllFollowers(); 
-                //displayAllFollowers() is a function that could theoretically show a dropdown list of your followers
+                //implement displayAllFollowers(); 
             }}> Followers: {50}
             </p> 
             <p onClick={() => {
-                //displayAllFollowing();
-                //displayAllFollowing(); is a function that could theoretically show a dropdown list of your followers
+                //implement displayAllFollowing();
             }}> Following: {17} 
             </p>
             </div>
