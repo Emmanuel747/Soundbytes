@@ -1,3 +1,5 @@
+import { useEffect, useContext } from "react";
+import { UserContext } from "./hooks/UserContext";
 import {
     BasePage,
     AuthPage,
@@ -6,11 +8,36 @@ import {
     ProfilePage,
     ErrorPage,
 } from "./pages";
+import { onAuthStateChanged } from "@firebase/auth";
+import { FireAuth } from "../backend";
 import { Routes, Route } from "react-router-dom";
 
 import "./styles.css";
 
 export default function App() {
+    const { currentUID, currentUsername, setCurrentUID, setCurrentUsername } =
+        useContext(UserContext);
+
+    useEffect(() => {
+        const unsub = onAuthStateChanged(FireAuth, function (user) {
+            console.log("Auth user:", user);
+            if (user) {
+                setCurrentUID(user.uid);
+                setCurrentUsername(user.displayName);
+            } else {
+                setCurrentUID("");
+                setCurrentUsername("");
+            }
+        });
+
+        console.log(
+            "Refreshing useEffect. Auth status:",
+            currentUID,
+            currentUsername
+        );
+
+        return unsub;
+    }, []);
     return (
         <Routes>
             <Route path='/auth' element={<AuthPage />} />

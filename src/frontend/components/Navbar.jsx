@@ -8,71 +8,18 @@ export default function Navbar() {
     const { currentUsername } = useContext(UserContext);
     const navigate = useNavigate();
 
-    return (
-        <div
-        // style={{
-        //     backgroundColor: "black",
-        //     color: "White",
-        // }}
-        >
-            <p
-            // style={{
-            //     fontWeight: "bold",
-            //     textAlign: "center",
-            //     padding: "10px",
-            // }}
-            >
-                Welcome to SoundBytes, {currentUsername}
-            </p>
-            <div
-            // style={{
-            //     fontWeight: "bold",
-            //     textAlign: "center",
-            //     display: "flex",
-            //     justifyContent: "space-evenly",
-            //     padding: "10px",
-            //     color: "teal",
-            //     backgroundColor: "lightGrey",
-            // }}
-            >
-                <NavLink
-                    to='/feed'
-                    // style={isActive => ({
-                    //   color: isActive ? "green" : "blue"
-                    // })}
-                    // className={(isActive) =>
-                    //     "nav-link" + (!isActive ? " unselected" : "")
-                    // }
-                >
-                    Home
-                </NavLink>
-                <NavLink
-                    to='/recording'
-                    // style={isActive => ({
-                    //   color: isActive ? "green" : "blue",
-                    //   fontWeight: isActive ? "bold" : "normal"
-                    // })}
-                    // className={(isActive) =>
-                    //     "nav-link" + (!isActive ? " unselected" : "")
-                    // }
-                >
-                    Create Byte
-                </NavLink>
+    const signOut = () => {
+        new Authenticator().signOut();
+    };
 
-                <NavLink
-                    to='/profile'
-                    // className={(isActive) =>
-                    //     "nav-link" + (!isActive ? " unselected" : "")
-                    // }
-                >
-                    Profiles
-                </NavLink>
-                <NavLink
-                    to='/auth'
-                    // className={(isActive) =>
-                    //     "nav-link" + (!isActive ? " unselected" : "")
-                    // }
-                    onClick={new Authenticator().signOut}>
+    return (
+        <div>
+            <p>Welcome to SoundBytes, {currentUsername}</p>
+            <div>
+                <NavLink to='/feed'>Home</NavLink>
+                <NavLink to='/recording'>Create Byte</NavLink>
+                <NavLink to='/profile'>Profiles</NavLink>
+                <NavLink to='/auth' onClick={signOut}>
                     Sign Out
                 </NavLink>
             </div>

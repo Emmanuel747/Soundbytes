@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Authenticator } from "../../backend";
 
 import { TextInput, TextButton } from "../components";
 import { UserContext } from "../hooks/UserContext";
@@ -291,18 +292,47 @@ export default function AuthPage() {
     const navigate = useNavigate();
     const { setCurrentUID, setCurrentUsername } = useContext(UserContext);
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
+    // Set Sign Up state
+    const [upUsername, setUpUsername] = useState("");
+    const [upEmail, setUpEmail] = useState("");
+    const [upPassword, setUpPassword] = useState("");
 
-    const handleSignIn = (email, password) => {
+    // Set Sign In state
+    const [inEmail, setInEmail] = useState("");
+    const [inPassword, setInPassword] = useState("");
+
+    const handleSignIn = async (e) => {
         // Set all UserContext variables and call something
         // like signInWithEmailAndPassword() from Authenticator
+        e.preventDefault();
+        try {
+            const uid = await new Authenticator().signIn(inEmail, inPassword);
+            setCurrentUID(uid);
+            setCurrentUsername(upUsername);
+
+            navigate("/feed");
+        } catch (e) {
+            console.log(e);
+        }
     };
 
-    const handleSignUp = (username, password, email) => {
+    const handleSignUp = async (e) => {
         // Set all UserContext variables and call something
         // like signUpWithEmailAndPassword() from Authenticator
+        e.preventDefault();
+        try {
+            const uid = await new Authenticator().signUp(
+                upUsername,
+                upEmail,
+                upPassword
+            );
+            setCurrentUID(uid);
+            setCurrentUsername(upUsername);
+
+            navigate("/feed");
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return (
@@ -310,15 +340,31 @@ export default function AuthPage() {
             <h1>Auth Page</h1>
             <form>
                 <h2>Sign In</h2>
-                <TextInput placeHolder='Username' setText={setUsername} />
-                <TextInput inputType='password' placeHolder='Password' />
+                <TextInput
+                    inputType='email'
+                    placeHolder='Email'
+                    setText={setInEmail}
+                />
+                <TextInput
+                    inputType='password'
+                    placeHolder='Password'
+                    setText={setInPassword}
+                />
                 <TextButton title='Submit' onClick={handleSignIn} />
             </form>
             <form>
                 <h2>Sign Up</h2>
-                <TextInput inputType='email' placeHolder='Email' />
-                <TextInput placeHolder='Username' setText={setUsername} />
-                <TextInput inputType='password' placeHolder='Password' />
+                <TextInput
+                    inputType='email'
+                    placeHolder='Email'
+                    setText={setUpEmail}
+                />
+                <TextInput placeHolder='Username' setText={setUpUsername} />
+                <TextInput
+                    inputType='password'
+                    placeHolder='Password'
+                    setText={setUpPassword}
+                />
                 <TextButton title='Submit' onClick={handleSignUp} />
             </form>
         </div>
