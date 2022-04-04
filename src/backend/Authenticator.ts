@@ -5,6 +5,7 @@ import { Database } from "../backend/storage/Database";
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
+    updateProfile,
 } from "firebase/auth";
 
 class Authenticator implements IAuthenticator {
@@ -21,6 +22,8 @@ class Authenticator implements IAuthenticator {
             email,
             password
         );
+
+        updateProfile(userCredential.user, { displayName: username });
 
         // Create new User object
         const uid = userCredential.user.uid;
