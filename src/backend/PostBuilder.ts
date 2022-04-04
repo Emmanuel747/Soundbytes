@@ -29,7 +29,6 @@ class PostBuilder implements IPostBuilder {
             timestamp: now,
             likes: 0,
             replies: [],
-            deleted: false,
         };
 
         const pid = await new Database().makePost(post);
