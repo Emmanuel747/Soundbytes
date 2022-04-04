@@ -4,14 +4,14 @@
 
 ## Todo
 
--   [ ] Database.ts
-    -   [ ] getUser()
-    -   [ ] makeUser()
-    -   [ ] editUser()
+-   [x] Database.ts
+    -   [x] getUser()
+    -   [x] makeUser()
+    -   [x] editUser()
 -   [x] MediaStorage.ts
 -   [x] FeedComposer.ts
 -   [x] Authenticator.ts
--   [ ] PostBuilder.ts
+-   [x} PostBuilder.ts
 
 -   [ ] Establish the user auth flow everywhere
 -   [ ] Return to useProtectedRoutes hook
@@ -22,7 +22,7 @@
 ## Stretch
 
 -   Delete posts (keep the data, but mark them as deleted)
--
+-   Auto play features
 
 ## Database Structure
 
