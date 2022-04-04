@@ -8,7 +8,7 @@ interface IDatabase {
     editPost(post: PostEditable, pid: PID, uid: UID): void;
 
     getUser(uid: UID): Promise<User>;
-    makeUser(user: User, uid: UID): Promise<UID>;
+    makeUser(user: User, uid: UID): void;
     editUser(user: UserEditable, uid: UID): void;
 
     getUIDfromUsername(username: string): Promise<UID>;

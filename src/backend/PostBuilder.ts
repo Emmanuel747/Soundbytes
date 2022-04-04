@@ -46,13 +46,13 @@ class PostBuilder implements IPostBuilder {
         // Call makePost, then append reply
         // to parent post's replies list.
 
-        const db = new Database();
-
         const newPID = await this.makePost(title, file, uid);
-        const replies = (await db.getPost(parentPID)).replies;
-        replies.push(newPID);
 
-        await db.editPost({ replies: replies }, parentPID, parentUID);
+        await new Database().editPost(
+            { replies: [newPID] },
+            parentPID,
+            parentUID
+        );
     }
 
     async editLikes(uid: UID, pid: PID, delta: number): Promise<void> {
@@ -60,9 +60,7 @@ class PostBuilder implements IPostBuilder {
         // update likes with likes + delta
         // create post editable object, create object with just likes +/- 1
 
-        const db = new Database();
-        const likes = (await db.getPost(pid)).likes + delta;
-        await db.editPost({ likes: likes }, pid, uid);
+        await new Database().editPost({ likes: delta }, pid, uid);
     }
 }
 

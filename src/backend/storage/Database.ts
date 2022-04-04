@@ -13,9 +13,9 @@ import { FireDB } from "../Fire";
 class Database implements IDatabase {
     async getPost(pid: PID): Promise<Post> {
         // Simply get post by PID
-        const docSnap = await getDoc(doc(FireDB, "posts", pid));
+        const postDoc = await getDoc(doc(FireDB, "posts", pid));
 
-        if (docSnap.exists()) return docSnap.data() as Post;
+        if (postDoc.exists()) return postDoc.data() as Post;
         else throw new Error("Post does not exist.");
     }
 
@@ -35,6 +35,19 @@ class Database implements IDatabase {
     }
 
     async editPost(post: PostEditable, pid: PID, uid: UID): Promise<void> {
+        // Finalize PostEditable changes
+        const postDetails = await this.getPost(pid);
+
+        if (post.replies !== undefined) {
+            const existingReplies = postDetails.replies;
+            post.replies.concat(existingReplies);
+        }
+
+        if (post.likes !== undefined) {
+            const existingLikes = postDetails.likes;
+            post.likes += existingLikes;
+        }
+
         // Update posts in both docs with the changes
 
         // Update 'posts/pid' document
@@ -48,19 +61,27 @@ class Database implements IDatabase {
 
     async getUser(uid: UID): Promise<User> {
         // Simply get user by UID
-        throw new Error("Method not implemented.");
+        const userDoc = await getDoc(doc(FireDB, "users", uid));
+
+        if (userDoc.exists()) return userDoc.data() as User;
+        else throw new Error("User does not exist.");
     }
 
-    async makeUser(user: User, uid: UID): Promise<UID> {
+    async makeUser(user: User, uid: UID): Promise<void> {
         // Add a User to the 'users' collection
         // Add username to the 'usernames' doc in 'users'
+        const userRef = doc(FireDB, "users", uid);
+        await setDoc(userRef, user);
 
-        throw new Error("Method not implemented.");
+        const usernamesRef = doc(FireDB, "users", "usernames");
+        const updatedUsername = { [user.username]: uid };
+        await setDoc(usernamesRef, updatedUsername);
     }
 
     async editUser(user: UserEditable, uid: string): Promise<void> {
         // Update doc with the changes
-        throw new Error("Method not implemented.");
+        const userRef = doc(FireDB, "users", uid);
+        await updateDoc(userRef, user);
     }
 
     async getUIDfromUsername(username: string): Promise<UID> {

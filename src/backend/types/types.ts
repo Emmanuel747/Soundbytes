@@ -14,8 +14,7 @@ type UserEditable = {
     pfpURL?: string;
     following?: UID[];
     followers?: UID[];
-    posts?: Feed;
-    likedPosts: PID[];
+    likedPosts?: PID[];
 };
 
 type Post = {
@@ -25,13 +24,11 @@ type Post = {
     timestamp: string;
     likes: number;
     replies: PID[];
-    deleted: boolean;
 };
 
 type PostEditable = {
     likes?: number;
     replies?: PID[];
-    deleted?: boolean;
 };
 
 type Feed = Post[];
