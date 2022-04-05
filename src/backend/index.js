@@ -9,7 +9,6 @@ import { PostBuilder } from "./PostBuilder";
 import { Authenticator } from "./Authenticator";
 import { FireAuth } from "./Fire";
 import { UserInteraction } from "./UserInteraction";
-import { PostInteraction } from "./PostInteraction";
 
 export {
     GlobalFeedComposer,
@@ -21,5 +20,4 @@ export {
     Authenticator,
     FireAuth,
     UserInteraction,
-    PostInteraction,
 };
