@@ -40,10 +40,6 @@ interface IAuthenticator {
     signOut(): void;
 }
 
-interface IPostInteraction {
-    handleLike(uid: UID, pid: PID, likeStatus: boolean): void;
-}
-
 interface IUserInteraction {
     follow(myUID: UID, otherUID: UID): void;
     unfollow(myUID: UID, otherUID: UID): void;
