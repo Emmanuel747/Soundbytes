@@ -26,8 +26,9 @@ class Database implements IDatabase {
         // Add a post to the 'users/uid' document
         const userRef = doc(FireDB, "users", post.uid);
         const userPosts = await this.getPostsFromUsers([post.uid]);
+        userPosts.push(post);
         await updateDoc(userRef, {
-            posts: userPosts.push(post),
+            posts: userPosts,
         });
 
         return postsRef.id;
@@ -69,8 +70,8 @@ class Database implements IDatabase {
     async makeUser(user: User, uid: UID): Promise<void> {
         // Add a User to the 'users' collection
         // Add username to the 'usernames' doc in 'users'
-        const userRef = collection(FireDB, "users", uid);
-        await addDoc(userRef, user);
+        const userRef = doc(FireDB, "users", uid);
+        await setDoc(userRef, user);
 
         const usernamesRef = doc(FireDB, "users", "usernames");
         const updatedUsername = { [user.username]: uid };
