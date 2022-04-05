@@ -7,11 +7,13 @@ import { PostBuilder } from "../../backend/";
 import { TextButton, TextInput } from "../components";
 import { UserContext } from "../hooks/UserContext";
 import useProtectedRoute from "../hooks/useProtectedRoute";
+import { useParams } from "react-router";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export default function RecordingPage() {
     useProtectedRoute();
+    const { parentPID, parentUID } = useParams();
     const { currentUID } = useContext(UserContext);
 
     const [title, setTitle] = useState("");
@@ -61,21 +63,32 @@ export default function RecordingPage() {
         );
     }, []);
 
-    const uploadPost = () => {
+    const uploadPost = async () => {
         const pm = new PostBuilder();
-        pm.makePost(title, blob, currentUID);
+        await pm.makePost(title, blob, currentUID);
+    };
+
+    const uploadReply = async () => {
+        const pm = new PostBuilder();
+        await pm.makeReply(parentPID, parentUID, title, blob, currentUID);
     };
 
     return (
         <div>
             <h1>Recording</h1>
-            <TextInput placeHolder="Title" setText={setTitle} />
+            <h3>
+                {parentPID && parentUID ? "Reply to post" : "Make a new post"}
+            </h3>
+            <TextInput placeHolder='Title' setText={setTitle} />
             <TextButton
                 onClick={isRecording ? stopRecording : startRecording}
                 title={isRecording ? "Stop Recording" : "Start Recording"}
             />
-            <audio src={blobURL} controls="controls" />
-            <TextButton onClick={uploadPost} title="Upload" />
+            <audio src={blobURL} controls='controls' />
+            <TextButton
+                onClick={parentPID && parentUID ? uploadReply : uploadPost}
+                title='Upload'
+            />
         </div>
     );
 }

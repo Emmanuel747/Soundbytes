@@ -18,7 +18,10 @@ export default function App() {
                 <Route path='/feed' element={<FeedPage />} />
                 <Route path='/recording'>
                     <Route index element={<RecordingPage />} />
-                    <Route path=':parentPID' element={<RecordingPage />} />
+                    <Route
+                        path=':parentPID/:parentUID'
+                        element={<RecordingPage />}
+                    />
                 </Route>
                 <Route path='/profile'>
                     <Route index element={<ProfilePage />} />
