@@ -11,10 +11,10 @@
 -   [x] MediaStorage.ts
 -   [x] FeedComposer.ts
 -   [x] Authenticator.ts
--   [x} PostBuilder.ts
+-   [x] PostBuilder.ts
 
--   [ ] Establish the user auth flow everywhere
--   [ ] Return to useProtectedRoutes hook
+-   [x] Establish the user auth flow everywhere
+-   [x] Return to useProtectedRoutes hook
 -   [ ] Flesh out the Post component
 -   [ ] Add editing to Profile (this includes toggle following on other's profiles)
 -   [ ] Create search bar in Profile

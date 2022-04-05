@@ -290,7 +290,7 @@ function EmanAuthPage({ userData, setUserData, isAuth, setIsAuth }) {
 
 export default function AuthPage() {
     const navigate = useNavigate();
-    const { setCurrentUID, setCurrentUsername } = useContext(UserContext);
+    // const { setCurrentUID, setCurrentUsername } = useContext(UserContext);
 
     // Set Sign Up state
     const [upUsername, setUpUsername] = useState("");
@@ -305,15 +305,16 @@ export default function AuthPage() {
         // Set all UserContext variables and call something
         // like signInWithEmailAndPassword() from Authenticator
         e.preventDefault();
-        try {
-            const uid = await new Authenticator().signIn(inEmail, inPassword);
-            setCurrentUID(uid);
-            setCurrentUsername(upUsername);
-
-            navigate("/feed");
-        } catch (e) {
-            console.log(e);
-        }
+        new Authenticator()
+            .signIn(inEmail, inPassword)
+            // .then((uid) => {
+            //     setCurrentUID(uid);
+            //     setCurrentUsername(upUsername);
+            // })
+            .then(() => navigate("/feed"))
+            .catch((e) => {
+                console.log(e);
+            });
     };
 
     const handleSignUp = async (e) => {
@@ -326,8 +327,8 @@ export default function AuthPage() {
                 upEmail,
                 upPassword
             );
-            setCurrentUID(uid);
-            setCurrentUsername(upUsername);
+            // setCurrentUID(uid);
+            // setCurrentUsername(upUsername);
 
             navigate("/feed");
         } catch (e) {
