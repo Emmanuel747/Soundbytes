@@ -3,6 +3,7 @@ import {
     doc,
     getDoc,
     getDocs,
+    addDoc,
     setDoc,
     updateDoc,
 } from "firebase/firestore";
@@ -19,8 +20,8 @@ class Database implements IDatabase {
 
     async makePost(post: Post): Promise<PID> {
         // Add a post to the 'posts' collection
-        const postsRef = doc(FireDB, "posts");
-        await setDoc(postsRef, post);
+        const postsRef = collection(FireDB, "posts");
+        await addDoc(postsRef, post);
 
         // Add a post to the 'users/uid' document
         const userRef = doc(FireDB, "users", post.uid);
@@ -68,8 +69,8 @@ class Database implements IDatabase {
     async makeUser(user: User, uid: UID): Promise<void> {
         // Add a User to the 'users' collection
         // Add username to the 'usernames' doc in 'users'
-        const userRef = doc(FireDB, "users", uid);
-        await setDoc(userRef, user);
+        const userRef = collection(FireDB, "users", uid);
+        await addDoc(userRef, user);
 
         const usernamesRef = doc(FireDB, "users", "usernames");
         const updatedUsername = { [user.username]: uid };

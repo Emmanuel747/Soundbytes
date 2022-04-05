@@ -8,10 +8,10 @@ class MediaStorage implements IMediaStorage {
         return await getDownloadURL(mediaRef);
     }
 
-    upload(path: string, file: Blob): void {
+    async upload(path: string, file: Blob): Promise<void> {
         // Upload images and audio files the server
         const mediaRef = ref(FireStorage, path);
-        uploadBytes(mediaRef, file);
+        await uploadBytes(mediaRef, file);
     }
 }
 

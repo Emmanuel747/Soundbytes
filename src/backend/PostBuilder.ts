@@ -13,7 +13,7 @@ class PostBuilder implements IPostBuilder {
         // Upload media
         const ms = new MediaStorage();
 
-        ms.upload(firePath, file);
+        await ms.upload(firePath, file);
         const url = await ms.getLink(firePath);
 
         // Upload data to Firestore
