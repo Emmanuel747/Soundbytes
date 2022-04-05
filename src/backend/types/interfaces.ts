@@ -42,7 +42,6 @@ interface IAuthenticator {
 
 interface IPostInteraction {
     handleLike(uid: UID, pid: PID, likeStatus: boolean): void;
-    handleReply(postPID: PID, parentPID: PID): void;
 }
 
 interface IUserInteraction {
