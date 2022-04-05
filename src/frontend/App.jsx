@@ -16,7 +16,10 @@ export default function App() {
             <Route path='/auth' element={<AuthPage />} />
             <Route element={<BasePage />}>
                 <Route path='/feed' element={<FeedPage />} />
-                <Route path='/recording' element={<RecordingPage />} />
+                <Route path='/recording'>
+                    <Route index element={<RecordingPage />} />
+                    <Route path=':parentPID' element={<RecordingPage />} />
+                </Route>
                 <Route path='/profile'>
                     <Route index element={<ProfilePage />} />
                     <Route path=':username' element={<ProfilePage />} />
