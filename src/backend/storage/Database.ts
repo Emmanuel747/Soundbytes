@@ -73,7 +73,7 @@ class Database implements IDatabase {
 
         const usernamesRef = doc(FireDB, "users", "usernames");
         const updatedUsername = { [user.username]: uid };
-        await setDoc(usernamesRef, updatedUsername);
+        await updateDoc(usernamesRef, updatedUsername);
     }
 
     async editUser(user: UserEditable, uid: string): Promise<void> {

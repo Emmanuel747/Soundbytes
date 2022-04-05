@@ -1,4 +1,4 @@
-import { React, useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../hooks/UserContext";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -10,6 +10,7 @@ export default function Navbar() {
 
     const signOut = () => {
         new Authenticator().signOut();
+        navigate("/auth");
     };
 
     return (

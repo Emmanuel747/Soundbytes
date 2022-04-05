@@ -8,6 +8,21 @@ const UserProvider = ({ children }) => {
     const [currentUID, setCurrentUID] = useState("");
     const [currentUsername, setCurrentUsername] = useState("");
 
+    useEffect(() => {
+        const unsub = onAuthStateChanged(FireAuth, function (user) {
+            if (user) {
+                console.log("uid:", user.uid, "username:", user.displayName);
+                setCurrentUID(user.uid);
+                setCurrentUsername(user.displayName);
+            } else {
+                setCurrentUID("");
+                setCurrentUsername("");
+            }
+        });
+
+        return unsub;
+    }, []);
+
     return (
         <UserContext.Provider
             value={{
