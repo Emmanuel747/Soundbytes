@@ -6,6 +6,7 @@ import { UserContext } from "../hooks/UserContext";
 import useProtectedRoute from "../hooks/useProtectedRoute";
 import useAsync from "../hooks/useAsync";
 import { useState, useEffect } from "react";
+import { NavLink, useNavigate, Link } from "react-router-dom";
 
 import { AiFillHome } from "react-icons/ai";
 
@@ -23,12 +24,20 @@ const SearchBar = () => {
                     border: "10px",
                     borderStyle: "solid",
                     borderWidth: 1,
-                    borderColor: "black", //This styling does not work, but I am
-                    borderRadius: 5,
-                }} //too tired to figure that out tonight.
+                    borderColor: "black", 
+                    borderRadius: 5,      
+                }}                        
                 placeHolder='Search Users'
             />
-            <AiFillHome style={{ fontSize: "64px" }} />
+        </div>
+    );
+};
+
+const HomeScreenButton = () => {
+
+    return( 
+        <div>
+            <Link to='/feed'><AiFillHome style={{ fontSize: "64px" }} /></Link>
         </div>
     );
 };
@@ -43,11 +52,16 @@ const PersonalProfile = () => {
                 style={{ maxWidth: "10rem" }}
                 src='https://cdn.discordapp.com/attachments/178196683727962112/953082990806831176/unknown.png'
             />
-            <div className='flex-col items-center justify-center text-center profileContainer'>
+            <div className='text-center'>
                 <h3>{currentUsername}</h3>
                 <h4>{'"I make great life decisions"'}</h4>
-            </div>
-            <div className='flex justify-around followerContainer'>
+            </div>        
+            <button onClick={() => new Database().editUser(new Database().getUser(currentUID), currentUID)/* I still have to move this line along with 
+                                                                                                    the rest of the implementaion of the follow
+                                                                                                     button to the new function */}>  
+                    Follow 
+                </button>
+            <div className='flex justify-around'>
                 <p>Followers: {50}</p>
                 <p>Following: {17}</p>
             </div>
@@ -67,12 +81,34 @@ const OtherProfile = ({ username }) => {
 
     return (
         <>
-            <h3>{username}</h3>
-            <h4>{"<BIO?>"}</h4>
+            <div classname='flex flex-col'>
+            <img
+                className='self-center'
+                style={{ maxWidth: "10rem" }}
+                src='https://cdn.discordapp.com/attachments/178196683727962112/953082990806831176/unknown.png'
+            />
+            </div>
+            <div className='text-center'>
+                <h3>{username}</h3>
+                <h4>{'"implement user bio'}</h4>
+            </div>
+            <div className="flex justify-center followButton">
+                <button onClick={() => new Database().editUser(new Database().getUser(uid), uid)/* I still have to move this line along with 
+                                                                                                    the rest of the implementaion of the follow
+                                                                                                     button to the new function */}>  
+                    Follow 
+                </button>
+            </div>
             <Feed feedFactory={new ProfileFeedComposer(uid)} />
         </>
     );
 };
+
+const FollowButton = () => {
+
+//I'm just going to make a separate function for the follow button so it doesn't get too cluttered in the profile div. -miguel 1:06am 4/5/22
+
+}
 
 export default function ProfilePage() {
     useProtectedRoute();
@@ -81,6 +117,7 @@ export default function ProfilePage() {
     return (
         <div>
             <SearchBar />
+            <HomeScreenButton />
             {username ? (
                 <OtherProfile username={username} />
             ) : (

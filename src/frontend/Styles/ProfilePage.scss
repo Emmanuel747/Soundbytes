@@ -2,6 +2,9 @@
 
 */
 
+$button-color: #0f477e;
+$button-color-hover: #0067c2;
+
 fieldset {
   border: 0;
 }
@@ -22,6 +25,9 @@ input {
   padding: 10;
 }
 
+.followButton {
+  color: black;
+}
 .headerContainer {
 
 }
