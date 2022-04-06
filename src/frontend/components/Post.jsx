@@ -14,7 +14,7 @@ export default function Post({ post }) {
         new Date(parseInt(post.timestamp)).toLocaleDateString("en-US");
 
     const getUser = async () => {
-        const user = await new Database.getUser(currentUID);
+        const user = await new Database().getUser(currentUID);
         setUser(user);
 
         const tempPID = "";
@@ -24,7 +24,7 @@ export default function Post({ post }) {
     };
 
     const getOtherUser = async () => {
-        const other = await new Database.getUser(post.uid);
+        const other = await new Database().getUser(post.uid);
         setOtherPFP(other.pfpURL);
         setOtherUsername(other.username);
     };
@@ -54,15 +54,13 @@ export default function Post({ post }) {
             <p className='username'>{otherUsername}</p>
             {/* <img src={otherPFP} alt="profile picture" /> */}
             <p>{getTimestamp()}</p>
-            <p>
-                <div
-                    onClick={() => {
-                        handleLikes();
-                    }}>
-                    {<AiOutlineLike style={{ fontSize: "32px" }} />}
-                    {post.likes}
-                </div>
-            </p>
+            <div
+                onClick={() => {
+                    handleLikes();
+                }}>
+                {<AiOutlineLike style={{ fontSize: "32px" }} />}
+                <p>{post.likes}</p>
+            </div>
             <audio src={post.audioURL} controls></audio>
         </div>
     );
