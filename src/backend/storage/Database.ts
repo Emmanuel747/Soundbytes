@@ -21,6 +21,7 @@ class Database implements IDatabase {
     async makePost(post: Post): Promise<PID> {
         // Add a post to the 'posts' collection
         const postsRef = collection(FireDB, "posts");
+        post.pid = postsRef.id;
         await addDoc(postsRef, post);
 
         // Add a post to the 'users/uid' document

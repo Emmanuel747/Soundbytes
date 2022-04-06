@@ -18,6 +18,7 @@ type UserEditable = {
 };
 
 type Post = {
+    pid: PID;
     title: string;
     uid: UID;
     audioURL: string;
