@@ -21,18 +21,18 @@ const SearchBar = () => {
     };
 
     return (
-        <div>
-            <TextInput
-                style={{
-                    border: "10px",
-                    borderStyle: "solid",
-                    borderWidth: 1,
-                    borderColor: "black", 
-                    borderRadius: 5,      
-                }}                        
-                placeHolder='Search Users'
-            />
-        </div>
+      <div>
+        <TextInput
+          style={{
+            border: "10px",
+            borderStyle: "solid",
+            borderWidth: 1,
+            borderColor: "black", 
+            borderRadius: 5,      
+          }}                        
+          placeHolder='Search Users'
+        />
+      </div>
     );
 };
 
