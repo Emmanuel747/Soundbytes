@@ -1,0 +1,17 @@
+.inactive {
+  width: 15%;
+
+  align-items: center;
+}
+.active {
+  background-color: #aca5a55e;
+  width: 15%;
+  color: black;
+  align-items: center;
+}
+
+.header {
+  -webkit-text-stroke-width: 0.4px;
+  -webkit-text-stroke-color: rgba(34, 106, 189, 0.568);
+  letter-spacing: 0.2rem;
+}
