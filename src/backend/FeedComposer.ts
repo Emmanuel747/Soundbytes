@@ -40,7 +40,7 @@ class ProfileFeedComposer extends LocalFeedComposer {
     async composeFeed(): Promise<Feed> {
         // Get feed composed of just a specific user's posts
         if (this.uid) {
-            return (await this.database.getPostsFromUsers([this.uid])) as Feed;
+          return (await this.database.getPostsFromUsers([this.uid])) as Feed;
         }
         return [];
     }

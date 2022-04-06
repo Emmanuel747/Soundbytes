@@ -9,8 +9,11 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate, Link } from "react-router-dom";
 
 import { AiFillHome } from "react-icons/ai";
+import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 
 import "../Styles/ProfilePage.scss";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const SearchBar = () => {
     const getAllUsernames = () => {
@@ -18,25 +21,26 @@ const SearchBar = () => {
     };
 
     return (
-        <div>
-            <TextInput
-                style={{
-                    border: "10px",
-                    borderStyle: "solid",
-                    borderWidth: 1,
-                    borderColor: "black", 
-                    borderRadius: 5,      
-                }}                        
-                placeHolder='Search Users'
-            />
-        </div>
+      <div>
+        <TextInput
+          style={{
+            border: "10px",
+            borderStyle: "solid",
+            borderWidth: 1,
+            borderColor: "black", 
+            borderRadius: 5,      
+          }}                        
+          placeHolder='Search Users'
+        />
+      </div>
     );
 };
+
 
 const HomeScreenButton = () => {
 
     return( 
-        <div>
+        <div> 
             <Link to='/feed'><AiFillHome style={{ fontSize: "64px" }} /></Link>
         </div>
     );
@@ -56,10 +60,8 @@ const PersonalProfile = () => {
                 <h3>{currentUsername}</h3>
                 <h4>{'"I make great life decisions"'}</h4>
             </div>        
-            <button onClick={() => new Database().editUser(new Database().getUser(currentUID), currentUID)/* I still have to move this line along with 
-                                                                                                    the rest of the implementaion of the follow
-                                                                                                     button to the new function */}>  
-                    Follow 
+            <button onClick={() => HandleFollow(currentUsername, currentUID)}>  
+                Follow 
                 </button>
             <div className='flex justify-around'>
                 <p>Followers: {50}</p>
@@ -92,13 +94,7 @@ const OtherProfile = ({ username }) => {
                 <h3>{username}</h3>
                 <h4>{'"implement user bio'}</h4>
             </div>
-            <div className="flex justify-center followButton">
-                <button onClick={() => new Database().editUser(new Database().getUser(uid), uid)/* I still have to move this line along with 
-                                                                                                    the rest of the implementaion of the follow
-                                                                                                     button to the new function */}>  
-                    Follow 
-                </button>
-            </div>
+            
             <Feed feedFactory={new ProfileFeedComposer(uid)} />
         </>
     );
@@ -106,8 +102,18 @@ const OtherProfile = ({ username }) => {
 
 const FollowButton = () => {
 
-//I'm just going to make a separate function for the follow button so it doesn't get too cluttered in the profile div. -miguel 1:06am 4/5/22
+// /*new Database().editUser(new Database().getUser(uid), uid) I'm just going to make a separate function for the follow button so it doesn't get too cluttered in the profile div. -miguel 1:06am 4/5/22
+    <div className="flex justify-center followButton">
+            <button onClick={() => HandleFollow()}>  
+            Follow 
+        </button>
+    </div>
+}
 
+const HandleFollow = (following, currentUID) => {
+    return(
+        new Database().editUser(following, currentUID)
+    );
 }
 
 export default function ProfilePage() {
