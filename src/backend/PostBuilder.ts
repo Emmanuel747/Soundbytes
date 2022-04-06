@@ -54,7 +54,16 @@ class PostBuilder implements IPostBuilder {
         // update likes with likes + delta
         // create post editable object, create object with just likes +/- 1
 
-        await new Database().editPost({ likes: delta }, pid, uid);
+        const db = new Database();
+
+        const user = await db.getUser(uid);
+        const likedPosts = user.likedPosts;
+
+        if (delta < 0) likedPosts.splice(likedPosts.indexOf(pid), 1);
+        else likedPosts.push(pid);
+
+        await db.editUser({ likedPosts: likedPosts }, uid);
+        await db.editPost({ likes: delta }, pid, uid);
     }
 }
 
