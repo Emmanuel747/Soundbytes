@@ -12,109 +12,115 @@ import { AiFillHome } from "react-icons/ai";
 import { AiOutlineSearch } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
 
-import "../Styles/ProfilePage.scss";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-
 const SearchBar = () => {
     const getAllUsernames = () => {
         // Call something like Database.getAllUsernames()
     };
 
     return (
-      <div>
-        <TextInput
-          style={{
-            border: "10px",
-            borderStyle: "solid",
-            borderWidth: 1,
-            borderColor: "black", 
-            borderRadius: 5,      
-          }}                        
-          placeHolder='Search Users'
-        />
-      </div>
+        <div>
+            <TextInput
+                style={{
+                    border: "10px",
+                    borderStyle: "solid",
+                    borderWidth: 1,
+                    borderColor: "black",
+                    borderRadius: 5,
+                }}
+                placeHolder='Search Users'
+            />
+        </div>
     );
 };
 
-
 const HomeScreenButton = () => {
+    return (
+        <Link to='/feed'>
+            <AiFillHome style={{ fontSize: "64px" }} />
+        </Link>
+    );
+};
 
-    return( 
-        <div> 
-            <Link to='/feed'><AiFillHome style={{ fontSize: "64px" }} /></Link>
+const UserDetails = ({ username, pfpURL, followerCount, followingCount }) => {
+    return (
+        <div className='flex flex-col items-center'>
+            <img style={{ maxWidth: "10rem" }} src={pfpURL} alt='Profile' />
+            <h3>{username}</h3>
+            <div className='flex flex-row justify-center gap-x-10'>
+                <p>Following: {followingCount}</p>
+                <p>Followers: {followerCount}</p>
+            </div>
         </div>
     );
 };
 
 const PersonalProfile = () => {
     const { currentUsername, currentUID } = useContext(UserContext);
+    const [pfpURL, setPfpURL] = useState(""); // Could probably set this to a default pfp
+    const [followerCount, setFollowerCount] = useState(0);
+    const [followingCount, setFollowingCount] = useState(0);
+
+    const getUser = async () => {
+        const user = await new Database().getUser(currentUID);
+        setFollowerCount(user.followers.length);
+        setFollowingCount(user.following.length);
+        setPfpURL(user.pfpURL);
+    };
+
+    useEffect(() => {
+        getUser();
+    }, []);
 
     return (
-        <div className='flex flex-col headerContainer'>
-            <img
-                className='self-center userProfileImg'
-                style={{ maxWidth: "10rem" }}
-                src='https://cdn.discordapp.com/attachments/178196683727962112/953082990806831176/unknown.png'
+        <div className='flex flex-col'>
+            <UserDetails
+                username={currentUsername}
+                pfpURL={pfpURL}
+                followerCount={followerCount}
+                followingCount={followingCount}
             />
-            <div className='text-center'>
-                <h3>{currentUsername}</h3>
-                <h4>{'"I make great life decisions"'}</h4>
-            </div>        
-            <button onClick={() => HandleFollow(currentUsername, currentUID)}>  
-                Follow 
-                </button>
-            <div className='flex justify-around'>
-                <p>Followers: {50}</p>
-                <p>Following: {17}</p>
-            </div>
             <Feed feedFactory={new ProfileFeedComposer(currentUID)} />
         </div>
     );
 };
 
 const OtherProfile = ({ username }) => {
-    const getUID = async () => {
-        const db = new Database();
-        const uid = await db.getUIDfromUsername(username);
+    const [pfpURL, setPfpURL] = useState(""); // Could probably set this to a default pfp
+    const [followerCount, setFollowerCount] = useState(0);
+    const [followingCount, setFollowingCount] = useState(0);
+    const [composer, setComposer] = useState();
 
-        return uid;
+    const getUID = async () =>
+        await new Database().getUIDfromUsername(username);
+
+    const getUser = async (uid) => {
+        const user = await new Database().getUser(uid);
+        setFollowerCount(user.followers.length);
+        setFollowingCount(user.following.length);
+        setPfpURL(user.pfpURL);
     };
-    const uid = useAsync(getUID);
+
+    const getComposer = (uid) => setComposer(new ProfileFeedComposer(uid));
+
+    useEffect(() => {
+        getUID().then((uid) => {
+            getUser(uid);
+            getComposer(uid);
+        });
+    }, []);
 
     return (
-        <>
-            <div classname='flex flex-col'>
-            <img
-                className='self-center'
-                style={{ maxWidth: "10rem" }}
-                src='https://cdn.discordapp.com/attachments/178196683727962112/953082990806831176/unknown.png'
+        <div className='flex flex-col'>
+            <UserDetails
+                username={username}
+                pfpURL={pfpURL}
+                followerCount={followerCount}
+                followingCount={followingCount}
             />
-            </div>
-            <div className='text-center'>
-                <h3>{username}</h3>
-                <h4>{'"implement user bio'}</h4>
-            </div>
-            
-            <Feed feedFactory={new ProfileFeedComposer(uid)} />
-        </>
+            {composer && <Feed feedFactory={composer} />}
+        </div>
     );
 };
-
-const FollowButton = () => {
-
-// /*new Database().editUser(new Database().getUser(uid), uid) I'm just going to make a separate function for the follow button so it doesn't get too cluttered in the profile div. -miguel 1:06am 4/5/22
-    <div className="flex justify-center followButton">
-            <button onClick={() => HandleFollow()}>  
-            Follow 
-        </button>
-    </div>
-}
-
-const HandleFollow = (following, currentUID) => {
-    return(
-        new Database().editUser(following, currentUID)
-    );
-}
 
 export default function ProfilePage() {
     useProtectedRoute();
