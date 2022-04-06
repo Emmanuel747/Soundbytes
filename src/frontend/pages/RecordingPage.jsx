@@ -74,21 +74,27 @@ export default function RecordingPage() {
     };
 
     return (
-        <div>
-            <h1>Recording</h1>
+        
+        <div className="text-center flex flex-col">
+            <h1 className="flex flex-col text-center">Recording</h1>
             <h3>
                 {parentPID && parentUID ? "Reply to post" : "Make a new post"}
             </h3>
-            <TextInput placeHolder='Title' setText={setTitle} />
-            <TextButton
+            <TextInput className="flex flex-col text-center" placeHolder='Title' setText={setTitle} />
+            <TextButton className="text-center"  
                 onClick={isRecording ? stopRecording : startRecording}
                 title={isRecording ? "Stop Recording" : "Start Recording"}
             />
+            <div className="h-55 flex flex-col justify-center">
             <audio src={blobURL} controls='controls' />
+            </div>
             <TextButton
                 onClick={parentPID && parentUID ? uploadReply : uploadPost}
                 title='Upload'
             />
         </div>
+        
+
+        
     );
 }
