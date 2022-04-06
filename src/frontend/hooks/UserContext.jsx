@@ -12,7 +12,7 @@ const UserProvider = ({ children }) => {
         const unsub = onAuthStateChanged(FireAuth, function (user) {
             if (user) {
                 if(user.displayName) {
-                  console.log("uid:", user.uid, "username:", user.displayName);
+                  // console.log("uid:", user.uid, "username:", user.displayName);
                   setCurrentUID(user.uid);
                   setCurrentUsername(user.displayName);
                 } else {
