@@ -88,7 +88,7 @@ class Database implements IDatabase {
         // Get 'users/usernames' document, find given username, and return UID
         const usernames = await getDoc(doc(FireDB, "users", "usernames"));
 
-        if (usernames.exists()) return usernames.data()[username].uid;
+        if (usernames.exists()) return usernames.data()[username];
         else throw new Error("No usernames found.");
     }
 
