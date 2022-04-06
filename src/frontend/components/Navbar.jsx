@@ -21,7 +21,7 @@ export default function Navbar() {
                 <NavLink to='/recording'>Create Byte</NavLink>
                 <NavLink to='/profile'>Profiles</NavLink>
                 <NavLink to='/auth' onClick={signOut}>
-                    Sign Out
+                  Sign Out
                 </NavLink>
             </div>
         </div>
