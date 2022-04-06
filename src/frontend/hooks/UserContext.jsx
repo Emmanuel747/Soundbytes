@@ -11,15 +11,15 @@ const UserProvider = ({ children }) => {
     useEffect(() => {
         const unsub = onAuthStateChanged(FireAuth, function (user) {
             if (user) {
-                if(user.displayName) {
-                  // console.log("uid:", user.uid, "username:", user.displayName);
-                  setCurrentUID(user.uid);
-                  setCurrentUsername(user.displayName);
+                if (user.displayName) {
+                    setCurrentUID(user.uid);
+                    setCurrentUsername(user.displayName);
                 } else {
-                  setCurrentUID(user.uid);
-                  setCurrentUsername(user.displayName);
-                  setTimeout(function () {window.location.reload(false)}, 300)
-                  
+                    setCurrentUID(user.uid);
+                    setCurrentUsername(user.displayName);
+                    setTimeout(function () {
+                        window.location.reload(false);
+                    }, 300);
                 }
             } else {
                 setCurrentUID("");
