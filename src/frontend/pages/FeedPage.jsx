@@ -24,7 +24,7 @@ export default function FeedPage() {
                 <div className='p-2 localFeedContainer'>
                     <h2>Local Feed</h2>
                     <Feed feedFactory={new LocalFeedComposer(currentUID)} />
-                    {console.log(LocalFeedComposer(currentUID))}
+                    {console.log(new LocalFeedComposer(currentUID))}
                 </div>
             </div>
         </div>
