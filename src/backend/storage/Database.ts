@@ -105,15 +105,16 @@ class Database implements IDatabase {
         return posts;
     }
 
-    async getPostsFromUsers(uids: UID[]): Promise<Post[]> {
+    async getPostsFromUsers(uids: UID[]): Promise<Feed> {
         // Get a list of all posts from a list of UIDs
-        const posts: Post[] = [];
-
-        uids.forEach(async (uid) => {
+        const listsOfPosts: Promise<Feed>[] = uids.map(async (uid) => {
             const userDoc = await getDoc(doc(FireDB, "users", uid));
-            if (userDoc.exists()) posts.concat((userDoc.data() as User).posts);
-            else throw new Error("User ID not found.");
+            return (userDoc.data() as User).posts;
         });
+
+        const posts: Feed = await Promise.all(listsOfPosts).then((results) =>
+            results.flat()
+        );
 
         return posts;
     }
