@@ -8,6 +8,7 @@ import { MediaStorage } from "./storage/MediaStorage";
 import { PostBuilder } from "./PostBuilder";
 import { Authenticator } from "./Authenticator";
 import { FireAuth } from "./Fire";
+import { UserInteraction } from "./UserInteraction";
 
 export {
     GlobalFeedComposer,
@@ -18,4 +19,5 @@ export {
     PostBuilder,
     Authenticator,
     FireAuth,
+    UserInteraction,
 };

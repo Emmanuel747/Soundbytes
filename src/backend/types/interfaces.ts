@@ -39,3 +39,8 @@ interface IAuthenticator {
     signIn(email: string, password: string): Promise<UID>;
     signOut(): void;
 }
+
+interface IUserInteraction {
+    follow(myUID: UID, otherUID: UID): void;
+    unfollow(myUID: UID, otherUID: UID): void;
+}
