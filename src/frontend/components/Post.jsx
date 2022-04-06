@@ -14,7 +14,7 @@ export default function Post({ post }) {
         new Database().editPost(post, post)
         console.log(post);
         post.likes = post.likes + 1;
-        console.log(new Database.getUser(uid));
+        // console.log(new Database.getUser(uid));
     }
 
     return (
