@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { GlobalFeedComposer, LocalFeedComposer } from "../../backend";
 import { Feed } from "../components";
@@ -8,6 +9,7 @@ import useProtectedRoute from "../hooks/useProtectedRoute";
 import "../Styles/FeedPage.scss";
 
 export default function FeedPage() {
+
     useProtectedRoute();
     const { currentUID } = useContext(UserContext);
 

@@ -1,23 +1,16 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Authenticator } from "../../backend";
-
-import { TextInput, TextButton } from "../components";
 import { UserContext } from "../hooks/UserContext";
-
-// import "../Styles/AuthPage.scss";
+import { Authenticator } from "../../backend";
+import "../Styles/AuthPage.scss";
 
 export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
-  const navigate = useNavigate();
-  const { currentUID, setCurrentUID, currentUsername, setCurrentUsername } =
-    useContext(UserContext);
 
+  // userInput varible states ~Eman April 5, 2022
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
   const [email, setEmail] = useState("");
-
-  // const authBtns = document.getElementById('authBtn');
   const [errMsgText, setErrMsgText] = useState("");
 
   // Trigger functions for the bounce animation ~Eman, April 1, 2022
@@ -35,45 +28,36 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
     userForms.classList.remove("bounceLeft");
     userForms.classList.add("bounceRight");
   };
-  const handleSignIn = (e, email, password) => {
-    // Set all UserContext variables and call something
-    // like signInWithEmailAndPassword() from Authenticator
-    e.preventDefault();
-    setCurrentUsername(username);
-    //Hardcoded user account (Delete Later).
-    if (email === "test@gmail.com") {
-      try {
-        //Insert Auth checker from Backend HERE <---
 
-        setIsAuth(true);
-        setUserData({
-          username: username,
-          email: email,
-        });
+  // Sign in and sign up functions ~Eman April 6, 2022
+  const navigate = useNavigate();
+  const handleSignIn = async (e, email, password) => {
+    e.preventDefault();
+    // setCurrentUsername(username);
+    try {
+      await new Authenticator().signIn(email, password);
+      setErrMsgText("Welcome back!");
+      setTimeout(function () {
         navigate("/feed");
-      } catch (err) {
+      }, 1500);
+    } catch (err) {
         setErrMsgText("" + err);
         console.log(err);
       }
-    } else {
-      setErrMsgText("Please type 'test@gmail.com' into username field");
-    }
   };
-
-  const handleSignUp = (e, username, password, email) => {
-    // Set all UserContext variables and call something
-    // like signUpWithEmailAndPassword() from Authenticator
+  const handleSignUp = async  (e, username, password, email) => {
     e.preventDefault();
-    setCurrentUsername(username);
-
+    // setCurrentUsername(username);
     if (repassword === password) {
       try {
-        //Auth User functions goes HERE <---
-        setTimeout(function () {
-          rmBounceL();
-          navigate("/");
-        }, 2000);
-        setErrMsgText("Thank you for signing up.");
+         await new Authenticator().signUp(
+          username,
+          email,
+          password
+        );
+        setErrMsgText("Thank you for signing up! Please Login");
+        rmBounceL();
+        navigate("/feed");
       } catch (err) {
         setErrMsgText("" + err);
         console.log(err);
@@ -82,14 +66,14 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
     e.preventDefault();
   };
 
-  const devLogin = () => {
-    setCurrentUsername("Test Man");
-    setIsAuth(true);
-    setUserData({
-      username: "Dev Man",
-      email: "test@gmail.com",
-    });
-    navigate("/feed");
+  //delete later
+  const devLogin = async () => {
+    let test = await new Authenticator().signUp(
+      username,
+      email,
+      password
+    );
+    console.log({test})
   };
 
   return (
@@ -146,8 +130,8 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
                     type='email'
                     className='forms_field-input'
                     required
-                    onChange={(event) => {
-                      setUsername(event.target.value);
+                    onChange={(e) => {
+                      setUsername(e.target.value);
                     }}
                   />
                   <label className='forms_field-label'>
@@ -160,8 +144,8 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
                     className='forms_field-input'
                     minLength='6'
                     required
-                    onChange={(event) => {
-                      setPassword(event.target.value);
+                    onChange={(e) => {
+                      setPassword(e.target.value);
                     }}
                   />
                   <label className='forms_field-label'>
@@ -175,6 +159,7 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
                   className='forms_buttons-forgot'>
                   Forgot password?
                 </button>
+
                 {/* Button for logging in with hardcoded test account  */}
                 <button
                   type='button'
@@ -209,8 +194,8 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
                     type='text'
                     className='forms_field-input'
                     required
-                    onChange={(event) => {
-                      setUsername(event.target.value);
+                    onChange={(e) => {
+                      setUsername(e.target.value);
                     }}
                   />
                   <label className='forms_field-label'>
@@ -222,8 +207,8 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
                     type='email'
                     className='forms_field-input'
                     required
-                    onChange={(event) => {
-                      setEmail(event.target.value);
+                    onChange={(e) => {
+                      setEmail(e.target.value);
                     }}
                   />
                   <label className='forms_field-label'>
@@ -235,8 +220,8 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
                     type='password'
                     className='forms_field-input'
                     required
-                    onChange={(event) => {
-                      setPassword(event.target.value);
+                    onChange={(e) => {
+                      setPassword(e.target.value);
                     }}
                   />
                   <label className='forms_field-label'>
@@ -271,87 +256,3 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
     </section>
   );
 }
-
-// export default function AuthPage() {
-//   const navigate = useNavigate();
-//   // const { setCurrentUID, setCurrentUsername } = useContext(UserContext);
-
-//   // Set Sign Up state
-//   const [upUsername, setUpUsername] = useState("");
-//   const [upEmail, setUpEmail] = useState("");
-//   const [upPassword, setUpPassword] = useState("");
-
-//   // Set Sign In state
-//   const [inEmail, setInEmail] = useState("");
-//   const [inPassword, setInPassword] = useState("");
-
-//   const handleSignIn = async (e) => {
-//     // Set all UserContext variables and call something
-//     // like signInWithEmailAndPassword() from Authenticator
-//     e.preventDefault();
-//     new Authenticator()
-//       .signIn(inEmail, inPassword)
-//       // .then((uid) => {
-//       //     setCurrentUID(uid);
-//       //     setCurrentUsername(upUsername);
-//       // })
-//       .then(() => navigate("/feed"))
-//       .catch((e) => {
-//         console.log(e);
-//       });
-//   };
-
-//   const handleSignUp = async (e) => {
-//     // Set all UserContext variables and call something
-//     // like signUpWithEmailAndPassword() from Authenticator
-//     e.preventDefault();
-//     try {
-//       const uid = await new Authenticator().signUp(
-//         upUsername,
-//         upEmail,
-//         upPassword
-//       );
-//       // setCurrentUID(uid);
-//       // setCurrentUsername(upUsername);
-
-//       navigate("/feed");
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h1>Auth Page</h1>
-//       <form>
-//         <h2>Sign In</h2>
-//         <TextInput
-//           inputType='email'
-//           placeHolder='Email'
-//           setText={setInEmail}
-//         />
-//         <TextInput
-//           inputType='password'
-//           placeHolder='Password'
-//           setText={setInPassword}
-//         />
-//         <TextButton title='Submit' onClick={handleSignIn} />
-//       </form>
-//       <form>
-//         <h2>Sign Up</h2>
-//         <TextInput
-//           inputType='email'
-//           placeHolder='Email'
-//           setText={setUpEmail}
-//         />
-//         <TextInput placeHolder='Username' setText={setUpUsername} />
-//         <TextInput
-//           inputType='password'
-//           placeHolder='Password'
-//           setText={setUpPassword}
-//         />
-//         <TextButton title='Submit' onClick={handleSignUp} />
-//       </form>
-//     </div>
-//   );
-// }
