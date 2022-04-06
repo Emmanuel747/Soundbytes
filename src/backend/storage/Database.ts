@@ -61,6 +61,10 @@ class Database implements IDatabase {
 
     async getUser(uid: UID): Promise<User> {
         // Simply get user by UID
+        if (!uid) {
+            console.log("no uid in Database.getUser", uid);
+            throw new Error("No uid in Database.getUser");
+        }
         const userDoc = await getDoc(doc(FireDB, "users", uid));
 
         if (userDoc.exists()) return userDoc.data() as User;
