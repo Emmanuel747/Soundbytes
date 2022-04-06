@@ -21,6 +21,7 @@ class Database implements IDatabase {
     async makePost(post: Post): Promise<PID> {
         // Add a post to the 'posts' collection
         const postsRef = collection(FireDB, "posts");
+        post.pid = postsRef.id;
         await addDoc(postsRef, post);
 
         // Add a post to the 'users/uid' document
@@ -61,6 +62,10 @@ class Database implements IDatabase {
 
     async getUser(uid: UID): Promise<User> {
         // Simply get user by UID
+        if (!uid) {
+            console.log("no uid in Database.getUser", uid);
+            throw new Error("No uid in Database.getUser");
+        }
         const userDoc = await getDoc(doc(FireDB, "users", uid));
 
         if (userDoc.exists()) return userDoc.data() as User;
@@ -88,7 +93,7 @@ class Database implements IDatabase {
         // Get 'users/usernames' document, find given username, and return UID
         const usernames = await getDoc(doc(FireDB, "users", "usernames"));
 
-        if (usernames.exists()) return usernames.data()[username].uid;
+        if (usernames.exists()) return usernames.data()[username];
         else throw new Error("No usernames found.");
     }
 

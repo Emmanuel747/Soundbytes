@@ -64,13 +64,13 @@ export default function RecordingPage() {
     }, []);
 
     const uploadPost = async () => {
-        const pm = new PostBuilder();
-        await pm.makePost(title, blob, currentUID);
+        const pb = new PostBuilder();
+        await pb.makePost(title, blob, currentUID);
     };
 
     const uploadReply = async () => {
-        const pm = new PostBuilder();
-        await pm.makeReply(parentPID, parentUID, title, blob, currentUID);
+        const pb = new PostBuilder();
+        await pb.makeReply(parentPID, parentUID, title, blob, currentUID);
     };
 
     return (

@@ -18,6 +18,7 @@ class PostBuilder implements IPostBuilder {
 
         // Upload data to Firestore
         const post: Post = {
+            pid: "",
             title: title,
             uid: uid,
             audioURL: url,

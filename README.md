@@ -1,4 +1,4 @@
-# Notify - SoundBytes
+# SoundBytes
 
 [Temporary] Project in development by a team of LSU early professionals.
 
@@ -16,7 +16,7 @@
 -   [x] Establish the user auth flow everywhere
 -   [x] Return to useProtectedRoutes hook
 -   [ ] Flesh out the Post component
--   [ ] Add editing to Profile (this includes toggle following on other's profiles)
+-   [ ] Add following to Profile
 -   [ ] Create search bar in Profile
 
 ## Stretch
