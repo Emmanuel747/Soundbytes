@@ -12,6 +12,9 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
     const [email, setEmail] = useState("");
     const [errMsgText, setErrMsgText] = useState("");
 
+    const [emailIn, setEmailIn] = useState("");
+    const [passwordIn, setPasswordIn] = useState("");
+
     // Trigger functions for the bounce animation ~Eman, April 1, 2022
     const rmBounceR = () => {
         setErrMsgText("");
@@ -30,11 +33,11 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
 
     // Sign in and sign up functions ~Eman April 6, 2022
     const navigate = useNavigate();
-    const handleSignIn = async (e, email, password) => {
+    const handleSignIn = async (e, emailIn, passwordIn) => {
         e.preventDefault();
         // setCurrentUsername(username);
         try {
-            await new Authenticator().signIn(email, password);
+            await new Authenticator().signIn(emailIn, passwordIn);
             setErrMsgText("Welcome back!");
             setTimeout(function () {
                 navigate("/feed");
@@ -49,10 +52,17 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
         // setCurrentUsername(username);
         if (repassword === password) {
             try {
-                await new Authenticator().signUp(username, email, password);
-                setErrMsgText("Thank you for signing up! Please Login");
-                rmBounceL();
-                navigate("/feed");
+                const uid = await new Authenticator().signUp(
+                    username,
+                    email,
+                    password
+                );
+
+                if (uid) {
+                    setErrMsgText("Thank you for signing up! Please Login");
+                    rmBounceL();
+                    navigate("/feed");
+                } else setErrMsgText("Something went wrong");
             } catch (err) {
                 setErrMsgText("" + err);
                 console.log(err);
@@ -63,10 +73,10 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
 
     //delete later
     const devLogin = async () => {
-        let test = await new Authenticator().signUp(
-          "admin",
-          "admin@soundbytes.com",
-          "admin123"
+        let test = await new Authenticator().signIn(
+            "admin",
+            "admin@soundbytes.com",
+            "admin123"
         );
         console.log({ test });
     };
@@ -117,7 +127,7 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
                         <form
                             className='forms_form'
                             onSubmit={(e) => {
-                                handleSignIn(e, username, password);
+                                handleSignIn(e, emailIn, passwordIn);
                             }}>
                             <fieldset className='forms_fieldset'>
                                 <div className='forms_field'>
@@ -126,7 +136,7 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
                                         className='forms_field-input'
                                         required
                                         onChange={(e) => {
-                                            setUsername(e.target.value);
+                                            setEmailIn(e.target.value);
                                         }}
                                     />
                                     <label className='forms_field-label'>
@@ -140,7 +150,7 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
                                         minLength='6'
                                         required
                                         onChange={(e) => {
-                                            setPassword(e.target.value);
+                                            setPasswordIn(e.target.value);
                                         }}
                                     />
                                     <label className='forms_field-label'>
