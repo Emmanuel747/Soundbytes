@@ -63,7 +63,7 @@ export default function Post({ post }) {
         getOtherUser();
         setLikeCount(post.likes);
     }, []);
-
+    
     return (
         <div className='p-4 border rounded-lg shadow bg-slate-300 border-slate-600'>
             <h4 className='font-medium text-center'>{post.title}</h4>
@@ -75,7 +75,8 @@ export default function Post({ post }) {
             />
             <p>{getTimestamp()}</p>
             <div onClick={handleLikes}>
-                {/* <AiOutlineLike style={{ fontSize: "32px" }} /> */}
+                { likedPost ? ( <AiFillLike style={{ fontSize: "32px"}} /> ): 
+                                ( <AiOutlineLike style={{ fontSize: "32px" }} /> )}
                 <div onClick={() => setLikedPost(!likedPost)}>
                     {likedPost ? "LIKED" : "NOT LIKED"}
                 </div>
