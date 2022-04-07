@@ -137,7 +137,9 @@ class Database implements IDatabase {
         // Get a list of all posts from a list of UIDs
         const listsOfPosts: Promise<Feed>[] = uids.map(async (uid) => {
             const userDoc = await getDoc(doc(FireDB, "users", uid));
-            return (userDoc.data() as User).posts;
+            return (userDoc.data() as User).posts.filter(
+                (post) => post.isReply !== true
+            );
         });
 
         const posts: Feed = await Promise.all(listsOfPosts).then((results) =>
