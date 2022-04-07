@@ -11,9 +11,28 @@ import { NavLink, useNavigate, Link } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { AiOutlineSearch } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
-import "../Styles/GenericStyles.scss";
+import '../Styles/GenericStyles.scss';
 
 import SearchBar from "../components/SearchBar";
+
+// const SearchBar = () => {
+
+
+//     return (
+//         <div>
+//             <TextInput
+//                 style={{
+//                     border: "10px",
+//                     borderStyle: "solid",
+//                     borderWidth: 1,
+//                     borderColor: "black",
+//                     borderRadius: 5,
+//                 }}
+//                 placeHolder='Search Users'
+//             />
+//         </div>
+//     );
+// };
 
 const HomeScreenButton = () => {
     return (
@@ -26,15 +45,8 @@ const HomeScreenButton = () => {
 const UserDetails = ({ username, pfpURL, followerCount, followingCount }) => {
     return (
         <div className='flex flex-col items-center overflow-hidden textFont'>
-            <img
-                style={{
-                    maxWidth: "11rem",
-                    borderRadius: "150/2",
-                    borderWidth: 2,
-                    borderColor: "black",
-                }}
-                src={pfpURL}
-                alt='ProfileImg'
+            <img style={{ maxWidth: "11rem", borderRadius: "150/2", borderWidth: 2, borderColor: "black" }} 
+              src={pfpURL} alt='ProfileImg' 
             />
             <h3>{username}</h3>
             <div className='flex flex-row justify-center gap-x-10'>
@@ -63,15 +75,20 @@ const PersonalProfile = () => {
     }, []);
 
     return (
-        <div>
-            <UserDetails
-                className='flex flex-col'
+        <div >
+            <UserDetails  className='flex flex-col'
                 username={currentUsername}
                 pfpURL={pfpURL}
                 followerCount={followerCount}
                 followingCount={followingCount}
             />
-            <Feed feedFactory={new ProfileFeedComposer(currentUID)} />
+            <div className='RootContainer'>
+            <div className='feedContainer'>
+                <div className='feedContainer font-mono tracking-widest p-2 globalFeedContainer font-loader font-bold'>
+                {<Feed feedFactory={new ProfileFeedComposer(currentUID)} />}
+                </div>
+            </div>
+            </div>
         </div>
     );
 };
@@ -103,19 +120,18 @@ const OtherProfile = ({ username }) => {
 
     return (
         <div>
-            <UserDetails
-                className='flex flex-col'
+            <UserDetails  className='flex flex-col'
                 username={username}
                 pfpURL={pfpURL}
                 followerCount={followerCount}
                 followingCount={followingCount}
             />
             <div className='RootContainer'>
-                <div className='feedContainer'>
-                    <div className='p-2 font-mono font-bold tracking-widest feedContainer globalFeedContainer font-loader'>
-                        {composer && <Feed feedFactory={composer} />}
-                    </div>
+            <div className='feedContainer'>
+                <div className='feedContainer font-mono tracking-widest p-2 globalFeedContainer font-loader font-bold'>
+                {composer && <Feed feedFactory={composer} />}
                 </div>
+            </div>
             </div>
         </div>
     );
