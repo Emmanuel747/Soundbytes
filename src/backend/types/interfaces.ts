@@ -23,7 +23,7 @@ interface IMediaStorage {
 }
 
 interface IPostBuilder {
-    makePost(title: string, file: Blob, isReply: boolean, uid: UID): void;
+    makePost(title: string, file: Blob, uid: UID, isReply: boolean): void;
     makeReply(
         parentPID: PID,
         parentUID: UID,

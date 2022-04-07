@@ -5,8 +5,8 @@ class PostBuilder implements IPostBuilder {
     async makePost(
         title: string,
         file: Blob,
-        isReply: boolean = false,
-        uid: string
+        uid: string,
+        isReply: boolean = false
     ): Promise<PID> {
         // Call MediaStorage.upload and MediaStorage.getLink.
         // Create a Post object, then call Database.makePost.
@@ -33,6 +33,8 @@ class PostBuilder implements IPostBuilder {
             replies: [],
         };
 
+        console.log("PB Post", post);
+
         const pid = await new Database().makePost(post);
         return pid;
     }
@@ -47,7 +49,7 @@ class PostBuilder implements IPostBuilder {
         // Call makePost, then append reply
         // to parent post's replies list.
 
-        const newPID = await this.makePost(title, file, true, uid);
+        const newPID = await this.makePost(title, file, uid, true);
 
         await new Database().editPost(
             { replies: [newPID] },
