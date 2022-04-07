@@ -2,7 +2,7 @@ import { Database } from "../../backend";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { UserContext } from "../hooks/UserContext";
 import { useState, useContext, useEffect } from "react";
-import { TiArrowForward } from "react-icons/ti";
+import { TiArrowForwardOutline } from "react-icons/ti";
 import { useNavigate } from "react-router";
 
 export default function Post({ post }) {
@@ -69,7 +69,7 @@ export default function Post({ post }) {
     }, []);
 
     return (
-        <div className='p-4 border rounded-lg shadow bg-slate-300 border-slate-600'>
+        <div className='p-4 border rounded-lg shadow bg-slate-600 border-slate-900 border-2'>
             <h4 className='font-medium text-center'>{post.title}</h4>
             <p className='font-bold username'>@{otherUsername}</p>
             <img
@@ -81,15 +81,15 @@ export default function Post({ post }) {
             <div onClick={handleLikes}>
                 <div onClick={() => setLikedPost(!likedPost)}>
                     {likedPost ? (
-                        <AiFillLike style={{ fontSize: 32 }} />
+                        <AiFillLike style={{ fontSize: 28 }} />
                     ) : (
-                        <AiOutlineLike style={{ fontSize: 32 }} />
+                        <AiOutlineLike style={{ fontSize: 28 }} />
                     )}
                     {likedPost ? "LIKED" : "NOT LIKED"}
                 </div>
                 <p>{likeCount}</p>
             </div>
-            <TiArrowForward onClick={handleReply} style={{ fontSize: 32 }} />
+            <TiArrowForwardOutline onClick={handleReply} style={{ fontSize: 25 }} />
             <audio src={post.audioURL} controls></audio>
         </div>
     );
