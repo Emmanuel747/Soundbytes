@@ -64,9 +64,9 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
     //delete later
     const devLogin = async () => {
         let test = await new Authenticator().signUp(
-            "admin",
-            "admin@soundbytes.com",
-            "admin123"
+          "admin",
+          "admin@soundbytes.com",
+          "admin123"
         );
         console.log({ test });
     };

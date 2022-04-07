@@ -24,3 +24,8 @@ h3 {
 h4 {
   @apply text-lg;
 }
+
+div {
+  font-family: 'Mulish', sans-serif;
+  font-size: 1rem;
+}

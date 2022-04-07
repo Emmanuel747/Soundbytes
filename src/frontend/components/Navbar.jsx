@@ -16,7 +16,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="header bg-black text-white">
+    <div className="header text-white" style={{backgroundColor: '#222'}}>
       <p
         style={{fontWeight: 'bold', textAlign: 'center', padding: '10px', fontSize: 'large'}}
       > Welcome to SoundBytes🎙{currentUsername !== undefined ? `, ${currentUsername}` : ''} </p>
