@@ -2,6 +2,7 @@ import { Database } from "../../backend";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { UserContext } from "../hooks/UserContext";
 import { useState, useContext, useEffect } from "react";
+import { TiArrowForward } from "react-icons/ti";
 
 export default function Post({ post }) {
     const { currentUID } = useContext(UserContext);
