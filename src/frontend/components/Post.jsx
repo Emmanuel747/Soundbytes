@@ -2,6 +2,7 @@ import { Database } from "../../backend";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { UserContext } from "../hooks/UserContext";
 import { useState, useContext, useEffect } from "react";
+import WebFont from 'webfontloader';
 
 export default function Post({ post }) {
     const { currentUID } = useContext(UserContext);
@@ -46,20 +47,25 @@ export default function Post({ post }) {
     useEffect(() => {
         getUser();
         getOtherUser();
+        WebFont.load({
+            google: {
+              families: ['Roboto']
+            }
+          });
     }, []);
 
     return (
-        <div className='p-4 border bg-slate-300 border-slate-600 '>
-            <h4 className='text-center'>{post.title}</h4>
-            <p className='username'>{otherUsername}</p>
+        <div className='p-4 border bg-slate-300 border-slate-600 shadow rounded-lg'>
+            <h4 className='font-loader text-center font-medium'>{post.title}</h4>
+            <p className='username font-loader font-bold'>@{otherUsername}</p>
             {/* <img src={otherPFP} alt="profile picture" /> */}
-            <p>{getTimestamp()}</p>
-            <div
+            <p className="font-loader font-medium">{getTimestamp()}</p>
+            <div className="flex"
                 onClick={() => {
                     handleLikes();
                 }}>
                 {<AiOutlineLike style={{ fontSize: "32px" }} />}
-                <p>{post.likes}</p>
+                <p className="align-bottom" style={{ fontSize: "21px" }}>{post.likes}</p>
             </div>
             <audio src={post.audioURL} controls></audio>
         </div>
