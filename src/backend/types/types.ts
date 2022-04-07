@@ -33,3 +33,4 @@ type PostEditable = {
 };
 
 type Feed = Post[];
+type getAllUsernames = [];

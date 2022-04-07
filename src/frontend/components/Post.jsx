@@ -2,12 +2,13 @@ import { Database } from "../../backend";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { UserContext } from "../hooks/UserContext";
 import { useState, useContext, useEffect } from "react";
-import WebFont from 'webfontloader';
+import WebFont from "webfontloader";
 
 export default function Post({ post }) {
     const { currentUID } = useContext(UserContext);
     const [user, setUser] = useState();
     const [likedPost, setLikedPost] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
     const [otherUsername, setOtherUsername] = useState("");
     const [otherPFP, setOtherPFP] = useState("");
 
@@ -18,10 +19,8 @@ export default function Post({ post }) {
         const user = await new Database().getUser(currentUID);
         setUser(user);
 
-        const tempPID = "";
-
         // Set the like indicator to the correct one
-        setLikedPost(user.likedPosts.includes(tempPID));
+        setLikedPost(user.likedPosts.includes(post.pid));
     };
 
     const getOtherUser = async () => {
@@ -32,40 +31,55 @@ export default function Post({ post }) {
 
     const handleLikes = async () => {
         const db = new Database();
-        const tempPID = "";
 
         // See if the user had already liked it
-        // TODO
+        const currentLikes = user.likedPosts;
+        let delta = 0;
+
+        if (currentLikes.includes(post.pid)) {
+            // Post is already liked, so unlike it
+            delta--;
+            setLikedPost(false);
+            currentLikes.splice(currentLikes.indexOf(post.pid), 1);
+        } else {
+            // Post not liked yet, so like it
+            setLikedPost(true);
+            delta++;
+            currentLikes.push(post.pid);
+        }
+
+        const currentLikeCount = likeCount + delta;
+
+        setLikeCount(currentLikeCount);
+        console.log("Likes", currentLikeCount);
 
         // Update user's liked posts
-        const currentLikes = user.likedPosts;
-        currentLikes.push(tempPID);
-
         await db.editUser({ likedPosts: currentLikes }, currentUID);
+        await db.editPost({ likes: delta }, post.pid, post.uid);
     };
 
     useEffect(() => {
         getUser();
         getOtherUser();
-        WebFont.load({
-            google: {
-              families: ['Roboto']
-            }
-          });
+        setLikeCount(post.likes);
     }, []);
 
     return (
-        <div className='p-4 border bg-slate-300 border-slate-600 shadow rounded-lg'>
-            <h4 className='font-loader text-center font-medium'>{post.title}</h4>
-            <p className='username font-loader font-bold'>@{otherUsername}</p>
-            {/* <img src={otherPFP} alt="profile picture" /> */}
-            <p className="font-loader font-medium">{getTimestamp()}</p>
-            <div className="flex"
-                onClick={() => {
-                    handleLikes();
-                }}>
-                {<AiOutlineLike style={{ fontSize: "32px" }} />}
-                <p className="align-bottom" style={{ fontSize: "21px" }}>{post.likes}</p>
+        <div className='p-4 border rounded-lg shadow bg-slate-300 border-slate-600'>
+            <h4 className='font-medium text-center'>{post.title}</h4>
+            <p className='font-bold username'>@{otherUsername}</p>
+            <img
+                style={{ width: 80, height: 80 }}
+                src={otherPFP}
+                alt='Profile'
+            />
+            <p>{getTimestamp()}</p>
+            <div onClick={handleLikes}>
+                {/* <AiOutlineLike style={{ fontSize: "32px" }} /> */}
+                <div onClick={() => setLikedPost(!likedPost)}>
+                    {likedPost ? "LIKED" : "NOT LIKED"}
+                </div>
+                <p>{likeCount}</p>
             </div>
             <audio src={post.audioURL} controls></audio>
         </div>

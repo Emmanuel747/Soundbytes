@@ -11,27 +11,28 @@ import { NavLink, useNavigate, Link } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { AiOutlineSearch } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
+import '../Styles/GenericStyles.scss';
 
-const SearchBar = () => {
-    const getAllUsernames = () => {
-        // Call something like Database.getAllUsernames()
-    };
+import SearchBar from "../components/SearchBar";
 
-    return (
-        <div>
-            <TextInput
-                style={{
-                    border: "10px",
-                    borderStyle: "solid",
-                    borderWidth: 1,
-                    borderColor: "black",
-                    borderRadius: 5,
-                }}
-                placeHolder='Search Users'
-            />
-        </div>
-    );
-};
+// const SearchBar = () => {
+
+
+//     return (
+//         <div>
+//             <TextInput
+//                 style={{
+//                     border: "10px",
+//                     borderStyle: "solid",
+//                     borderWidth: 1,
+//                     borderColor: "black",
+//                     borderRadius: 5,
+//                 }}
+//                 placeHolder='Search Users'
+//             />
+//         </div>
+//     );
+// };
 
 const HomeScreenButton = () => {
     return (
@@ -43,8 +44,10 @@ const HomeScreenButton = () => {
 
 const UserDetails = ({ username, pfpURL, followerCount, followingCount }) => {
     return (
-        <div className='flex flex-col items-center'>
-            <img style={{ maxWidth: "10rem" }} src={pfpURL} alt='Profile' />
+        <div className='flex flex-col items-center overflow-hidden textFont'>
+            <img style={{ maxWidth: "11rem", borderRadius: "150/2", borderWidth: 2, borderColor: "black" }} 
+              src={pfpURL} alt='ProfileImg' 
+            />
             <h3>{username}</h3>
             <div className='flex flex-row justify-center gap-x-10'>
                 <p>Following: {followingCount}</p>
@@ -135,7 +138,7 @@ export default function ProfilePage() {
     return (
         <div>
             <SearchBar />
-            <HomeScreenButton />
+            {/* <HomeScreenButton /> */}
             {username ? (
                 <OtherProfile username={username} />
             ) : (

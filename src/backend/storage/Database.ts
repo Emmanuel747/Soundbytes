@@ -14,6 +14,8 @@ class Database implements IDatabase {
         // Simply get post by PID
         const postDoc = await getDoc(doc(FireDB, "posts", pid));
 
+        console.log("Post", pid);
+
         if (postDoc.exists()) return postDoc.data() as Post;
         else throw new Error("Post does not exist.");
     }
@@ -21,8 +23,11 @@ class Database implements IDatabase {
     async makePost(post: Post): Promise<PID> {
         // Add a post to the 'posts' collection
         const postsRef = collection(FireDB, "posts");
-        post.pid = postsRef.id;
-        await addDoc(postsRef, post);
+        const addedDoc = await addDoc(postsRef, post);
+
+        // Add pid to the post
+        post.pid = addedDoc.id;
+        await updateDoc(doc(postsRef, addedDoc.id), { pid: post.pid });
 
         // Add a post to the 'users/uid' document
         const userRef = doc(FireDB, "users", post.uid);
@@ -32,7 +37,7 @@ class Database implements IDatabase {
             posts: userPosts,
         });
 
-        return postsRef.id;
+        return post.pid;
     }
 
     async editPost(post: PostEditable, pid: PID, uid: UID): Promise<void> {
@@ -57,15 +62,30 @@ class Database implements IDatabase {
 
         // Update 'users/uid' document
         const userPostRef = doc(FireDB, "users", uid);
-        await updateDoc(userPostRef, post);
+        const user = await getDoc(userPostRef);
+        let userPosts = (user.data() as User).posts;
+
+        if (userPosts.length > 0) {
+            const indexChangedPost = userPosts.findIndex((p) => p.pid === pid);
+            userPosts[indexChangedPost] = Object.assign(
+                userPosts[indexChangedPost],
+                post
+            );
+        } else {
+            userPosts = Object.assign(userPosts, post);
+        }
+
+        await updateDoc(userPostRef, {
+            posts: userPosts,
+        });
     }
 
     async getUser(uid: UID): Promise<User> {
         // Simply get user by UID
         if (!uid) {
-            console.log("no uid in Database.getUser", uid);
             throw new Error("No uid in Database.getUser");
         }
+
         const userDoc = await getDoc(doc(FireDB, "users", uid));
 
         if (userDoc.exists()) return userDoc.data() as User;

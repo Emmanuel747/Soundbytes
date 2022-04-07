@@ -26,6 +26,7 @@ h4 {
   @apply text-lg;
 }
 
-.font-loader {
-  font-family: 'Roboto';
+div {
+  font-family: 'Mulish', sans-serif;
+  font-size: 1rem;
 }
