@@ -5,6 +5,7 @@ import {
     signInWithEmailAndPassword,
     updateProfile,
 } from "firebase/auth";
+import { MediaStorage } from "./storage/MediaStorage";
 
 class Authenticator implements IAuthenticator {
     database: IDatabase = new Database();
@@ -23,11 +24,29 @@ class Authenticator implements IAuthenticator {
 
         updateProfile(userCredential.user, { displayName: username });
 
+        // Generate random profile picture
+        const getRandomColor = () => {
+            const colors: string[] = [
+                "blue",
+                "green",
+                "orange",
+                "purple",
+                "red",
+                "yellow",
+            ];
+            const i = Math.floor(Math.random() * colors.length);
+            return colors[i];
+        };
+        // const pfpURL = "https://picsum.photos/200";
+        const pfpURL = await new MediaStorage().getLink(
+            `images/pfp-${getRandomColor()}.png`
+        );
+
         // Create new User object
         const uid = userCredential.user.uid;
         const newUser: User = {
             username: username,
-            pfpURL: "https://picsum.photos/200",
+            pfpURL: pfpURL,
             following: [],
             followers: [],
             posts: [],
@@ -36,6 +55,7 @@ class Authenticator implements IAuthenticator {
 
         // Update Database
         this.database.makeUser(newUser, uid);
+
         return uid;
     }
 
