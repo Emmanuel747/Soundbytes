@@ -1,7 +1,10 @@
-import { Database } from "../../backend";
+import { Database, GeneralFeedComposer } from "../../backend";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { UserContext } from "../hooks/UserContext";
 import { useState, useContext, useEffect } from "react";
+import { TiArrowForward } from "react-icons/ti";
+import { useNavigate } from "react-router";
+import Feed from "./Feed";
 
 export default function Post({ post }) {
     const { currentUID } = useContext(UserContext);
@@ -50,12 +53,14 @@ export default function Post({ post }) {
         const currentLikeCount = likeCount + delta;
 
         setLikeCount(currentLikeCount);
-        console.log("Likes", currentLikeCount);
 
         // Update user's liked posts
         await db.editUser({ likedPosts: currentLikes }, currentUID);
         await db.editPost({ likes: delta }, post.pid, post.uid);
     };
+
+    const navigate = useNavigate();
+    const handleReply = () => navigate(`/recording/${post.pid}/${post.uid}`);
 
     useEffect(() => {
         getUser();
@@ -64,23 +69,44 @@ export default function Post({ post }) {
     }, []);
 
     return (
-        <div className='p-4 border rounded-lg shadow bg-slate-300 border-slate-600'>
-            <h4 className='font-medium text-center'>{post.title}</h4>
-            <p className='font-bold username'>@{otherUsername}</p>
-            <img
-                style={{ width: 80, height: 80 }}
-                src={otherPFP}
-                alt='Profile'
-            />
-            <p>{getTimestamp()}</p>
-            <div onClick={handleLikes}>
-                {/* <AiOutlineLike style={{ fontSize: "32px" }} /> */}
-                <div onClick={() => setLikedPost(!likedPost)}>
-                    {likedPost ? "LIKED" : "NOT LIKED"}
+        <div className='p-4 border rounded-lg shadow bg-slate-500 border-slate-800'>
+            <div className='post'>
+                <img
+                    style={{ borderRadius: "50%", width: 80, height: 80 }}
+                    src={otherPFP}
+                    alt='Profile'
+                />
+                <p className='text-left font-bold'>@{otherUsername}</p>
+                <h4 className='font-medium'>{post.title}</h4>
+                
+                <div className="flex flex-row justify-items-stretch"> 
+                <div className="flex flex-row" onClick={handleLikes}>
+                    <div onClick={() => setLikedPost(!likedPost)}>
+                        {likedPost ? (
+                            <AiFillLike style={{ fontSize: 32 }} />
+                        ) : (
+                            <AiOutlineLike style={{ fontSize: 32 }} />
+                        )}
+                        {/*Let's just like count visible in the final product. likedPost ? "LIKED" : "NOT LIKED"*/}
+                    </div>
+                    <p>{likeCount}</p>
                 </div>
-                <p>{likeCount}</p>
+                <TiArrowForward
+                    onClick={handleReply}
+                    style={{ fontSize: 32,}}
+                />
+                </div>
+                <div className="flex flex-row"> 
+                    <audio src={post.audioURL} controls></audio>
+                    <p>{getTimestamp()}</p>
+                </div>
             </div>
-            <audio src={post.audioURL} controls></audio>
+
+            {post.replies.length > 0 && (
+                <div className='replies'>
+                    <Feed feedFactory={new GeneralFeedComposer(post.replies)} />
+                </div>
+            )}
         </div>
     );
 }

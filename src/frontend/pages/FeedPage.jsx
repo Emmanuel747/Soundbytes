@@ -13,7 +13,7 @@ export default function FeedPage() {
     const { currentUID } = useContext(UserContext);
 
     return (
-        <div className='RootContainer'>
+        <div className='RootContainer black-content'>
             <div className='p-3 text-center title'>
                 <h1 className='font-mono tracking-widest'>Feed Page</h1>
             </div>

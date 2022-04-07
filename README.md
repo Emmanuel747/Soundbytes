@@ -15,7 +15,7 @@
 
 -   [x] Establish the user auth flow everywhere
 -   [x] Return to useProtectedRoutes hook
--   [ ] Flesh out the Post component
+-   [x] Flesh out the Post component
 -   [ ] Add following to Profile
 -   [ ] Create search bar in Profile
 

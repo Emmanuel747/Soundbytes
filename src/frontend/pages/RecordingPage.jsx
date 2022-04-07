@@ -78,7 +78,9 @@ export default function RecordingPage() {
     };
     const uploadReply = async () => {
         const pb = new PostBuilder();
-        await pb.makeReply(parentPID, parentUID, title, blob, currentUID);
+        pb.makeReply(parentPID, parentUID, title, blob, currentUID).then(() =>
+            navigate("/feed")
+        );
     };
 
     return (

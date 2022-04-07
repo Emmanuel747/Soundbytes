@@ -1,58 +1,66 @@
 import { useContext } from "react";
 import { useParams } from "react-router";
-import { ProfileFeedComposer, Database } from "../../backend";
+import { ProfileFeedComposer, Database, UserInteraction } from "../../backend";
 import { Feed, IconButton, TextInput } from "../components";
 import { UserContext } from "../hooks/UserContext";
 import useProtectedRoute from "../hooks/useProtectedRoute";
-import useAsync from "../hooks/useAsync";
 import { useState, useEffect } from "react";
-import { NavLink, useNavigate, Link } from "react-router-dom";
-
-import { AiFillHome } from "react-icons/ai";
-import { AiOutlineSearch } from "react-icons/ai";
-import { AiOutlineClose } from "react-icons/ai";
-import '../Styles/GenericStyles.scss';
+import "../Styles/GenericStyles.scss";
 
 import SearchBar from "../components/SearchBar";
-
-// const SearchBar = () => {
-
-
-//     return (
-//         <div>
-//             <TextInput
-//                 style={{
-//                     border: "10px",
-//                     borderStyle: "solid",
-//                     borderWidth: 1,
-//                     borderColor: "black",
-//                     borderRadius: 5,
-//                 }}
-//                 placeHolder='Search Users'
-//             />
-//         </div>
-//     );
-// };
-
-const HomeScreenButton = () => {
-    return (
-        <Link to='/feed'>
-            <AiFillHome style={{ fontSize: "64px" }} />
-        </Link>
-    );
-};
 
 const UserDetails = ({ username, pfpURL, followerCount, followingCount }) => {
     return (
         <div className='flex flex-col items-center overflow-hidden textFont'>
-            <img style={{ maxWidth: "11rem", borderRadius: "150/2", borderWidth: 2, borderColor: "black" }} 
-              src={pfpURL} alt='ProfileImg' 
+            <img
+                style={{
+                    borderRadius: "50%",
+                    maxWidth: "11rem",
+                    //borderRadius: "150/2",
+                    borderWidth: 2,
+                    borderColor: "black",
+                }}
+                src={pfpURL}
+                alt='ProfileImg'
             />
             <h3>{username}</h3>
             <div className='flex flex-row justify-center gap-x-10'>
                 <p>Following: {followingCount}</p>
                 <p>Followers: {followerCount}</p>
             </div>
+        </div>
+    );
+};
+
+const FollowButton = ({ curUID, otherUID }) => {
+    const initFollowing = async () => {
+        const user = await new Database().getUser(curUID);
+        console.log(
+            user.following,
+            "in",
+            otherUID,
+            "==",
+            user.following.includes(otherUID)
+        );
+        return user.following.includes(otherUID);
+    };
+
+    const [isFollowing, setIsFollowing] = useState(initFollowing);
+
+    const toggleFollowing = () => {
+        const ui = new UserInteraction();
+        if (isFollowing) {
+            ui.unfollow(curUID, otherUID);
+            setIsFollowing(false);
+        } else {
+            ui.follow(curUID, otherUID);
+            setIsFollowing(true);
+        }
+    };
+
+    return (
+        <div onClick={toggleFollowing}>
+            {isFollowing ? "Unfollow" : "Follow"}
         </div>
     );
 };
@@ -75,20 +83,31 @@ const PersonalProfile = () => {
     }, []);
 
     return (
-        <div className='flex flex-col'>
+        <div>
             <UserDetails
+                className='flex flex-col'
                 username={currentUsername}
                 pfpURL={pfpURL}
                 followerCount={followerCount}
                 followingCount={followingCount}
             />
-            <Feed feedFactory={new ProfileFeedComposer(currentUID)} />
+            <div className='RootContainer'>
+                <div className='feedContainer'>
+                    <div className='p-2 font-mono font-bold tracking-widest feedContainer globalFeedContainer font-loader'>
+                        <Feed
+                            feedFactory={new ProfileFeedComposer(currentUID)}
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
 
 const OtherProfile = ({ username }) => {
+    const { currentUID } = useContext(UserContext);
     const [pfpURL, setPfpURL] = useState(""); // Could probably set this to a default pfp
+    const [UID, setUID] = useState("");
     const [followerCount, setFollowerCount] = useState(0);
     const [followingCount, setFollowingCount] = useState(0);
     const [composer, setComposer] = useState();
@@ -98,6 +117,7 @@ const OtherProfile = ({ username }) => {
 
     const getUser = async (uid) => {
         const user = await new Database().getUser(uid);
+        setUID(uid);
         setFollowerCount(user.followers.length);
         setFollowingCount(user.following.length);
         setPfpURL(user.pfpURL);
@@ -113,14 +133,22 @@ const OtherProfile = ({ username }) => {
     }, []);
 
     return (
-        <div className='flex flex-col'>
-            <UserDetails
+        <div>
+            <UserDetails style={{ borderRadius: "50%"}}
+                className='flex flex-col'
                 username={username}
                 pfpURL={pfpURL}
                 followerCount={followerCount}
                 followingCount={followingCount}
             />
-            {composer && <Feed feedFactory={composer} />}
+            <FollowButton curUID={currentUID} otherUID={UID} />
+            <div className='RootContainer'>
+                <div className='feedContainer'>
+                    <div className='p-2 font-mono font-bold tracking-widest feedContainer globalFeedContainer font-loader'>
+                        {composer && <Feed feedFactory={composer} />}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
@@ -130,13 +158,12 @@ export default function ProfilePage() {
     const { username } = useParams();
 
     return (
-        <div>
+        <div >
             <SearchBar />
-            {/* <HomeScreenButton /> */}
             {username ? (
                 <OtherProfile username={username} />
             ) : (
-                <PersonalProfile />
+                <PersonalProfile/>
             )}
         </div>
     );
