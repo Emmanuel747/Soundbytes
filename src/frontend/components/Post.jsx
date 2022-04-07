@@ -2,7 +2,7 @@ import { Database, GeneralFeedComposer } from "../../backend";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { UserContext } from "../hooks/UserContext";
 import { useState, useContext, useEffect } from "react";
-import { TiArrowForwardOutline } from "react-icons/ti";
+import { TiArrowForward } from "react-icons/ti";
 import { useNavigate } from "react-router";
 import Feed from "./Feed";
 
@@ -70,26 +70,7 @@ export default function Post({ post }) {
     }, []);
 
     return (
-<<<<<<< HEAD
-        <div className='p-4 border rounded-lg shadow bg-slate-600 border-slate-900 border-2'>
-            <h4 className='font-medium text-center'>{post.title}</h4>
-            <p className='font-bold username'>@{otherUsername}</p>
-            <img
-                style={{ width: 80, height: 80 }}
-                src={otherPFP}
-                alt='Profile'
-            />
-            <p>{getTimestamp()}</p>
-            <div onClick={handleLikes}>
-                <div onClick={() => setLikedPost(!likedPost)}>
-                    {likedPost ? (
-                        <AiFillLike style={{ fontSize: 28 }} />
-                    ) : (
-                        <AiOutlineLike style={{ fontSize: 28 }} />
-                    )}
-                    {likedPost ? "LIKED" : "NOT LIKED"}
-=======
-        <div className='p-4 border rounded-lg shadow bg-slate-300 border-slate-600'>
+        <div className='p-4 border rounded-lg shadow bg-slate-500 border-slate-800'>
             <div className='post'>
                 <h4 className='font-medium text-center'>{post.title}</h4>
                 <p className='font-bold username'>@{otherUsername}</p>
@@ -109,7 +90,6 @@ export default function Post({ post }) {
                         {likedPost ? "LIKED" : "NOT LIKED"}
                     </div>
                     <p>{likeCount}</p>
->>>>>>> 8f9910942291a1e9c2813f0f52bb169fa8ce05c1
                 </div>
                 <TiArrowForward
                     onClick={handleReply}
@@ -117,17 +97,12 @@ export default function Post({ post }) {
                 />
                 <audio src={post.audioURL} controls></audio>
             </div>
-<<<<<<< HEAD
-            <TiArrowForwardOutline onClick={handleReply} style={{ fontSize: 25 }} />
-            <audio src={post.audioURL} controls></audio>
-=======
 
             {post.replies.length > 0 && (
                 <div className='replies'>
                     <Feed feedFactory={new GeneralFeedComposer(post.replies)} />
                 </div>
             )}
->>>>>>> 8f9910942291a1e9c2813f0f52bb169fa8ce05c1
         </div>
     );
 }
