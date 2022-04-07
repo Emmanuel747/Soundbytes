@@ -15,7 +15,6 @@ export default function SearchBar() {
     // Helper isActive toggle function ~Eman April 6, 2022
     const handleToggle = () => {
         setActive(!isActive);
-        console.log(isActive);
     };
 
     let usernamesArr = [];
@@ -23,7 +22,6 @@ export default function SearchBar() {
         let usernamesObj = await new Database().getAllUsernames();
         let sorted = Object.keys(usernamesObj);
         setUsernames(sorted.sort());
-        console.log(userNames);
     };
 
     const filterUsernames = async () => {
@@ -95,7 +93,7 @@ export default function SearchBar() {
 
                 <div className='search__icon-container'>
                     <label
-                        for='searchInput'
+                        htmlFor='searchInput'
                         className='search__label'
                         aria-label='Search'>
                         <svg viewBox='0 0 1000 1000' title='Search'>

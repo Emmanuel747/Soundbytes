@@ -33,8 +33,6 @@ class PostBuilder implements IPostBuilder {
             replies: [],
         };
 
-        console.log("PB Post", post);
-
         const pid = await new Database().makePost(post);
         return pid;
     }

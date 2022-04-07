@@ -53,7 +53,6 @@ export default function Post({ post }) {
         const currentLikeCount = likeCount + delta;
 
         setLikeCount(currentLikeCount);
-        console.log("Likes", currentLikeCount);
 
         // Update user's liked posts
         await db.editUser({ likedPosts: currentLikes }, currentUID);

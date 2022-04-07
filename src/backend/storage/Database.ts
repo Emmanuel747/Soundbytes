@@ -16,8 +16,6 @@ class Database implements IDatabase {
         // Simply get post by PID
         const postDoc = await getDoc(doc(FireDB, "posts", pid));
 
-        console.log("Post", pid);
-
         if (postDoc.exists()) return postDoc.data() as Post;
         else throw new Error("Post does not exist.");
     }
