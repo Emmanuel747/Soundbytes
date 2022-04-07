@@ -3,6 +3,7 @@ import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { UserContext } from "../hooks/UserContext";
 import { useState, useContext, useEffect } from "react";
 import { TiArrowForward } from "react-icons/ti";
+import { useNavigate } from "react-router";
 
 export default function Post({ post }) {
     const { currentUID } = useContext(UserContext);
@@ -58,12 +59,15 @@ export default function Post({ post }) {
         await db.editPost({ likes: delta }, post.pid, post.uid);
     };
 
+    const navigate = useNavigate();
+    const handleReply = () => navigate(`/recording/${post.pid}/${post.uid}`);
+
     useEffect(() => {
         getUser();
         getOtherUser();
         setLikeCount(post.likes);
     }, []);
-    
+
     return (
         <div className='p-4 border rounded-lg shadow bg-slate-300 border-slate-600'>
             <h4 className='font-medium text-center'>{post.title}</h4>
@@ -75,13 +79,17 @@ export default function Post({ post }) {
             />
             <p>{getTimestamp()}</p>
             <div onClick={handleLikes}>
-                { likedPost ? ( <AiFillLike style={{ fontSize: "32px"}} /> ): 
-                                ( <AiOutlineLike style={{ fontSize: "32px" }} /> )}
                 <div onClick={() => setLikedPost(!likedPost)}>
+                    {likedPost ? (
+                        <AiFillLike style={{ fontSize: 32 }} />
+                    ) : (
+                        <AiOutlineLike style={{ fontSize: 32 }} />
+                    )}
                     {likedPost ? "LIKED" : "NOT LIKED"}
                 </div>
                 <p>{likeCount}</p>
             </div>
+            <TiArrowForward onClick={handleReply} style={{ fontSize: 32 }} />
             <audio src={post.audioURL} controls></audio>
         </div>
     );
