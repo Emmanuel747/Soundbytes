@@ -2,7 +2,12 @@ import { Database } from "./storage/Database";
 import { MediaStorage } from "./storage/MediaStorage";
 
 class PostBuilder implements IPostBuilder {
-    async makePost(title: string, file: Blob, uid: string): Promise<PID> {
+    async makePost(
+        title: string,
+        file: Blob,
+        isReply: boolean = false,
+        uid: string
+    ): Promise<PID> {
         // Call MediaStorage.upload and MediaStorage.getLink.
         // Create a Post object, then call Database.makePost.
         // likes are 0, replies are an empty array, create a timestamp
@@ -24,6 +29,7 @@ class PostBuilder implements IPostBuilder {
             audioURL: url,
             timestamp: now,
             likes: 0,
+            isReply: isReply,
             replies: [],
         };
 
@@ -41,7 +47,7 @@ class PostBuilder implements IPostBuilder {
         // Call makePost, then append reply
         // to parent post's replies list.
 
-        const newPID = await this.makePost(title, file, uid);
+        const newPID = await this.makePost(title, file, true, uid);
 
         await new Database().editPost(
             { replies: [newPID] },

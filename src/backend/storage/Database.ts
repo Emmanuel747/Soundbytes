@@ -6,6 +6,8 @@ import {
     addDoc,
     setDoc,
     updateDoc,
+    where,
+    query,
 } from "firebase/firestore";
 import { FireDB } from "../Fire";
 
@@ -120,7 +122,8 @@ class Database implements IDatabase {
     async getAllPosts(): Promise<Post[]> {
         // Get every post from the server
         const postsRef = collection(FireDB, "posts");
-        const allDocs = await getDocs(postsRef);
+        const q = query(postsRef, where("isReply", "!=", true));
+        const allDocs = await getDocs(q);
 
         let posts: Post[] = [];
         allDocs.forEach((doc) => {

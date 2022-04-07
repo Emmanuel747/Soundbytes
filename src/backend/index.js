@@ -2,6 +2,7 @@ import {
     GlobalFeedComposer,
     LocalFeedComposer,
     ProfileFeedComposer,
+    GeneralFeedComposer,
 } from "./FeedComposer";
 import { Database } from "./storage/Database";
 import { MediaStorage } from "./storage/MediaStorage";
@@ -14,6 +15,7 @@ export {
     GlobalFeedComposer,
     LocalFeedComposer,
     ProfileFeedComposer,
+    GeneralFeedComposer,
     Database,
     MediaStorage,
     PostBuilder,
