@@ -72,8 +72,8 @@ const PersonalProfile = () => {
     }, []);
 
     return (
-        <div className='flex flex-col'>
-            <UserDetails
+        <div >
+            <UserDetails  className='flex flex-col'
                 username={currentUsername}
                 pfpURL={pfpURL}
                 followerCount={followerCount}
@@ -110,14 +110,20 @@ const OtherProfile = ({ username }) => {
     }, []);
 
     return (
-        <div className='flex flex-col'>
-            <UserDetails
+        <div>
+            <UserDetails  className='flex flex-col'
                 username={username}
                 pfpURL={pfpURL}
                 followerCount={followerCount}
                 followingCount={followingCount}
             />
-            {composer && <Feed feedFactory={composer} />}
+            <div className='RootContainer'>
+            <div className='feedContainer'>
+                <div className='feedContainer font-mono tracking-widest p-2 globalFeedContainer font-loader font-bold'>
+                {composer && <Feed feedFactory={composer} />}
+                </div>
+            </div>
+            </div>
         </div>
     );
 };
