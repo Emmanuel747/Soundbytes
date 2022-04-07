@@ -1,25 +1,13 @@
 import { useContext } from "react";
 import { useParams } from "react-router";
-import { ProfileFeedComposer, Database } from "../../backend";
+import { ProfileFeedComposer, Database, UserInteraction } from "../../backend";
 import { Feed, IconButton, TextInput } from "../components";
 import { UserContext } from "../hooks/UserContext";
 import useProtectedRoute from "../hooks/useProtectedRoute";
-import useAsync from "../hooks/useAsync";
-import { useState, useEffect, createContext } from "react";
-import { Link } from "react-router-dom";
-
-import { AiFillHome } from "react-icons/ai";
+import { useState, useEffect } from "react";
 import "../Styles/GenericStyles.scss";
 
 import SearchBar from "../components/SearchBar";
-
-const HomeScreenButton = () => {
-    return (
-        <Link to='/feed'>
-            <AiFillHome style={{ fontSize: "64px" }} />
-        </Link>
-    );
-};
 
 const UserDetails = ({ username, pfpURL, followerCount, followingCount }) => {
     return (
@@ -39,6 +27,39 @@ const UserDetails = ({ username, pfpURL, followerCount, followingCount }) => {
                 <p>Following: {followingCount}</p>
                 <p>Followers: {followerCount}</p>
             </div>
+        </div>
+    );
+};
+
+const FollowButton = ({ curUID, otherUID }) => {
+    const initFollowing = async () => {
+        const user = await new Database().getUser(curUID);
+        console.log(
+            user.following,
+            "in",
+            otherUID,
+            "==",
+            user.following.includes(otherUID)
+        );
+        return user.following.includes(otherUID);
+    };
+
+    const [isFollowing, setIsFollowing] = useState(initFollowing);
+
+    const toggleFollowing = () => {
+        const ui = new UserInteraction();
+        if (isFollowing) {
+            ui.unfollow(curUID, otherUID);
+            setIsFollowing(false);
+        } else {
+            ui.follow(curUID, otherUID);
+            setIsFollowing(true);
+        }
+    };
+
+    return (
+        <div onClick={toggleFollowing}>
+            {isFollowing ? "Unfollow" : "Follow"}
         </div>
     );
 };
@@ -72,13 +93,9 @@ const PersonalProfile = () => {
             <div className='RootContainer'>
                 <div className='feedContainer'>
                     <div className='p-2 font-mono font-bold tracking-widest feedContainer globalFeedContainer font-loader'>
-                        {
-                            <Feed
-                                feedFactory={
-                                    new ProfileFeedComposer(currentUID)
-                                }
-                            />
-                        }
+                        <Feed
+                            feedFactory={new ProfileFeedComposer(currentUID)}
+                        />
                     </div>
                 </div>
             </div>
@@ -87,7 +104,9 @@ const PersonalProfile = () => {
 };
 
 const OtherProfile = ({ username }) => {
+    const { currentUID } = useContext(UserContext);
     const [pfpURL, setPfpURL] = useState(""); // Could probably set this to a default pfp
+    const [UID, setUID] = useState("");
     const [followerCount, setFollowerCount] = useState(0);
     const [followingCount, setFollowingCount] = useState(0);
     const [composer, setComposer] = useState();
@@ -97,6 +116,7 @@ const OtherProfile = ({ username }) => {
 
     const getUser = async (uid) => {
         const user = await new Database().getUser(uid);
+        setUID(uid);
         setFollowerCount(user.followers.length);
         setFollowingCount(user.following.length);
         setPfpURL(user.pfpURL);
@@ -120,6 +140,7 @@ const OtherProfile = ({ username }) => {
                 followerCount={followerCount}
                 followingCount={followingCount}
             />
+            <FollowButton curUID={currentUID} otherUID={UID} />
             <div className='RootContainer'>
                 <div className='feedContainer'>
                     <div className='p-2 font-mono font-bold tracking-widest feedContainer globalFeedContainer font-loader'>
@@ -138,7 +159,6 @@ export default function ProfilePage() {
     return (
         <div>
             <SearchBar />
-            {/* <HomeScreenButton /> */}
             {username ? (
                 <OtherProfile username={username} />
             ) : (
