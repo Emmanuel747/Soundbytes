@@ -2,6 +2,7 @@ import { Database } from "../../backend";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { UserContext } from "../hooks/UserContext";
 import { useState, useContext, useEffect } from "react";
+import WebFont from "webfontloader";
 
 export default function Post({ post }) {
     const { currentUID } = useContext(UserContext);
@@ -64,19 +65,16 @@ export default function Post({ post }) {
     }, []);
 
     return (
-        <div className='p-4 border bg-slate-300 border-slate-600 '>
-            <h4 className='text-center'>{post.title}</h4>
-            <p className='username'>{otherUsername}</p>
+        <div className='p-4 border rounded-lg shadow bg-slate-300 border-slate-600'>
+            <h4 className='font-medium text-center'>{post.title}</h4>
+            <p className='font-bold username'>@{otherUsername}</p>
             <img
                 style={{ width: 80, height: 80 }}
                 src={otherPFP}
                 alt='Profile'
             />
             <p>{getTimestamp()}</p>
-            <div
-                onClick={() => {
-                    handleLikes();
-                }}>
+            <div onClick={handleLikes}>
                 {/* <AiOutlineLike style={{ fontSize: "32px" }} /> */}
                 <div onClick={() => setLikedPost(!likedPost)}>
                     {likedPost ? "LIKED" : "NOT LIKED"}
