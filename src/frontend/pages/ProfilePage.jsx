@@ -6,12 +6,13 @@ import { UserContext } from "../hooks/UserContext";
 import useProtectedRoute from "../hooks/useProtectedRoute";
 import { useState, useEffect } from "react";
 import "../Styles/GenericStyles.scss";
+import "../Styles/FeedPage.scss";
 
 import SearchBar from "../components/SearchBar";
 
 const UserDetails = ({ username, pfpURL, followerCount, followingCount }) => {
     return (
-        <div className='flex flex-col items-center overflow-hidden textFont'>
+        <div className='flex flex-col items-center textFont emanBg'>
             <img
                 style={{
                     borderRadius: "50%",
@@ -83,24 +84,20 @@ const PersonalProfile = () => {
     }, []);
 
     return (
-        <div>
-            <UserDetails
-                className='flex flex-col'
-                username={currentUsername}
-                pfpURL={pfpURL}
-                followerCount={followerCount}
-                followingCount={followingCount}
-            />
-            <div className='RootContainer'>
-                <div className='feedContainer'>
-                    <div className='p-2 font-mono font-bold tracking-widest feedContainer globalFeedContainer font-loader'>
-                        <Feed
-                            feedFactory={new ProfileFeedComposer(currentUID)}
-                        />
-                    </div>
-                </div>
-            </div>
+      <div>
+        <UserDetails
+          className='flex flex-col'
+          username={currentUsername}
+          pfpURL={pfpURL}
+          followerCount={followerCount}
+          followingCount={followingCount}
+        />
+        <div className='RootContainer'>
+          <Feed
+            feedFactory={new ProfileFeedComposer(currentUID)}
+          />
         </div>
+      </div>
     );
 };
 
@@ -143,7 +140,7 @@ const OtherProfile = ({ username }) => {
             />
             <FollowButton curUID={currentUID} otherUID={UID} />
             <div className='RootContainer'>
-                <div className='feedContainer'>
+                <div className='feedContainer '>
                     <div className='p-2 font-mono font-bold tracking-widest feedContainer globalFeedContainer font-loader'>
                         {composer && <Feed feedFactory={composer} />}
                     </div>

@@ -68,45 +68,45 @@ export default function Post({ post }) {
         setLikeCount(post.likes);
     }, []);
 
-    return (
-        <div className='p-4 border rounded-lg shadow bg-slate-500 border-slate-800'>
-            <div className='post'>
-                <img
-                    style={{ borderRadius: "50%", width: 80, height: 80 }}
-                    src={otherPFP}
-                    alt='Profile'
-                />
-                <p className='text-left font-bold'>@{otherUsername}</p>
-                <h4 className='font-medium'>{post.title}</h4>
-                
-                <div className="flex flex-row justify-items-stretch"> 
-                <div className="flex flex-row" onClick={handleLikes}>
-                    <div onClick={() => setLikedPost(!likedPost)}>
-                        {likedPost ? (
-                            <AiFillLike style={{ fontSize: 32 }} />
-                        ) : (
-                            <AiOutlineLike style={{ fontSize: 32 }} />
-                        )}
-                        {/*Let's just like count visible in the final product. likedPost ? "LIKED" : "NOT LIKED"*/}
-                    </div>
-                    <p>{likeCount}</p>
-                </div>
-                <TiArrowForward
-                    onClick={handleReply}
-                    style={{ fontSize: 32,}}
-                />
-                </div>
-                <div className="flex flex-row"> 
-                    <audio src={post.audioURL} controls></audio>
-                    <p>{getTimestamp()}</p>
-                </div>
-            </div>
+  return (
+    <div className=' emanWidth p-2  shadow bg-slate-500'>
+      <div className='post p-3 text-black font-serif'>
+        <img
+          style={{ borderRadius: "50%", width: 80, height: 80 }}
+          src={otherPFP}
+          alt='Profile'
+        />
+        <p className='text-left font-bold'>@{otherUsername}</p>
+        <h4 className='font-medium'>{post.title ? post.title : "Untitled"}</h4>
 
-            {post.replies.length > 0 && (
-                <div className='replies'>
-                    <Feed feedFactory={new GeneralFeedComposer(post.replies)} />
-                </div>
-            )}
+        <div className="flex flex-row justify-items-stretch">
+          <div className="flex flex-row" onClick={handleLikes}>
+            <div onClick={() => setLikedPost(!likedPost)}>
+              {likedPost ? (
+                <AiFillLike style={{ fontSize: 32 }} />
+              ) : (
+                <AiOutlineLike style={{ fontSize: 32 }} />
+              )}
+              {/*Let's just like count visible in the final product. likedPost ? "LIKED" : "NOT LIKED"*/}
+            </div>
+            <p>{likeCount}</p>
+          </div>
+          <TiArrowForward
+            onClick={handleReply}
+            style={{ fontSize: 32, }}
+          />
         </div>
-    );
+        <div className="flex flex-row">
+          <audio src={post.audioURL} controls></audio>
+          <p>{getTimestamp()}</p>
+        </div>
+      </div>
+
+      {post.replies.length > 0 && (
+        <div className='replies'>
+          <Feed feedFactory={new GeneralFeedComposer(post.replies)} />
+        </div>
+      )}
+    </div>
+  );
 }

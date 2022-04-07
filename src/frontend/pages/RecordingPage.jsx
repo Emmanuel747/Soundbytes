@@ -19,13 +19,52 @@ export default function RecordingPage() {
 
     const [title, setTitle] = useState("");
     const [isRecording, setIsRecording] = useState(false);
+    const [isRecordingValid, setRecordingValid] = useState(false);
     const [blob, setBlob] = useState();
     const [blobURL, setBlobURL] = useState("");
     const [isBlocked, setIsBlocked] = useState(false);
-    const [FeedbackMsg, setFeedbackMsg] = useState("Try typing something in here!");
+    const [FeedbackMsg, setFeedbackMsg] = useState("Your SoundByte🎵");
+    const [isActive, setIsActive] = useState(false);
+    const [isPaused, setIsPaused] = useState(true);
+    const [recordTime, setRecordTime] = useState(0);
+    
+    {/* recordTimer Function for Min audio length */}
+    useEffect(() => {
+      let interval = null;
+    
+      if (isActive && isPaused === false) {
+        interval = setInterval(() => {
+          setRecordTime((recordTime) => recordTime + 1);
+        }, 1000);
+      } else {
+        clearInterval(interval);
+      }
+      return () => {
+        clearInterval(interval);
+      };
+    }, [isActive, isPaused]);
+    
+    const handleStart = () => {
+      if (recordTime > 1) {
+        setRecordTime(0);
+      }
+      setIsActive(true);
+      setIsPaused(false);
+    };
+    // const handlePauseResume = () => {
+    //   setIsPaused(!isPaused);
+    // };
+    const handleReset = () => {
+      setIsActive(false);
+      console.log(recordTime);
+      if (recordTime > 4 && title !== "") {
+        setRecordingValid(true);
+      } else setRecordingValid(false)
+    };
 
     const startRecording = () => {
       if (!isBlocked) {
+        handleStart();
         Mp3Recorder.start()
           .then(() => {
             setIsRecording(true);
@@ -34,6 +73,7 @@ export default function RecordingPage() {
       }
     };
     const stopRecording = () => {
+      handleReset();
       Mp3Recorder.stop()
         .getMp3()
         .then(([buffer, blob]) => {
@@ -53,7 +93,6 @@ export default function RecordingPage() {
       navigator.getUserMedia(
         { audio: true },
         () => {
-          console.log("Permission Granted");
           setIsBlocked(false);
         },
         () => {
@@ -65,9 +104,12 @@ export default function RecordingPage() {
 
     const navigate = useNavigate();
     const uploadPost = async (e) => {
-      e.PreventDefault();
-        const pb = new PostBuilder();
+      e.preventDefault();
+      console.log(recordTime + " I AM " + title)
+      if (isRecordingValid) {
         try {
+          console.log("You attempted a NEWPOST");
+          const pb = new PostBuilder();
           await pb.makePost(title, blob, currentUID);
           setFeedbackMsg("Upload Success!")
           navigate("/feed"); 
@@ -75,8 +117,21 @@ export default function RecordingPage() {
           setFeedbackMsg(err);
           console.log(err);
         }
+      } else if (title === "") {
+        setFeedbackMsg("Error: Title your SoundByte🎙");
+        setTimeout(function() {
+          setFeedbackMsg("");
+        }, 3000)
+      } else {
+        setFeedbackMsg("Error: SoundByte must be at least 5 seconds!");
+        setTimeout(function() {
+          setFeedbackMsg("");
+        }, 3000)
+      }
     };
-    const uploadReply = async () => {
+    const uploadReply = async (e) => {
+      e.preventDefault();
+      console.log("You attempted a REPLY");
         const pb = new PostBuilder();
         pb.makeReply(parentPID, parentUID, title, blob, currentUID).then(() =>
             navigate("/feed")
@@ -86,8 +141,9 @@ export default function RecordingPage() {
     return (
       <div className=" recordBody fill-height text-center flex flex-col" >
         <div className="recordHeader parent">
-          <h1 className="flex parent flex-col text-center "> Recording </h1>
-          <p clasName="line"> {parentPID && parentUID ? "Reply to post" : "Make a new post"} </p>
+          <h1 className="flex parent flex-col text-center eman"> 
+            {parentPID && parentUID ? "Reply to a SoundByte🎙" : "Create a SoundByte🎙"}
+          </h1>
         </div>
 
         <form className="h-screen">
@@ -96,35 +152,50 @@ export default function RecordingPage() {
           /> */}
           <div className=" titleInput text-input">
             <input 
-              require 
+              required
               type="text" 
               id="input1" 
-              placeholder={FeedbackMsg}
+              placeholder="SoundByte🎵 Title"
               onChange={(event) => (setTitle(event.target.value))} />
             <label for="input1">SoundByte Name🎤</label>
           </div>
+          
           <div className="recordBtnContainer">
+            <div>
+              <TextButton className="text-center eman"
+                title={ isRecording ? "Stop Recording" : "Start Recording" }
+              />
+            </div>
             <input type="checkbox" name="checkbox" className="checkbox" id="checkbox" />
+            {/* Record Start & Stop Button ~Eman April 7, 2022 */}
             <label 
               for="checkbox"
               onClick={ isRecording ? stopRecording : startRecording }
             > </label>
-            <div>
-              <TextButton className="text-center"
-                title={ isRecording ? "Stop Recording" : "Start Recording" }
-              />
-            </div>
           </div>
+
+          <div className ="recordingStatusMsg" >{FeedbackMsg} 
+            <div className="counterStatus"> Recording Length: 
+              {recordTime > 4 ? 
+                <span className="sub valid"> {recordTime} </span> 
+                : 
+                <span className="sub invalid"> {recordTime} </span>
+              }
+            seconds</div>
+          </div>
+          {/* Audio Player ~Eman April 7, 2022 */}
           <div className="audioPlayerContainer">
-            <audio className="flex " src={blobURL} controls='controls' />
+            <audio className="flex" src={blobURL} controls='controls' />
           </div>
 
           {/* <UploadBtn /> */}
-          <TextButton
+          <button
             type="submit"
             onClick={(e) => parentPID && parentUID ? uploadReply(e) : uploadPost(e)}
-            title='Upload'
-          />
+          >
+            <UploadBtn />
+          </button>
+          
         </form>
 
 

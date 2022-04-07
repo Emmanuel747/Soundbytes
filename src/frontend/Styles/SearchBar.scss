@@ -20,15 +20,18 @@
   width: 100vw !important;
   justify-content: center;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   // transform: scaleY(0.5);
   position: relative;
 }
 
 
-
+.suggestionBox {
+  
+}
 .suggestionBox.inactive {
   display: none;
+  overflow: auto !important;
 }
 .suggestionBox.active {
   display: block;
@@ -48,6 +51,7 @@
   border-color: #222 #222 #222;
   border-radius: 3px;
   background-color: #332f2ff6;
+
   ul li {
     margin-top: 2px;
     padding: 3px;

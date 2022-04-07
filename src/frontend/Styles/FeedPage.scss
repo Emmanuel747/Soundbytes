@@ -63,18 +63,46 @@ input[type='submit'] {
 
 .RootContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
+  padding-inline: 20px;
+  background-color: #222222;
+  overflow: auto !important;
+  max-height: 800px;
+}
+.emanWidth {
+  width: fit-content;
+  margin: 10px;
+  border: rgb(248 243 243 / 56%) 7px solid;
+  border-radius: 10px;
+}
+
+.emanFlex {
+  height: 85vh;
+  overflow: auto;
+  // &:only-child {
+  //   height: 100%;
+  //   overflow: hidden;
+  // }
+  padding: 15px;
+  width: 45vw;
+  max-width: fit-content;
 }
 .feedContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  height: 100%;
+  overflow: hidden;
+  flex-grow: 1;
 
-}
-.globalFeedContainer {
+  .global {
   
-}
-.localFeedContainer {
+  }
+  .local {
+  
+  }
 
 }
+

@@ -1,5 +1,6 @@
 import useAsync from "../hooks/useAsync";
 import Post from "./Post";
+import '../Styles/FeedPage.scss'
 
 export default function Feed({ feedFactory }) {
     const genFeed = async () => {
@@ -8,10 +9,9 @@ export default function Feed({ feedFactory }) {
     };
     const posts = useAsync(genFeed);
 
-    return (
-        <div className='border border-black p-3, bg-slate-600'>
-            <p className='p-1 text-center font-bold'>Feed</p>
-            {posts}
-        </div>
-    );
+  return (
+    <>
+      {posts}
+    </>
+  );
 }

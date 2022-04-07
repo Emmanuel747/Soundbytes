@@ -22,6 +22,7 @@ export default function SearchBar() {
         let usernamesObj = await new Database().getAllUsernames();
         let sorted = Object.keys(usernamesObj);
         setUsernames(sorted.sort());
+        console.log(userNames)
     };
 
     const filterUsernames = async () => {
@@ -43,8 +44,9 @@ export default function SearchBar() {
     const navigate = useNavigate();
 
     const routeToUser = (username) => {
-        setActive(false);
-        navigate(`/profile/${username}`);
+      setActive(false);
+      navigate(`/profile/${username}`);
+      window.location.reload(false);
     };
     return (
         <div
