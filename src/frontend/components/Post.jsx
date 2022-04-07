@@ -74,7 +74,7 @@ export default function Post({ post }) {
                 <h4 className='font-medium text-center'>{post.title}</h4>
                 <p className='font-bold username'>@{otherUsername}</p>
                 <img
-                    style={{ width: 80, height: 80 }}
+                    style={{ borderRadius: "50%", width: 80, height: 80 }}
                     src={otherPFP}
                     alt='Profile'
                 />

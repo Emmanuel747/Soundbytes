@@ -14,8 +14,9 @@ const UserDetails = ({ username, pfpURL, followerCount, followingCount }) => {
         <div className='flex flex-col items-center overflow-hidden textFont'>
             <img
                 style={{
+                    borderRadius: "50%",
                     maxWidth: "11rem",
-                    borderRadius: "150/2",
+                    //borderRadius: "150/2",
                     borderWidth: 2,
                     borderColor: "black",
                 }}
@@ -133,7 +134,7 @@ const OtherProfile = ({ username }) => {
 
     return (
         <div>
-            <UserDetails
+            <UserDetails style={{ borderRadius: "50%"}}
                 className='flex flex-col'
                 username={username}
                 pfpURL={pfpURL}
@@ -157,12 +158,12 @@ export default function ProfilePage() {
     const { username } = useParams();
 
     return (
-        <div>
+        <div >
             <SearchBar />
             {username ? (
                 <OtherProfile username={username} />
             ) : (
-                <PersonalProfile />
+                <PersonalProfile/>
             )}
         </div>
     );
