@@ -5,13 +5,12 @@ export default function TextInput({
     setText,
 }) {
     return (
-        <input
-            type={inputType || "text"}
-            className={className || "border border-black rounded-sm"}
-            placeholder={placeHolder || "Enter text"}
-            onChange={(event) => {
-                setText(event.target.value);
-            }}
-        />
+      <input
+        required
+        type={inputType || "text"}
+        className={className || "border border-black rounded-sm"}
+        placeholder={placeHolder || "Enter text"}
+
+      />
     );
 }

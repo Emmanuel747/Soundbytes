@@ -1,0 +1,188 @@
+
+.recordBody{
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background-color:rgba(58, 54, 54, 0.452);
+  padding-top: 20px;
+  padding-inline: 30px;
+  justify-content: center;
+  align-items: center;
+
+  :only-child  {
+    margin: 15px;
+    align-items: center;
+  }
+}
+
+// }
+.header {
+  padding-top: 20px;
+  padding-inline: 30px;
+}
+.recordHeader {
+  padding-top: 10px;
+}
+.titleInput {
+  input::placeholder {
+    color: black;
+    text-align: center;
+  }
+  input {
+    text-align: center;
+  }
+
+}
+.audioPlayerContainer {
+  justify-self: center;
+  align-items: center;
+
+  audio {
+    display: inline-block !important;
+    align-self: center;
+    margin-left: 20px;
+    width: 600px;
+  }
+}
+
+.recordBtnContainer {
+  margin: 20px;
+  margin-bottom: 10px;
+  /* function */
+@keyframes ripple {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.02);
+  }
+}
+
+/* main */
+body {
+  background-color: #333;
+  display: grid;
+  height: 100vh;
+  place-items: center;
+}
+
+/* Recording button component */
+.checkbox {
+  display: none;
+}
+
+.checkbox + label {
+  --size: 90%;
+  --radius: 50%;
+  border: 6px solid black;
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: inline-block;
+  height: 150px;
+  width: 150px;
+  position: relative;
+}
+
+.checkbox + label:before {
+  background-color: red;
+  border-radius: var(--radius);
+  bottom: 0;
+  content: '';
+  height: var(--size);
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: all .25s cubic-bezier(1, 0, 0, 0.2);
+  width: var(--size);
+}
+
+.checkbox:checked + label {
+  animation: .15s ripple .25s;
+}
+
+  .checkbox:checked + label:before {
+    --size: 50%;
+    --radius: 10%;
+    transform: rotateZ(180deg);
+  }
+}
+
+// some styling for titles
+.parent {
+  text-align: center;
+}
+
+.line {
+  font-size: 30px;
+  position: relative;
+  display: inline-block;
+  margin: 0;
+}
+
+.line:after, .line:before {
+  content: '';
+  width: 50px;
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  background: black;
+}
+
+.line:before {
+  left: 0;
+  transform: translate(-120%, -50%);
+}
+
+.line:after {
+  right: 0;
+  transform: translate(120%, -50%);
+}
+
+//Styling for Title Input box
+.text-input{
+  
+  position: relative;
+  margin-top: 50px;
+  
+  input[type="text"] {
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    box-sizing: border-box;
+    outline: none;
+    border: 2.5px solid #E03616;
+    border-radius: 3px;
+    padding: 10px 10px 10px 100px;
+    transition: all 0.1s ease-out;
+  }
+  
+  input[type="text"] + label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 40px;
+    line-height: 40px;
+    color: white;
+    border-radius: 3px 0 0 3px;
+    padding: 0 20px;
+    background: #E03616;
+    transform: translateZ(0) translateX(0);
+    transition: all 0.3s ease-in;
+    transition-delay: 0.2s;
+  }
+  
+  input[type="text"]:focus + label{
+    transform: translateY(-120%) translateX(0%);
+    border-radius: 3px;
+    transition: all 0.1s ease-out;
+  }
+  
+  input[type="text"]:focus{
+    padding: 10px;
+    transition: all 0.3s ease-out;
+    transition-delay: 0.2s;
+  }
+}

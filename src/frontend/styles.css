@@ -30,3 +30,7 @@ div {
   font-family: 'Mulish', sans-serif;
   font-size: 1rem;
 }
+
+audio {
+  display: flex !important;
+}
