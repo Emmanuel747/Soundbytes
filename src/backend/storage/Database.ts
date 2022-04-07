@@ -6,6 +6,8 @@ import {
     addDoc,
     setDoc,
     updateDoc,
+    where,
+    query,
 } from "firebase/firestore";
 import { FireDB } from "../Fire";
 
@@ -120,7 +122,8 @@ class Database implements IDatabase {
     async getAllPosts(): Promise<Post[]> {
         // Get every post from the server
         const postsRef = collection(FireDB, "posts");
-        const allDocs = await getDocs(postsRef);
+        const q = query(postsRef, where("isReply", "!=", true));
+        const allDocs = await getDocs(q);
 
         let posts: Post[] = [];
         allDocs.forEach((doc) => {
@@ -134,7 +137,9 @@ class Database implements IDatabase {
         // Get a list of all posts from a list of UIDs
         const listsOfPosts: Promise<Feed>[] = uids.map(async (uid) => {
             const userDoc = await getDoc(doc(FireDB, "users", uid));
-            return (userDoc.data() as User).posts;
+            return (userDoc.data() as User).posts.filter(
+                (post) => post.isReply !== true
+            );
         });
 
         const posts: Feed = await Promise.all(listsOfPosts).then((results) =>

@@ -40,10 +40,35 @@ class ProfileFeedComposer extends LocalFeedComposer {
     async composeFeed(): Promise<Feed> {
         // Get feed composed of just a specific user's posts
         if (this.uid) {
-          return (await this.database.getPostsFromUsers([this.uid])) as Feed;
+            return (await this.database.getPostsFromUsers([this.uid])) as Feed;
         }
         return [];
     }
 }
 
-export { GlobalFeedComposer, LocalFeedComposer, ProfileFeedComposer };
+class GeneralFeedComposer extends AbstractFeedComposer {
+    posts: PID[];
+
+    constructor(posts: PID[]) {
+        super();
+        this.posts = posts;
+    }
+
+    async composeFeed(): Promise<Feed> {
+        // Get feed composed of just a specific user's posts
+        if (this.posts) {
+            const feed = this.posts.map(
+                async (pid) => await this.database.getPost(pid)
+            );
+            return await Promise.all(feed);
+        }
+        return [];
+    }
+}
+
+export {
+    GlobalFeedComposer,
+    LocalFeedComposer,
+    ProfileFeedComposer,
+    GeneralFeedComposer,
+};

@@ -24,6 +24,7 @@ type Post = {
     audioURL: string;
     timestamp: string;
     likes: number;
+    isReply: boolean;
     replies: PID[];
 };
 
