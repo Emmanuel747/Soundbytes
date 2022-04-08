@@ -16,8 +16,8 @@
 -   [x] Establish the user auth flow everywhere
 -   [x] Return to useProtectedRoutes hook
 -   [x] Flesh out the Post component
--   [ ] Add following to Profile
--   [ ] Create search bar in Profile
+-   [x] Add following to Profile
+-   [x] Create search bar in Profile
 
 ## Stretch
 
@@ -38,7 +38,6 @@ USERS:
 
     -   username
     -   profile picture link
-    -   bio?
     -   posts: PID[]
     -   likedPosts: PID[]
     -   following: UID[]
@@ -48,7 +47,7 @@ POSTS:
 
 -   PID
 
-    -   title // maybe
+    -   title
     -   creator uid
     -   audio file
     -   timestamp

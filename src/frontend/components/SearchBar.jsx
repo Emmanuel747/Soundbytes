@@ -76,13 +76,13 @@ export default function SearchBar() {
                                 : "suggestionBox inactive"
                         }>
                         <ul>
-                            {userNames.map((name) => (
+                            {userNames.map((name, i) => (
                                 <li
+                                    key={i}
                                     onClick={() => {
                                         routeToUser(name);
                                     }}>
-                                    {" "}
-                                    {name}{" "}
+                                    {name}
                                 </li>
                             ))}
                         </ul>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="200mm"
+   height="200mm"
+   viewBox="0 0 200 200"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="pfp.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:snap-nodes="true"
+     inkscape:zoom="0.70911897"
+     inkscape:cx="256.65651"
+     inkscape:cy="449.85399"
+     inkscape:window-width="1920"
+     inkscape:window-height="1000"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     height="200mm" />
+  <defs
+     id="defs2">
+    <rect
+       x="553.42511"
+       y="512.5415"
+       width="49.85812"
+       height="69.801369"
+       id="rect3103" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text3101"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect3103);fill:#000000;fill-opacity:1;stroke:none" />
+    <circle
+       style="fill:#ffb380;stroke:#000000;stroke-width:1.16836;stroke-miterlimit:0;stroke-dasharray:none"
+       id="path15599"
+       cx="100"
+       cy="100"
+       r="98.415817" />
+    <path
+       id="path13599"
+       style="font-size:102.724px;line-height:1.25;font-family:Consolas;-inkscape-font-specification:'Consolas, Normal';fill:#ffe6d5;stroke:none;stroke-width:1.16836;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 99.956358,25.633169 V 132.19024 c -2.295248,-0.89475 -4.520089,-1.52007 -6.675936,-1.88015 L 96.08495,140.7771 85.474227,130.16641 c -1.537732,0.19695 -3.012546,0.52594 -4.424456,0.98716 l 1.758191,6.5612 -7.046045,-4.06702 c -1.048273,0.64681 -2.039599,1.35508 -2.971172,2.12829 l 2.160305,8.05678 -6.331176,-3.65526 c -0.884128,1.19251 -1.654504,2.45813 -2.311848,3.79654 l 7.721061,13.37479 -9.792007,-5.65253 c -0.01844,0.33492 -0.02779,0.66979 -0.02779,1.00469 0,4.29745 1.302507,7.7157 3.907021,10.25508 2.669627,2.47432 6.315572,3.71141 10.938573,3.71141 0.82159,0 1.627126,-0.0298 2.418718,-0.0858 l -2.560606,-9.55713 8.525288,8.52589 c 0.957115,-0.27417 1.888299,-0.5974 2.791249,-0.97268 l -1.412227,-5.26854 5.471403,3.15833 c 0.718164,-0.44979 1.409199,-0.92985 2.075768,-1.43698 l -1.68573,-6.28528 5.253441,3.03338 c 0.377092,-0.41068 0.744012,-0.83251 1.098282,-1.26855 0.23072,-0.28394 0.45453,-0.57455 0.67502,-0.86762 l -6.33905,-10.98022 9.60306,5.54325 c 0.70286,-1.49238 1.31162,-3.06907 1.82339,-4.73241 1.36736,-4.23232 2.05102,-8.79021 2.05102,-13.67366 V 64.896572 c 4.88346,2.474289 8.95326,5.273701 12.2089,8.399102 3.25564,3.125413 5.86006,6.446191 7.81345,9.962271 1.95338,3.45098 3.32066,7.032139 4.10203,10.743563 0.84646,3.711423 1.26973,7.357962 1.26973,10.939172 0,2.66963 -0.1956,5.27406 -0.58625,7.81345 -0.32556,2.47426 -0.81365,4.81831 -1.46478,7.03215 -0.586,2.21383 -1.26964,4.26479 -2.05102,6.15306 -0.78132,1.88825 -1.59519,3.54866 -2.44163,4.98115 l 5.27395,2.44165 c 2.79984,-4.68813 5.1112,-9.63657 6.93434,-14.84559 1.82317,-5.27413 2.73509,-10.80877 2.73509,-16.6038 0,-4.883459 -0.48865,-9.441334 -1.46535,-13.673664 -0.91159,-4.232331 -2.18138,-8.171351 -3.80921,-11.817671 -1.56272,-3.646321 -3.38537,-7.064587 -5.469,-10.2551 -2.0185,-3.19054 -4.10213,-6.218824 -6.25085,-9.083782 -2.14872,-2.799846 -4.26507,-5.436362 -6.3487,-7.910652 -2.01847,-2.539392 -3.80907,-5.013635 -5.37176,-7.422799 -1.5627,-2.409181 -2.83251,-4.785918 -3.80923,-7.129968 -0.91155,-2.344067 -1.36753,-4.786193 -1.36753,-7.325592 v -1.660353 z" />
+  </g>
+</svg>
