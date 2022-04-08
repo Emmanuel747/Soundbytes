@@ -130,24 +130,24 @@ const OtherProfile = ({ username }) => {
     }, []);
 
     return (
-        <div>
-            <UserDetails style={{ borderRadius: "50%"}}
-                className='flex flex-col'
-                username={username}
-                pfpURL={pfpURL}
-                followerCount={followerCount}
-                followingCount={followingCount}
-            />
-            <FollowButton curUID={currentUID} otherUID={UID} />
-            <div className='RootContainer'>
-                <div className='feedContainer '>
-                    <div className='p-2 font-mono font-bold tracking-widest feedContainer globalFeedContainer font-loader'>
-                        {composer && <Feed feedFactory={composer} />}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+      <div>
+          <UserDetails style={{ borderRadius: "50%"}}
+              className='flex flex-col'
+              username={username}
+              pfpURL={pfpURL}
+              followerCount={followerCount}
+              followingCount={followingCount}
+          />
+          <FollowButton curUID={currentUID} otherUID={UID} />
+          <div className='RootContainer'>
+              <div className='feedContainer '>
+                  <div className='p-2 font-mono font-bold tracking-widest feedContainer globalFeedContainer font-loader'>
+                      {composer && <Feed feedFactory={composer} />}
+                  </div>
+              </div>
+          </div>
+      </div>
+  );
 };
 
 export default function ProfilePage() {
