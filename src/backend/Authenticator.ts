@@ -5,7 +5,6 @@ import {
     signInWithEmailAndPassword,
     updateProfile,
 } from "firebase/auth";
-import { MediaStorage } from "./storage/MediaStorage";
 
 class Authenticator implements IAuthenticator {
     database: IDatabase = new Database();
@@ -38,9 +37,7 @@ class Authenticator implements IAuthenticator {
             return colors[i];
         };
         // const pfpURL = "https://picsum.photos/200";
-        const pfpURL = await new MediaStorage().getLink(
-            `images/pfp-${getRandomColor()}.png`
-        );
+        const pfpURL = `https://firebasestorage.googleapis.com/v0/b/notify-soundbytes.appspot.com/o/images%2Fpfp-${getRandomColor()}.png?alt=media&token=4ade9de8-9f89-40c3-a9ff-9a75f73fc175`;
 
         // Create new User object
         const uid = userCredential.user.uid;
