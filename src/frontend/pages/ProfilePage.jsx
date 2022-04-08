@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useParams } from "react-router";
 import { ProfileFeedComposer, Database, UserInteraction } from "../../backend";
-import { Feed, IconButton, TextInput } from "../components";
+import { Feed, IconButton, TextInput, UploadBtn } from "../components";
 import { UserContext } from "../hooks/UserContext";
 import useProtectedRoute from "../hooks/useProtectedRoute";
 import { useState, useEffect } from "react";
@@ -33,16 +33,9 @@ const UserDetails = ({ username, pfpURL, followerCount, followingCount }) => {
     );
 };
 
-const FollowButton = ({ curUID, otherUID }) => {
+const FollowButton = ({ curUID, otherUID, setFollowerCount }) => {
     const initFollowing = async () => {
         const user = await new Database().getUser(curUID);
-        console.log(
-            user.following,
-            "in",
-            otherUID,
-            "==",
-            user.following.includes(otherUID)
-        );
         return user.following.includes(otherUID);
     };
 
@@ -53,15 +46,21 @@ const FollowButton = ({ curUID, otherUID }) => {
         if (isFollowing) {
             ui.unfollow(curUID, otherUID);
             setIsFollowing(false);
+            setFollowerCount((followerCount) => followerCount - 1)
         } else {
             ui.follow(curUID, otherUID);
             setIsFollowing(true);
+            setFollowerCount((followerCount) => followerCount + 1)
         }
     };
 
     return (
-        <div onClick={toggleFollowing}>
-            {isFollowing ? "Unfollow" : "Follow"}
+        <div
+          className="flex text-center emanStyle" 
+          onClick={toggleFollowing}>
+            <div>
+              <UploadBtn btnName={isFollowing ? "Unfollow" : "Follow"}/>
+            </div>
         </div>
     );
 };
@@ -136,9 +135,10 @@ const OtherProfile = ({ username }) => {
               username={username}
               pfpURL={pfpURL}
               followerCount={followerCount}
+              setFollowerCount={setFollowerCount}
               followingCount={followingCount}
           />
-          <FollowButton curUID={currentUID} otherUID={UID} />
+          <FollowButton curUID={currentUID} otherUID={UID} setFollowerCount={setFollowerCount} />
           <div className='RootContainer'>
               <div className='feedContainer '>
                   <div className='p-2 font-mono font-bold tracking-widest feedContainer globalFeedContainer font-loader'>

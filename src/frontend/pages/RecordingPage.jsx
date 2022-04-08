@@ -56,7 +56,6 @@ export default function RecordingPage() {
   // };
   const handleReset = () => {
     setIsActive(false);
-    console.log(recordTime);
     if (recordTime > 4 && title !== "") {
       setRecordingValid(true);
     } else setRecordingValid(false)
@@ -105,10 +104,8 @@ export default function RecordingPage() {
   const navigate = useNavigate();
   const uploadPost = async (e) => {
     e.preventDefault();
-    console.log(recordTime + " I AM " + title)
     if (isRecordingValid) {
       try {
-        console.log("You attempted a NEWPOST");
         const pb = new PostBuilder();
         await pb.makePost(title, blob, currentUID);
         setFeedbackMsg("Upload Success!")
@@ -131,7 +128,6 @@ export default function RecordingPage() {
   };
   const uploadReply = async (e) => {
     e.preventDefault();
-    console.log("You attempted a REPLY");
     const pb = new PostBuilder();
     pb.makeReply(parentPID, parentUID, title, blob, currentUID).then(() =>
       navigate("/feed")

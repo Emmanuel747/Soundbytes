@@ -70,16 +70,6 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
         } else setErrMsgText("Minimum 6 characters or Passwords Do not Match.");
         e.preventDefault();
     };
-
-    //delete later
-    const devLogin = async () => {
-        let test = await new Authenticator().signIn(
-            "admin@soundbytes.com",
-            "admin123"
-        );
-        console.log({ test });
-    };
-
     return (
         <section className='user'>
             <div className='user_options-container'>
@@ -165,13 +155,6 @@ export default function AuthPage({ userData, setUserData, isAuth, setIsAuth }) {
                                 </button>
 
                                 {/* Button for logging in with hardcoded test account  */}
-                                <button
-                                    type='button'
-                                    className='forms_buttons-forgot'
-                                    style={{ color: "red" }}
-                                    onClick={devLogin}>
-                                    DevTool: Login w/ TestUser
-                                </button>
                                 <input
                                     type='submit'
                                     value='Login'
