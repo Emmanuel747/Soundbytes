@@ -1,27 +1,15 @@
 # SoundBytes
 
-[Temporary] Project in development by a team of LSU early professionals.
+Social media platform developed by a team of LSU early professionals.
 
-## Todo
+## How to run
 
--   [x] Database.ts
-    -   [x] getUser()
-    -   [x] makeUser()
-    -   [x] editUser()
--   [x] MediaStorage.ts
--   [x] FeedComposer.ts
--   [x] Authenticator.ts
--   [x] PostBuilder.ts
+-   Run the command: `npm i && npm start`
 
--   [x] Establish the user auth flow everywhere
--   [x] Return to useProtectedRoutes hook
--   [x] Flesh out the Post component
--   [x] Add following to Profile
--   [x] Create search bar in Profile
-
-## Stretch
+## Stretch Goals
 
 -   Delete posts (keep the data, but mark them as deleted)
+-   Edit user details (like profile picture)
 -   Auto play features
 
 ## Database Structure
