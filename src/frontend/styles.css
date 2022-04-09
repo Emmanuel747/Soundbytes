@@ -56,5 +56,6 @@ html,body {
 }
 
 html {
+  background-color: #222;
   overflow-x: hidden;
 }
